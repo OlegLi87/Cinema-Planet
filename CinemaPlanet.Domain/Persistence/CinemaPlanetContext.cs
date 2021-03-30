@@ -14,7 +14,8 @@ namespace CinemaPlanet.Domain.Persistence
         public DbSet<Auditorium> Auditoriums { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieSession> MovieSessions { get; set; }
-        public DbSet<Client> Clients { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -22,7 +23,7 @@ namespace CinemaPlanet.Domain.Persistence
             modelBuilder.Configurations.Add(new AuditoriumConfiguration());
             modelBuilder.Configurations.Add(new MovieConfiguration());
             modelBuilder.Configurations.Add(new MovieSessionConfiguration());
-            modelBuilder.Configurations.Add(new ClientConfiguration());
+            modelBuilder.Configurations.Add(new UserConfiguration());
         }
     }
 }

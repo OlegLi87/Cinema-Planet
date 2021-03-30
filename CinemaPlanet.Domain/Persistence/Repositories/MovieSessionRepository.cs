@@ -13,7 +13,17 @@ namespace CinemaPlanet.Domain.Persistence.Repositories
     {
         public MovieSessionRepository(DbContext context) : base(context)
         {
+        }
 
+        public List<MovieSession> GetAvailableSessions()
+        {
+            var mss = context.Set<MovieSession>()
+                .Include(ms => ms.Auditorium)
+                .Include(ms => ms.Movie)
+                .Include(ms => ms.Orders)
+                .ToList();
+
+            return mss.Where(ms => ms.GetAvailableSeatsLeft() > 0).ToList();
         }
     }
 }

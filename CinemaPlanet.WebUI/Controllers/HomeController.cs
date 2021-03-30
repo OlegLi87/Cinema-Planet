@@ -22,8 +22,11 @@ namespace CinemaPlanet.WebUI.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var clients = unitOfWork.Movies.Get();
-            return View(clients);
+            if (!User.Identity.IsAuthenticated) return RedirectToAction("SignIn", "Login");
+            if (User.IsInRole("Admin")) return View();
+
+            var ms = unitOfWork.MovieSessions.GetAvailableSessions();
+            return View("UserMainPage");
         }
 
         protected override void Dispose(bool disposing)

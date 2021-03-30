@@ -6,11 +6,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinema Planet - @ViewBag.Title</title>
-    @Styles.Render("~/Content")
-    @Scripts.Render("~/Scripts")
-    @RenderSection("scripts", false)
+    @Styles.Render("~/bundles/css")
+    <script src="https://kit.fontawesome.com/67163f62cb.js" defer crossorigin="anonymous"></script>
 </head>
 <body>
+    @Html.Partial("_NavBar")
+
     @RenderBody()
+    
+    @Scripts.Render("~/bundles/jqueryBootstrap")
+    @RenderSection("scripts", false)
 </body>
 </html>

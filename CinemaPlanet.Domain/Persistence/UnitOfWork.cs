@@ -16,7 +16,7 @@ namespace CinemaPlanet.Domain.Persistence
         public IAuditoriumRepository Auditoriums { get; private set; }
         public IMovieRepository Movies { get; private set; }
         public IMovieSessionRepository MovieSessions { get; private set; }
-        public IClientRepository Clients { get; private set; }
+        public IUserRepository Users { get; private set; }
         public IOrderRepository Orders { get; private set; }
 
         public UnitOfWork(CinemaPlanetContext context)
@@ -25,7 +25,7 @@ namespace CinemaPlanet.Domain.Persistence
             Auditoriums = new AuditoriumRepository(context);
             Movies = new MovieRepository(context);
             MovieSessions = new MovieSessionRepository(context);
-            Clients = new ClientRepository(context);
+            Users = new UserRepository(context);
             Orders = new OrderRepository(context);
         }
 

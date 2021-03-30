@@ -13,7 +13,6 @@ namespace CinemaPlanet.Domain.Persistence.Repositories
     {
         public MovieRepository(DbContext context) : base(context)
         {
-
         }
     }
 }

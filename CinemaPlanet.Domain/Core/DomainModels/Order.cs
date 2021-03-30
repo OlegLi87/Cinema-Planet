@@ -7,7 +7,7 @@
         public byte SeatNumber { get; set; }
         public int MovieSessionId { get; set; }
         public MovieSession MovieSession { get; set; }
-        public int ClientId { get; set; }
-        public Client Client { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

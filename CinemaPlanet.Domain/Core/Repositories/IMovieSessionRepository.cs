@@ -9,5 +9,6 @@ namespace CinemaPlanet.Domain.Core.Repositories
 {
     public interface IMovieSessionRepository : IRepository<MovieSession>
     {
+        List<MovieSession> GetAvailableSessions();
     }
 }

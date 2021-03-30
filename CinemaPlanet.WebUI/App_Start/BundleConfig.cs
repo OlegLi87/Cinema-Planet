@@ -10,13 +10,17 @@ namespace CinemaPlanet.WebUI.App_Start
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new StyleBundle("~/Content")
-                .Include("~/Content/bootstrap.css", "~/Content/Style.css"));
+            bundles.Add(new StyleBundle("~/bundles/css")
+                .Include("~/Content/bootstrap.css", "~/Content/CustomStyles/style.css"));
 
-            bundles.Add(new ScriptBundle("~/Scripts")
-                .Include("~/Scripts/jquery-3.6.0.js",
+            bundles.Add(new ScriptBundle("~/bundles/jqueryBootstrap")
+                .Include("~/Scripts/jquery-{version}.js",
                 "~/Scripts/popper.js",
                 "~/Scripts/bootstrap.js"));
+
+            bundles.Add(new Bundle("~/bundles/jqueryValidation")
+                .Include("~/Scripts/jquery-validation/jquery.validate.js",
+                "~/Scripts/jquery-validation/jquery.validate.unobtrusive.js"));
         }
     }
 }

@@ -12,7 +12,7 @@ namespace CinemaPlanet.Domain.Core
         IAuditoriumRepository Auditoriums { get; }
         IMovieRepository Movies { get; }
         IMovieSessionRepository MovieSessions { get; }
-        IClientRepository Clients { get; }
+        IUserRepository Users { get; }
         IOrderRepository Orders { get; }
         void Save();
     }

@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace CinemaPlanet.Domain.Persistence.EntityConfigurations
 {
-    class ClientConfiguration : EntityTypeConfiguration<Client>
+    class RoleConfiguration : EntityTypeConfiguration<Role>
     {
-        public ClientConfiguration()
+        public RoleConfiguration()
         {
-            Property(c => c.Name)
+            Property(r => r.Name)
                 .IsRequired()
-                .HasMaxLength(2550);
+                .HasMaxLength(255);
 
-            HasMany(c => c.Orders)
-                .WithRequired(o => o.Client)
-                .HasForeignKey(o => o.ClientId);
+            HasMany(r => r.Users)
+                .WithRequired(u => u.Role)
+                .HasForeignKey(u => u.RoleId);
         }
     }
 }

@@ -14,5 +14,10 @@ namespace CinemaPlanet.Domain.Core.DomainModels
         public int MovieId { get; set; }
         public Movie Movie { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+
+        public int GetAvailableSeatsLeft()
+        {
+            return Auditorium.GetSeatsCapacity() - Orders.Count;
+        }
     }
 }

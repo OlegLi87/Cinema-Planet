@@ -1,0 +1,30 @@
+﻿html, body {
+    min-height: 100vh;
+}
+
+body {
+    background-image: url("../../Content/Images/userBackground.jfif");
+    background-size: cover;
+}
+
+.navbar {
+    box-shadow: 0 0 4px black;
+}
+
+.container {
+    background-color: rgba(52,58,64,0.7);
+    min-height: 85vh;
+}
+
+#mainHeader {
+    font-size: clamp(1.5rem,7vw,3.5rem);
+}
+
+.movies-container {
+ 
+}
+
+.searching-bar {
+    background-color:antiquewhite
+}
+

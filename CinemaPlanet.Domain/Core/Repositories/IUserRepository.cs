@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace CinemaPlanet.Domain.Core.Repositories
 {
-    public interface IClientRepository : IRepository<Client>
+    public interface IUserRepository : IRepository<User>
     {
+        User GetByCredentials(string username, string password = null);
     }
 }

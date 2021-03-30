@@ -1,0 +1,179 @@
+﻿@using System.Web.Optimization
+@model CinemaPlanet.Domain.Core.DomainModels.User
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    bool showElement = true;
+    string submitBtnText = "Sign Up";
+    if (ViewContext.RouteData.Values["action"] as string == "SignIn")
+    {
+        showElement = false;
+        submitBtnText = "Sign In";
+    }
+}
+
+    <div class="form-container">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            if (ViewBag.ErrorMessage != null)
+            {
+                <div class="text-center py-2 mb-3 bg-warning border-warning rounded">
+                    <strong><span class="text-danger">@ViewBag.ErrorMessage</span></strong>
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserName, new { @class = "form-label text-white h6" })
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-warning" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "form-label text-white h6" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-warning" })
+            </div>
+            if (showElement)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BirthDate, new { @class = "form-label text-white h6" })
+                    @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-warning" })
+                </div>
+            }
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">@submitBtnText</button>
+                <div id="clearBtn" class="btn btn-danger ml-2">Clear</div>
+            </div>
+            <hr />
+            if (showElement)
+            {
+                <span class="text-white-50">Allready got an account? @Html.ActionLink("Sign in", "SignIn", "Login", null, new { @class = "text-white" })</span>
+            }
+            else
+            {
+                <span class="text-white-50">New User? @Html.ActionLink("Sign up", "SignUp", "Login", null, new { @class = "text-white" })</span>
+            }
+        }
+    </div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryValidation")
+    <script>
+        $('document').ready(() => {
+            $('#clearBtn').click(() => {
+                $('form').find('input.form-control').val('');
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>User</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }*@

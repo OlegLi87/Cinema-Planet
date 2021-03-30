@@ -11,7 +11,7 @@ namespace CinemaPlanet.Domain.Persistence.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        DbContext context;
+        protected DbContext context;
         public Repository(DbContext context)
         {
             this.context = context;
@@ -24,28 +24,28 @@ namespace CinemaPlanet.Domain.Persistence.Repositories
             return entity;
         }
 
-        public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null)
+        public List<T> Get(Expression<Func<T, bool>> predicate = null)
         {
-            if (predicate == null) return context.Set<T>();
-            return context.Set<T>().Where(predicate);
+            if (predicate == null) return context.Set<T>().ToList();
+            return context.Set<T>().Where(predicate).ToList();
         }
 
-        public void Add(T entity)
+        public virtual void Add(T entity)
         {
             context.Set<T>().Add(entity);
         }
 
-        public void AddRange(ICollection<T> entities)
+        public virtual void AddRange(ICollection<T> entities)
         {
             context.Set<T>().AddRange(entities);
         }
 
-        public void Remove(T entity)
+        public virtual void Remove(T entity)
         {
             context.Set<T>().Remove(entity);
         }
 
-        public void RemoveRange(ICollection<T> entities)
+        public virtual void RemoveRange(ICollection<T> entities)
         {
             context.Set<T>().RemoveRange(entities);
         }

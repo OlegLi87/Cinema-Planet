@@ -1,0 +1,28 @@
+﻿.page-container {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: minmax(auto,20rem) 1fr;
+    grid-template-rows: minmax(100vh,auto);
+    background-image: url("../../Content/Images/loginPage.jpeg");
+    background-position: center;
+}
+
+.form-container {
+    background-color: rgba(125, 117, 117, 0.5);
+    box-shadow: 0 0 3px black;
+    padding: 3rem 0.5rem 3rem;
+}
+
+.form-group:last-child {
+    margin: 0;
+}
+
+hr {
+    border-color: white;
+}
+
+@media(min-width: 20rem) {
+    .form-container {
+        padding: 2rem;
+    }
+}

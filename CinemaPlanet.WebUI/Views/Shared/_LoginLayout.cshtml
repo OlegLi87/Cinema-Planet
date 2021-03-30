@@ -1,0 +1,24 @@
+﻿@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cinema Planet - Login</title>
+    @Styles.Render("~/bundles/css")
+    <link rel="stylesheet" href="~/Content/CustomStyles/login.css" />
+</head>
+<body>
+    <div class="page-container">      
+            @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jqueryBootstrap")
+    @RenderSection("scripts")
+</body>
+</html>

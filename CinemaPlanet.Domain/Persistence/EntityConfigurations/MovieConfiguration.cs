@@ -16,6 +16,12 @@ namespace CinemaPlanet.Domain.Persistence.EntityConfigurations
                 .IsRequired()
                 .HasMaxLength(255);
 
+            Property(m => m.Description)
+                .IsRequired();
+
+            Property(m => m.ImageUrl)
+                .IsRequired();
+
             HasMany(m => m.MovieSessions)
                 .WithRequired(ms => ms.Movie)
                 .HasForeignKey(ms => ms.MovieId);

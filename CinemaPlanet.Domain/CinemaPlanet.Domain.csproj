@@ -40,9 +40,30 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +73,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DomainModels\Auditorium.cs" />
-    <Compile Include="Core\DomainModels\Client.cs" />
+    <Compile Include="Core\DomainModels\Role.cs" />
+    <Compile Include="Core\DomainModels\User.cs" />
     <Compile Include="Core\DomainModels\Genre.cs" />
     <Compile Include="Core\DomainModels\Movie.cs" />
     <Compile Include="Core\DomainModels\MovieSession.cs" />
@@ -60,7 +82,7 @@
     <Compile Include="Core\DomainModels\SeatType.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\IAuditoriumRepository.cs" />
-    <Compile Include="Core\Repositories\IClientRepository.cs" />
+    <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="Core\Repositories\IMovieRepository.cs" />
     <Compile Include="Core\Repositories\IMovieSessionRepository.cs" />
     <Compile Include="Core\Repositories\IOrderRepository.cs" />
@@ -69,14 +91,39 @@
     <Compile Include="Migrations\202103261341196_TablesCreated.designer.cs">
       <DependentUpon>202103261341196_TablesCreated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103280947027_DescriptionAndImageUrlColumnsAddedToMoviesTable.cs" />
+    <Compile Include="Migrations\202103280947027_DescriptionAndImageUrlColumnsAddedToMoviesTable.designer.cs">
+      <DependentUpon>202103280947027_DescriptionAndImageUrlColumnsAddedToMoviesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103281241323_ClientsTableRenamedToUsers.cs" />
+    <Compile Include="Migrations\202103281241323_ClientsTableRenamedToUsers.designer.cs">
+      <DependentUpon>202103281241323_ClientsTableRenamedToUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103281258134_NameColumnChangedToUserNameInUsersTable.cs" />
+    <Compile Include="Migrations\202103281258134_NameColumnChangedToUserNameInUsersTable.designer.cs">
+      <DependentUpon>202103281258134_NameColumnChangedToUserNameInUsersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103281314460_RolesTableAdded+PasswordColumnAddeToUsersTable.cs" />
+    <Compile Include="Migrations\202103281314460_RolesTableAdded+PasswordColumnAddeToUsersTable.designer.cs">
+      <DependentUpon>202103281314460_RolesTableAdded+PasswordColumnAddeToUsersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103281409384_SetIndexAndUniqueConstraintOnUsernameColumnInUsersTable.cs" />
+    <Compile Include="Migrations\202103281409384_SetIndexAndUniqueConstraintOnUsernameColumnInUsersTable.designer.cs">
+      <DependentUpon>202103281409384_SetIndexAndUniqueConstraintOnUsernameColumnInUsersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103281710470_RelationshipChangedToOneToManeBetweenRoleAndUserTables.cs" />
+    <Compile Include="Migrations\202103281710470_RelationshipChangedToOneToManeBetweenRoleAndUserTables.designer.cs">
+      <DependentUpon>202103281710470_RelationshipChangedToOneToManeBetweenRoleAndUserTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\CinemaPlanetContext.cs" />
     <Compile Include="Persistence\EntityConfigurations\AuditoriumConfiguration.cs" />
-    <Compile Include="Persistence\EntityConfigurations\ClientConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\RoleConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\MovieConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\MovieSessionConfiguration.cs" />
     <Compile Include="Persistence\Repositories\AuditoriumRepository.cs" />
-    <Compile Include="Persistence\Repositories\ClientRepository.cs" />
+    <Compile Include="Persistence\Repositories\UserRepository.cs" />
     <Compile Include="Persistence\Repositories\MovieRepository.cs" />
     <Compile Include="Persistence\Repositories\MovieSessionRepository.cs" />
     <Compile Include="Persistence\Repositories\OrderRepository.cs" />
@@ -92,6 +139,24 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202103261341196_TablesCreated.resx">
       <DependentUpon>202103261341196_TablesCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103280947027_DescriptionAndImageUrlColumnsAddedToMoviesTable.resx">
+      <DependentUpon>202103280947027_DescriptionAndImageUrlColumnsAddedToMoviesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103281241323_ClientsTableRenamedToUsers.resx">
+      <DependentUpon>202103281241323_ClientsTableRenamedToUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103281258134_NameColumnChangedToUserNameInUsersTable.resx">
+      <DependentUpon>202103281258134_NameColumnChangedToUserNameInUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103281314460_RolesTableAdded+PasswordColumnAddeToUsersTable.resx">
+      <DependentUpon>202103281314460_RolesTableAdded+PasswordColumnAddeToUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103281409384_SetIndexAndUniqueConstraintOnUsernameColumnInUsersTable.resx">
+      <DependentUpon>202103281409384_SetIndexAndUniqueConstraintOnUsernameColumnInUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103281710470_RelationshipChangedToOneToManeBetweenRoleAndUserTables.resx">
+      <DependentUpon>202103281710470_RelationshipChangedToOneToManeBetweenRoleAndUserTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
