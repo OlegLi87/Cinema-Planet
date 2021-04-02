@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Movies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HeaderText = "Movies Manager";
+}
+
+@section AddToHead
+    {
+    <link rel="stylesheet" href="~/Content/CustomStyles/admin/navTabs.css" />
+}
+
+@Html.Action("NavTabsContent", "Navigation", new { callingAction = ViewContext.RouteData.Values["action"] })

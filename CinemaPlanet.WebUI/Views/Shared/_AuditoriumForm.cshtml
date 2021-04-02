@@ -1,0 +1,52 @@
+﻿@using System.Web.Optimization
+
+@model CinemaPlanet.WebUI.ViewModels.AdminAuditoriumsViewModel
+
+@using (Html.BeginForm("SaveAuditorium", "Admin"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Auditorium.Name, new { @class = "form-label text-warning" })
+        @Html.TextBoxFor(m => m.Auditorium.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Auditorium.Name, null, new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Auditorium.ImageUrl, new { @class = "form-label text-warning" })
+        @Html.TextBoxFor(m => m.Auditorium.ImageUrl, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Auditorium.ImageUrl, null, new { @class = "text-danger" })
+    </div>
+    <div class="d-flex flex-column flex-sm-row justify-content-between">
+        <div class="form-group mr-sm-3">
+            @Html.LabelFor(m => m.Auditorium.BasicSeatsCapacity, new { @class = "form-label text-warning" })
+            @Html.TextBoxFor(m => m.Auditorium.BasicSeatsCapacity, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(m => m.Auditorium.BasicSeatsCapacity, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group  mr-sm-3">
+            @Html.LabelFor(m => m.Auditorium.SilverSeatsCapacity, new { @class = "form-label text-warning" })
+            @Html.TextBoxFor(m => m.Auditorium.SilverSeatsCapacity, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(m => m.Auditorium.SilverSeatsCapacity, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Auditorium.GoldSeatsCapacity, new { @class = "form-label text-warning" })
+            @Html.TextBoxFor(m => m.Auditorium.GoldSeatsCapacity, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(m => m.Auditorium.GoldSeatsCapacity, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.Auditorium.Id)
+    <div class="w-100 mx-auto text-center mt-2">
+        <button type="submit" class="btn btn-primary mr-3">Save</button>
+        <button type="reset" id="clearBtn" class="btn btn-warning">Reset</button>
+    </div>
+}
+
+@if ((ViewContext.RouteData.Values["action"] as string).Contains("Edit"))
+{
+    using (Html.BeginForm("DeleteAuditorium", "Admin", new { id = Model.Auditorium.Id }))
+    {
+        @Html.AntiForgeryToken();
+        <div class="w-100 text-center mt-3">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    }
+}

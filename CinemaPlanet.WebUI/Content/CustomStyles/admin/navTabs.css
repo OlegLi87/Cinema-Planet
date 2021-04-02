@@ -1,0 +1,17 @@
+﻿a:hover {
+    color: #ffc107;
+}
+
+.nav-link {
+    color: #ffc107;
+    border: none !important;
+}
+
+    .nav-link.active {
+        background-color: #ffc107 !important;
+        color: rgba(52,58,64,1) !important;
+    }
+
+.nav-tabs {
+    border-bottom: 1px solid #ffc107 !important;
+}

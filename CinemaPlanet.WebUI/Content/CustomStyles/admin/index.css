@@ -1,0 +1,14 @@
+﻿.statistics-container {
+    display: grid;
+    grid-template-rows: repeat(1fr,5);
+    grid-row-gap: 2.5rem;
+}
+
+.statistics-container span {
+    font-size: clamp(1rem,4vw,1.7rem);
+}
+
+.date-text {
+    font-size: clamp(0.9rem,3.5vw,1.5rem);
+    white-space: nowrap;
+}

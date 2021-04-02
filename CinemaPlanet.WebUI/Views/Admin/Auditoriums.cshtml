@@ -1,0 +1,56 @@
+﻿@using System.Web.Optimization
+@model CinemaPlanet.WebUI.ViewModels.AdminAuditoriumsViewModel
+
+@{
+    ViewBag.Title = "Auditoriums";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HeaderText = "Auditoriums Manager";
+}
+
+@section AddToHead
+    {
+    <link rel="stylesheet" href="~/Content/CustomStyles/admin/navTabs.css"/>
+    <link rel="stylesheet" href="~/Content/CustomStyles/admin/auditoriums.css" />
+}
+
+@Html.Action("NavTabsContent", "Navigation", new { callingAction = ViewContext.RouteData.Values["action"] })
+
+<div class="tab-content mt-3" id="managerTabContent">
+    <div class="tab-pane fade show active d-flex flex-wrap justify-content-center" id="listContent" role="tabpanel" aria-labelledby="list-tab">
+        @foreach (var audit in Model.Auditoriums)
+        {
+            if (audit.Id == 0)
+            {
+                continue;
+            }
+            <div class="content-container bg-warning text-success m-3">
+                <div class="image-container p-2 d-flex flex-column align-items-start">
+                    <div class="image">
+                        <img src=@audit.ImageUrl />
+                    </div>
+                    <div class="buttons-container mx-auto w-100 mt-2">
+                        @Html.ActionLink("Edit", "EditAuditorium", "Admin", new { id = audit.Id }, new { @class = "btn btn-primary w-100" })
+                    </div>
+                </div>
+                <div class="name-container pt-2 text-center"><span class="h4">@audit.Name</span><hr class="m-2"></div>
+                <div class="additional-info pb-1">
+                    <div class="bg-dark text-warning mb-1 pl-1 pr-3">Basic Seats Quantity: @audit.BasicSeatsCapacity</div>
+                    <div class="bg-dark text-warning mb-1 pl-1">Silver Seats Quantity: @audit.SilverSeatsCapacity</div>
+                    <div class="bg-dark text-warning mb-1 pl-1">Gold Seats Quantity: @audit.GoldSeatsCapacity</div>
+                    <div class="bg-dark text-warning mb-1 pl-1">Active Sessions: @audit.MovieSessions.Count</div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="tab-pane fade col-12 col-sm-10 col-md-8 mx-auto mt-4" id="createContent" role="tabpanel" aria-labelledby="create-tab">
+        @Html.Partial("_AuditoriumForm")
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryValidation")
+    <script src="~/Scripts/customScripts/navTabsToggle.js"></script>
+    <script src="~/Scripts/customScripts/numberInputControl.js"></script>
+}

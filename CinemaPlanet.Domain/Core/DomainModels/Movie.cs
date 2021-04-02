@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CinemaPlanet.Domain.Core.DomainModels
 {
@@ -12,6 +13,8 @@ namespace CinemaPlanet.Domain.Core.DomainModels
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+
+        [Display(Name = "Image Url")]
         public string ImageUrl { get; set; }
         public DateTime ReleaseDate { get; set; }
         public Genre Genre { get; set; }

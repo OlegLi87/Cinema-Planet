@@ -1,0 +1,19 @@
+﻿@using System.Web.Optimization
+@model CinemaPlanet.WebUI.ViewModels.AdminAuditoriumsViewModel
+@{
+    ViewBag.Title = "Edit Auditorium";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.TargetAction = "Auditoriums";
+    ViewBag.TargetController = "Admin";
+    ViewBag.HeaderText = new HtmlString("Edit Auditorium");
+}
+
+<div class="col-12 col-sm-10 col-md-8 mx-auto mt-4">
+    @Html.Partial("_AuditoriumForm")
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryValidation")
+    <script src="~/Scripts/customScripts/numberInputControl.js"></script>
+}

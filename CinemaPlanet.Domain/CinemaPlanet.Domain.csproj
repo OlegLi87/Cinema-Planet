@@ -115,6 +115,14 @@
     <Compile Include="Migrations\202103281710470_RelationshipChangedToOneToManeBetweenRoleAndUserTables.designer.cs">
       <DependentUpon>202103281710470_RelationshipChangedToOneToManeBetweenRoleAndUserTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103311353153_ImageUrlColumnAddedToAuditoriumsTable.cs" />
+    <Compile Include="Migrations\202103311353153_ImageUrlColumnAddedToAuditoriumsTable.designer.cs">
+      <DependentUpon>202103311353153_ImageUrlColumnAddedToAuditoriumsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104011051284_ImageUrlIsRequiredColumnInAuditoriumsTable.cs" />
+    <Compile Include="Migrations\202104011051284_ImageUrlIsRequiredColumnInAuditoriumsTable.designer.cs">
+      <DependentUpon>202104011051284_ImageUrlIsRequiredColumnInAuditoriumsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\CinemaPlanetContext.cs" />
     <Compile Include="Persistence\EntityConfigurations\AuditoriumConfiguration.cs" />
@@ -157,6 +165,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103281710470_RelationshipChangedToOneToManeBetweenRoleAndUserTables.resx">
       <DependentUpon>202103281710470_RelationshipChangedToOneToManeBetweenRoleAndUserTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103311353153_ImageUrlColumnAddedToAuditoriumsTable.resx">
+      <DependentUpon>202103311353153_ImageUrlColumnAddedToAuditoriumsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104011051284_ImageUrlIsRequiredColumnInAuditoriumsTable.resx">
+      <DependentUpon>202104011051284_ImageUrlIsRequiredColumnInAuditoriumsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

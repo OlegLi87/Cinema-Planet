@@ -1,0 +1,16 @@
+﻿@{
+    var links = new string[] { "Auditoriums", "Movies", "Sessions", "Orders", "Users" };
+}
+
+@foreach (var link in links)
+{
+    var className = "nav-link";
+    if ((ViewBag.CallingAction as string).Contains(link.Substring(0,link.Length - 1)))
+    {
+        className += " text-warning";
+    }
+
+    <li class="nav-item">
+        @Html.ActionLink(link, link, "Admin", null, new { @class = className })
+    </li>
+}

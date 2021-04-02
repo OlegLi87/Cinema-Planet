@@ -8,16 +8,7 @@
     </button>
     <div id="navContent" class="collapse navbar-collapse justify-content-end pr-3">
         <ul class="nav navbar-nav">
-            @if (User.IsInRole("User"))
-            {
-                <li class="nav-item nav-link text-warning d-none d-md-inline">
-                    Hello <strong>@User.Identity.Name </strong> !
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("My Orders", "Orders", null, new { @class = "nav-link" })
-                </li>
-            }
-
+            @Html.Action("NavigationContent", "Navigation", new { callingAction = ViewContext.RouteData.Values["action"] })
             <li class="nav-item">
                 @Html.ActionLink("Log out", "Signout", "Login", null, new { @class = "nav-link" })
             </li>

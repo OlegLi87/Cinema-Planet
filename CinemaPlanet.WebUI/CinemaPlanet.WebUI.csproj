@@ -111,6 +111,8 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CustomStyles\admin\auditoriums.css" />
+    <Content Include="Content\CustomStyles\admin\index.css" />
     <Content Include="Content\CustomStyles\login.css" />
     <Content Include="Content\CustomStyles\style.css" />
     <Content Include="Content\Images\loginPage.jpeg" />
@@ -120,6 +122,8 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\customScripts\navTabsToggle.js" />
+    <Content Include="Scripts\customScripts\numberInputControl.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -236,8 +240,11 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\NavigationController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -245,18 +252,31 @@
     <Compile Include="Infastructure\Auth\CustomRoleProvider.cs" />
     <Compile Include="Infastructure\NinjectBinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AdminAuditoriumsViewModel.cs" />
+    <Compile Include="ViewModels\AdminIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\UserMainPage.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
     <Content Include="Views\Login\LoginForm.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_UserNavigation.cshtml" />
+    <Content Include="Views\Shared\_AdminNavigation.cshtml" />
+    <Content Include="Views\Admin\Auditoriums.cshtml" />
+    <Content Include="Views\Admin\Movies.cshtml" />
+    <Content Include="Views\Admin\Sessions.cshtml" />
+    <Content Include="Views\Admin\Orders.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Shared\_NavTabs.cshtml" />
+    <Content Include="Views\Shared\_AuditoriumForm.cshtml" />
+    <Content Include="Views\Admin\EditAuditorium.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -267,6 +287,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Home\" />
+    <Folder Include="Views\Navigation\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CinemaPlanet.Domain\CinemaPlanet.Domain.csproj">

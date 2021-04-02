@@ -7,13 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinema Planet - @ViewBag.Title</title>
     @Styles.Render("~/bundles/css")
+    @RenderSection("AddToHead", false)
     <script src="https://kit.fontawesome.com/67163f62cb.js" defer crossorigin="anonymous"></script>
 </head>
 <body>
     @Html.Partial("_NavBar")
 
-    @RenderBody()
-    
+    <div class="container col-11 col-sm-10 mt-3 p-4 pb-5">
+        <h1 id="mainHeader" class="text-warning text-center display-4 mb-5">
+            @if (ViewBag.TargetAction != null)
+            {
+                <a class="text-warning text-decoration-none mr-3" href=@Url.Action(ViewBag.TargetAction,ViewBag.TargetController)>
+                    <i class="fas fa-arrow-circle-left"></i>
+                </a>
+            }
+            @ViewBag.HeaderText
+        </h1>
+
+        @RenderBody()
+    </div>
+
     @Scripts.Render("~/bundles/jqueryBootstrap")
     @RenderSection("scripts", false)
 </body>

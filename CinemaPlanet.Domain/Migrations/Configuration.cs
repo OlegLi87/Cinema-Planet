@@ -16,9 +16,9 @@
         protected override void Seed(CinemaPlanet.Domain.Persistence.CinemaPlanetContext context)
         {
             context.Auditoriums.AddOrUpdate(a => a.Name,
-                new Auditorium { Name = "Green Forest", BasicSeatsCapacity = 25, SilverSeatsCapacity = 20, GoldSeatsCapacity = 10 },
-                new Auditorium { Name = "Blue Sky", BasicSeatsCapacity = 30, SilverSeatsCapacity = 20, GoldSeatsCapacity = 10 },
-                new Auditorium { Name = "White Frost", BasicSeatsCapacity = 55, SilverSeatsCapacity = 23, GoldSeatsCapacity = 5 });
+                new Auditorium { Name = "Green Forest", ImageUrl = "https://media-cdn.tripadvisor.com/media/photo-s/12/c7/76/79/renovated-auditoriums.jpg", BasicSeatsCapacity = 25, SilverSeatsCapacity = 20, GoldSeatsCapacity = 10 },
+                new Auditorium { Name = "Blue Sky", ImageUrl = "https://www.boxofficepro.com/wp-content/uploads/2019/12/CGR-BRIGNAIS-43-600x286.jpg", BasicSeatsCapacity = 30, SilverSeatsCapacity = 20, GoldSeatsCapacity = 10 },
+                new Auditorium { Name = "White Frost", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Sala_de_cine.jpg/1200px-Sala_de_cine.jpg", BasicSeatsCapacity = 55, SilverSeatsCapacity = 23, GoldSeatsCapacity = 5 });
 
             context.Movies.AddOrUpdate(m => m.Name,
                 new Movie { Name = "Terminator 21", ReleaseDate = DateTime.Parse("18.03.2021"), Genre = Genre.Action, BasicSeatPrice = 15.5f, SilverSeatPrice = 20.55f, GoldSeatPrice = 30.15f, Description = "Terminator once again back and angry.", ImageUrl = "https://upload.wikimedia.org/wikipedia/en/7/70/Terminator1984movieposter.jpg" },

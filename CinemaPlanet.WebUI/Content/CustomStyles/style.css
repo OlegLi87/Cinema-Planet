@@ -13,18 +13,16 @@ body {
 
 .container {
     background-color: rgba(52,58,64,0.7);
-    min-height: 85vh;
 }
 
 #mainHeader {
     font-size: clamp(1.5rem,7vw,3.5rem);
 }
 
-.movies-container {
- 
-}
-
 .searching-bar {
-    background-color:antiquewhite
+    background-color: antiquewhite
 }
 
+.text-success {
+    color: rgba(52,58,64,1) !important;
+}
