@@ -1,0 +1,24 @@
+﻿table,th,td {
+    border: thin solid #FFC107
+}
+
+table th {
+    font-size: clamp(1rem,3vw,3rem);
+    padding: 1rem
+}
+
+table td {
+    font-size: clamp(1rem,2vw,1.5em);
+    padding: 1rem
+}
+
+
+@media(max-width: 36rem) {
+    .container {
+        padding: 0 !important;
+    }
+
+    th,td {
+        padding: 0.7rem !important;
+    }
+}

@@ -12,37 +12,40 @@
     <link rel="stylesheet" href="~/Content/CustomStyles/admin/navTabs.css" />
 }
 
-@Html.Action("NavTabsContent", "Navigation", new { callingAction = ViewContext.RouteData.Values["action"] })
+@Html.Action("NavTabsContent", "Navigation", new { callingAction = String.Empty })
 
 <div class="tab-content mt-3" id="managerTabContent">
-    <div class="tab-pane fade show active" id="listContent" role="tabpanel" aria-labelledby="list-tab">
-        @foreach (var session in Model.MovieSessions)
-        {
-            <p class="text-warning">#@session.Id</p>
-            <p class="text-warning">@session.Auditorium.Name</p>
-            <p class="text-warning">@session.Movie.Name</p>
-            <p class="text-warning">@session.SessionDate</p>
-            <p class="text-warning">@session.Orders.Count</p>
-            <p class="text-warning">Number of total seats : @session.Auditorium.GetSeatsCapacity()</p>
-            <p class="text-warning">Number of left seats : @(session.Auditorium.GetSeatsCapacity() - session.Orders.Count)</p>
-
-            foreach (var order in session.Orders)
-            {
-                <p class="text-primary">@order.SeatNumber</p>
-                <p class="text-primary">@order.UserId</p>
-            }
-        }
+    <div class="tab-pane fade show active col-12 col-sm-10 col-md-6 mx-auto mt-4" id="listContent" role="tabpanel" aria-labelledby="list-tab">
+        @Html.Partial("_MovieSessionForm", Model, new ViewDataDictionary { { "Section", "Search" } })
     </div>
 
     <div class="tab-pane fade col-12 col-sm-10 col-md-6 mx-auto mt-4" id="createContent" role="tabpanel" aria-labelledby="create-tab">
-        @Html.Partial("_MovieSessionForm")
+        @Html.Partial("_MovieSessionForm", Model, new ViewDataDictionary { { "Section", "Create" } })
     </div>
 </div>
 
 @section Scripts
 {
-    <script src="~/Scripts/customScripts/navTabsToggle.js"></script>
+    <script>
+        $('document').ready(() => {
+            const searchDateInput = $('#MovieSession_SessionDate')[0];
+            $('#anyDateChck').click((e) => {
+                if (e.target.checked) {
+                    $(searchDateInput).val(null);
+                    $(searchDateInput).attr('disabled', 'true');
+                }
+                else
+                {
+                    const dateVal = new Date(Date.now());
+                    dateVal.setDate(dateVal.getDate() + 1);
+                    $(searchDateInput).val(dateVal.toISOString().split('T')[0]);
+                    $(searchDateInput).attr('disabled', null);
+                }
+            });
+        });
+    </script>
 }
+
 
 
 

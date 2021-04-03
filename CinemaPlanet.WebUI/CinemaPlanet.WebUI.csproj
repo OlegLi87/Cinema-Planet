@@ -112,9 +112,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CustomStyles\admin\auditoriums.css" />
+    <Content Include="Content\CustomStyles\admin\customers.css" />
     <Content Include="Content\CustomStyles\admin\index.css" />
     <Content Include="Content\CustomStyles\admin\movies.css" />
     <Content Include="Content\CustomStyles\admin\navTabs.css" />
+    <Content Include="Content\CustomStyles\admin\sessionsList.css" />
     <Content Include="Content\CustomStyles\login.css" />
     <Content Include="Content\CustomStyles\style.css" />
     <Content Include="Content\Images\loginPage.jpeg" />
@@ -283,6 +285,8 @@
     <Content Include="Views\Shared\_MovieForm.cshtml" />
     <Content Include="Views\Admin\EditMovie.cshtml" />
     <Content Include="Views\Shared\_MovieSessionForm.cshtml" />
+    <Content Include="Views\Admin\SessionsList.cshtml" />
+    <Content Include="Views\Admin\Customers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

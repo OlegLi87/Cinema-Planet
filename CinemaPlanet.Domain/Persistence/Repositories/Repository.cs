@@ -17,14 +17,14 @@ namespace CinemaPlanet.Domain.Persistence.Repositories
             this.context = context;
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             T entity = context.Set<T>().Find(id);
             if (entity == null) throw new ArgumentException();
             return entity;
         }
 
-        public List<T> Get(Expression<Func<T, bool>> predicate = null)
+        public virtual List<T> Get(Expression<Func<T, bool>> predicate = null)
         {
             if (predicate == null) return context.Set<T>().ToList();
             return context.Set<T>().Where(predicate).ToList();

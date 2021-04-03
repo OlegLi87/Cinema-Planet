@@ -24,10 +24,10 @@ namespace CinemaPlanet.WebUI.Controllers
         // GET: Admin
         public ViewResult Index()
         {
-            var totalAuditoriums = unitOfWork.Auditoriums.Get().Count;
-            var totalMovies = unitOfWork.Movies.Get().Count;
-            var totalSessions = unitOfWork.MovieSessions.Get().Count;
-            var totalOrders = unitOfWork.MovieSessions.Get().Count;
+            var totalAuditoriums = unitOfWork.Auditoriums.Get().Count();
+            var totalMovies = unitOfWork.Movies.Get().Count();
+            var totalSessions = unitOfWork.MovieSessions.Get().Count();
+            var totalOrders = unitOfWork.Orders.Get().Count();
             var totalUsers = unitOfWork.Users.Get().Where(u => u.RoleId != 2).Count(); // Admin role is not counted.
 
             var overallStatistics = new AdminIndexViewModel
@@ -187,6 +187,7 @@ namespace CinemaPlanet.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public RedirectToRouteResult SaveSession(MovieSession movieSession)
         {
+            bool foo = movieSession.SessionDate == new DateTime();
             if (movieSession.Id == 0)
                 unitOfWork.MovieSessions.Add(movieSession);
 
@@ -194,14 +195,26 @@ namespace CinemaPlanet.WebUI.Controllers
             return RedirectToAction("Sessions");
         }
 
-        public ViewResult Orders()
+        // POST: Admin/SessionsList
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ViewResult SessionsList(MovieSession movieSession)
         {
-            return View();
+            var filteredMovieSessions = unitOfWork.MovieSessions
+                .GetFilteredSessions(movieSession.AuditoriumId, movieSession.MovieId, movieSession.SessionDate);
+
+            return View(filteredMovieSessions);
         }
 
-        public ViewResult Users()
+        public ViewResult Customers(int sessionId)
         {
-            return View();
+            var users = unitOfWork.MovieSessions.GetAllCustomersForSession(sessionId);
+            return View(users);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
         }
     }
 }

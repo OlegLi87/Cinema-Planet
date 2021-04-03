@@ -1,39 +1,74 @@
 ﻿@model CinemaPlanet.WebUI.ViewModels.AdminMovieSessionsViewModel
 
 @{
+    bool isAtSearchSection = ViewData["Section"] as string == "Search";
+
+    string targetAction = isAtSearchSection ? "SessionsList" : "SaveSession";
+
+    string auditDefOption, movieDefOption;
+    if (isAtSearchSection)
+    {
+        movieDefOption = auditDefOption = "Any";
+    }
+    else
+    {
+        movieDefOption = auditDefOption = null;
+    }
+
     string dateFormat = "yyyy-MM-dd";
     string dateValue;
 
     if (Model.MovieSession.Id == 0)
     {
+
         dateValue = DateTime.Now.AddDays(1).ToString(dateFormat);
+
     }
     else
     {
         dateValue = Model.MovieSession.SessionDate.ToString(dateFormat);
     }
+
+    HtmlString submitBtn;
+
+    if (isAtSearchSection)
+    {
+        submitBtn = new HtmlString("<button type=\"submit\" class=\"btn btn-success w-100\">Search</button>");
+    }
+    else
+    {
+        submitBtn = new HtmlString("<button type=\"submit\" class=\"btn btn-primary w-100\">Create</button>");
+    }
 }
 
-@using (Html.BeginForm("SaveSession", "Admin"))
+@using (Html.BeginForm(targetAction, "Admin"))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-group">
         @Html.LabelFor(m => m.MovieSession.AuditoriumId, new { @class = "form-label text-warning" })
-        @Html.DropDownListFor(m => m.MovieSession.AuditoriumId, new SelectList(Model.Auditoriums, "Id", "Name"), null, new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.MovieSession.AuditoriumId, new SelectList(Model.Auditoriums, "Id", "Name"), auditDefOption, new { @class = "form-control" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.MovieSession.MovieId, new { @class = "form-label text-warning" })
-        @Html.DropDownListFor(m => m.MovieSession.MovieId, new SelectList(Model.Movies, "Id", "Name"), null, new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.MovieSession.MovieId, new SelectList(Model.Movies, "Id", "Name"), movieDefOption, new { @class = "form-control" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.MovieSession.SessionDate, new { @class = "form-label text-warning" })
         @Html.TextBoxFor(m => m.MovieSession.SessionDate, new { @class = "form-control", @Type = "date", @Value = dateValue })
+
+        @if (isAtSearchSection)
+        {
+            <div class="form-check mt-2">
+                <input type="checkbox" id="anyDateChck" class="form-check-input">
+                <label class="form-check-label text-warning" for="anyDateChck">Any Date</label>
+            </div>
+        }
     </div>
 
     <div class="w-75 mx-auto">
-        <button type="submit" class="btn btn-primary w-100">Save</button>
+        @submitBtn
     </div>
 }

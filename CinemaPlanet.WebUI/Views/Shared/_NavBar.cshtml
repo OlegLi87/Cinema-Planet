@@ -9,7 +9,7 @@
     <div id="navContent" class="collapse navbar-collapse justify-content-end pr-3">
         <ul class="nav navbar-nav">
             @Html.Action("NavigationContent", "Navigation", new { callingAction = ViewContext.RouteData.Values["action"] })
-            <li class="nav-item">
+            <li class="nav-item ml-md-4">
                 @Html.ActionLink("Log out", "Signout", "Login", null, new { @class = "nav-link" })
             </li>
         </ul>
