@@ -1,0 +1,39 @@
+﻿@model CinemaPlanet.WebUI.ViewModels.AdminMovieSessionsViewModel
+
+@{
+    string dateFormat = "yyyy-MM-dd";
+    string dateValue;
+
+    if (Model.MovieSession.Id == 0)
+    {
+        dateValue = DateTime.Now.AddDays(1).ToString(dateFormat);
+    }
+    else
+    {
+        dateValue = Model.MovieSession.SessionDate.ToString(dateFormat);
+    }
+}
+
+@using (Html.BeginForm("SaveSession", "Admin"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MovieSession.AuditoriumId, new { @class = "form-label text-warning" })
+        @Html.DropDownListFor(m => m.MovieSession.AuditoriumId, new SelectList(Model.Auditoriums, "Id", "Name"), null, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MovieSession.MovieId, new { @class = "form-label text-warning" })
+        @Html.DropDownListFor(m => m.MovieSession.MovieId, new SelectList(Model.Movies, "Id", "Name"), null, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MovieSession.SessionDate, new { @class = "form-label text-warning" })
+        @Html.TextBoxFor(m => m.MovieSession.SessionDate, new { @class = "form-control", @Type = "date", @Value = dateValue })
+    </div>
+
+    <div class="w-75 mx-auto">
+        <button type="submit" class="btn btn-primary w-100">Save</button>
+    </div>
+}

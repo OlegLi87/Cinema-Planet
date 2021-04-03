@@ -26,3 +26,8 @@ body {
 .text-success {
     color: rgba(52,58,64,1) !important;
 }
+
+.form-control.input-validation-error {
+    border: 3px solid #DC3545;
+    box-shadow : none !important;
+}

@@ -6,9 +6,10 @@ using System.Web;
 
 namespace CinemaPlanet.WebUI.ViewModels
 {
-    public class AdminAuditoriumsViewModel
+    public class AdminSectionGenericViewModel<T>
     {
-        public IEnumerable<Auditorium> Auditoriums { get; set; }
-        public Auditorium Auditorium { get; set; }
+        public IEnumerable<T> Entities { get; set; }
+        public T Entity { get; set; }
+        public string[] Genres { get; set; }
     }
 }

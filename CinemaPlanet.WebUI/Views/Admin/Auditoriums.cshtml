@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@model CinemaPlanet.WebUI.ViewModels.AdminAuditoriumsViewModel
+@model CinemaPlanet.WebUI.ViewModels.AdminSectionGenericViewModel<CinemaPlanet.Domain.Core.DomainModels.Auditorium>
 
 @{
     ViewBag.Title = "Auditoriums";
@@ -9,15 +9,15 @@
 
 @section AddToHead
     {
-    <link rel="stylesheet" href="~/Content/CustomStyles/admin/navTabs.css"/>
+    <link rel="stylesheet" href="~/Content/CustomStyles/admin/navTabs.css" />
     <link rel="stylesheet" href="~/Content/CustomStyles/admin/auditoriums.css" />
 }
 
 @Html.Action("NavTabsContent", "Navigation", new { callingAction = ViewContext.RouteData.Values["action"] })
 
 <div class="tab-content mt-3" id="managerTabContent">
-    <div class="tab-pane fade show active d-flex flex-wrap justify-content-center" id="listContent" role="tabpanel" aria-labelledby="list-tab">
-        @foreach (var audit in Model.Auditoriums)
+    <div class="tab-pane fade show active d-flex flex-wrap" id="listContent" role="tabpanel" aria-labelledby="list-tab">
+        @foreach (var audit in Model.Entities)
         {
             if (audit.Id == 0)
             {

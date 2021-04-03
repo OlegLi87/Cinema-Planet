@@ -123,6 +123,10 @@
     <Compile Include="Migrations\202104011051284_ImageUrlIsRequiredColumnInAuditoriumsTable.designer.cs">
       <DependentUpon>202104011051284_ImageUrlIsRequiredColumnInAuditoriumsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104021621014_SessionDateColumnAddedToMovieSessionTable.cs" />
+    <Compile Include="Migrations\202104021621014_SessionDateColumnAddedToMovieSessionTable.designer.cs">
+      <DependentUpon>202104021621014_SessionDateColumnAddedToMovieSessionTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\CinemaPlanetContext.cs" />
     <Compile Include="Persistence\EntityConfigurations\AuditoriumConfiguration.cs" />
@@ -171,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104011051284_ImageUrlIsRequiredColumnInAuditoriumsTable.resx">
       <DependentUpon>202104011051284_ImageUrlIsRequiredColumnInAuditoriumsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104021621014_SessionDateColumnAddedToMovieSessionTable.resx">
+      <DependentUpon>202104021621014_SessionDateColumnAddedToMovieSessionTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

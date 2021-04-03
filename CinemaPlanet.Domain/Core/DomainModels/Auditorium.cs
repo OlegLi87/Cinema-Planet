@@ -11,12 +11,13 @@ namespace CinemaPlanet.Domain.Core.DomainModels
         }
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "The auditorium Name field required.")]
+        [Required(ErrorMessage = "Auditorium Name field is required.")]
+        [Display(Name = "Auditorium Name")]
         public string Name { get; set; }
 
         [Display(Name = "Image Url")]
-        [Required(ErrorMessage = "The Image Url field is required.")]
-        [RegularExpression(@"(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png)", ErrorMessage = "Value must conform to http/s ... png/jpg format.")]
+        [Required(ErrorMessage = "Image Url field is required.")]
+        [RegularExpression(@"(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|png|jpeg)", ErrorMessage = "Value must conform to http/s ... png/jpg/jpeg format.")]
         public string ImageUrl { get; set; }
 
         [Display(Name = "Basic Seats")]

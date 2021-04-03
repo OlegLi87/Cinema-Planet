@@ -1,0 +1,33 @@
+﻿hr {
+    border-color: rgba(52,58,64,0.5);
+}
+
+.content-container {
+    border-radius: 5px;
+    width: 11.5rem;
+    position: relative;
+}
+
+.image-box {
+    max-width: 8rem;
+    margin: 0.5rem 0 0 0.5rem;
+    box-shadow: 0 0 2px black;
+    border-radius: 15px;
+    overflow-x:hidden
+}
+
+.image-container::after {
+  content: '';
+  height: 3.5rem;
+  display: block;
+}
+
+.image-box img{
+    width: 100%;
+}
+
+.button-container {
+    position: absolute;
+    bottom: 1rem;
+    width: 80%;
+}

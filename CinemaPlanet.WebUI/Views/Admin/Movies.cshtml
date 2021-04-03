@@ -1,4 +1,5 @@
-﻿
+﻿@using System.Web.Optimization
+@model CinemaPlanet.WebUI.ViewModels.AdminSectionGenericViewModel<CinemaPlanet.Domain.Core.DomainModels.Movie>
 @{
     ViewBag.Title = "Movies";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,6 +9,39 @@
 @section AddToHead
     {
     <link rel="stylesheet" href="~/Content/CustomStyles/admin/navTabs.css" />
+    <link rel="stylesheet" href="~/Content/CustomStyles/admin/movies.css">
 }
 
 @Html.Action("NavTabsContent", "Navigation", new { callingAction = ViewContext.RouteData.Values["action"] })
+
+<div class="tab-content mt-3" id="managerTabContent">
+    <div class="tab-pane fade show active d-flex flex-wrap justify-content-center" id="listContent" role="tabpanel" aria-labelledby="list-tab">
+        @foreach (var movie in Model.Entities)
+        {
+            <div class="content-container bg-warning d-flex flex-column align-items-center p-2 m-2">
+                <div class="name-container text-center">
+                    <span class="h6"> @movie.Name</span>
+                    <span class="">(@movie.Genre)</span>
+                    <hr class="m-1" />
+                </div>
+                <div class="image-container">
+                    <div class="image-box mx-auto">
+                        <img src="@movie.ImageUrl" />
+                    </div>
+                </div>
+                <div class="button-container mt-2">
+                    @Html.ActionLink("Edit", "EditMovie", "Admin", new { id = movie.Id }, new { @class = "btn btn-primary w-100" })
+                </div>
+            </div>
+        }
+    </div>
+    <div class="tab-pane fade col-12 col-sm-10 col-md-8 mx-auto mt-4" id="createContent" role="tabpanel" aria-labelledby="create-tab">
+        @Html.Partial("_MovieForm")
+    </div>
+</div>
+
+@section Scripts
+    {
+    @Scripts.Render("~/bundles/jqueryValidation")
+    <script src="~/Scripts/customScripts/navTabsToggle.js"></script>
+}

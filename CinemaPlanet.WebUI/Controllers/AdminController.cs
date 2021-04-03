@@ -47,13 +47,13 @@ namespace CinemaPlanet.WebUI.Controllers
         public ViewResult Auditoriums()
         {
             var auditoriums = unitOfWork.Auditoriums.Get();
-            var auditViewModel = new AdminAuditoriumsViewModel
+            var auditViewModel = new AdminSectionGenericViewModel<Auditorium>
             {
-                Auditoriums = auditoriums,
+                Entities = auditoriums,
 
                 // will be used within creation form.
                 // The name of property should be the same as name of SaveAuditorium action parameter for auto binding.
-                Auditorium = new Auditorium()
+                Entity = new Auditorium()
             };
             return View(auditViewModel);
         }
@@ -62,25 +62,25 @@ namespace CinemaPlanet.WebUI.Controllers
         public ViewResult EditAuditorium(int id)
         {
             var auditorium = unitOfWork.Auditoriums.GetById(id);
-            var auditViewModel = new AdminAuditoriumsViewModel { Auditorium = auditorium };
+            var auditViewModel = new AdminSectionGenericViewModel<Auditorium> { Entity = auditorium };
             return View(auditViewModel);
         }
 
         // POST: Admin/SaveAuditorium
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public RedirectToRouteResult SaveAuditorium(Auditorium auditorium)
+        public RedirectToRouteResult SaveAuditorium(Auditorium entity)
         {
-            if (auditorium.Id == 0)
-                unitOfWork.Auditoriums.Add(auditorium);
+            if (entity.Id == 0)
+                unitOfWork.Auditoriums.Add(entity);
             else
             {
-                var auditoriumInDb = unitOfWork.Auditoriums.GetById(auditorium.Id);
-                auditoriumInDb.Name = auditorium.Name;
-                auditoriumInDb.ImageUrl = auditorium.ImageUrl;
-                auditoriumInDb.BasicSeatsCapacity = auditorium.BasicSeatsCapacity;
-                auditoriumInDb.SilverSeatsCapacity = auditorium.SilverSeatsCapacity;
-                auditoriumInDb.GoldSeatsCapacity = auditorium.GoldSeatsCapacity;
+                var auditoriumInDb = unitOfWork.Auditoriums.GetById(entity.Id);
+                auditoriumInDb.Name = entity.Name;
+                auditoriumInDb.ImageUrl = entity.ImageUrl;
+                auditoriumInDb.BasicSeatsCapacity = entity.BasicSeatsCapacity;
+                auditoriumInDb.SilverSeatsCapacity = entity.SilverSeatsCapacity;
+                auditoriumInDb.GoldSeatsCapacity = entity.GoldSeatsCapacity;
             }
 
             unitOfWork.Save();
@@ -99,15 +99,99 @@ namespace CinemaPlanet.WebUI.Controllers
         }
         #endregion
 
+        #region Movies section
         // GET : Admin/Movies
         public ViewResult Movies()
         {
-            return View();
+            var movies = unitOfWork.Movies.Get();
+            var moviesViewModel = new AdminSectionGenericViewModel<Movie>
+            {
+                Entities = movies,
+                Entity = new Movie(),
+                Genres = Enum.GetNames(typeof(Genre))
+            };
+
+            return View(moviesViewModel);
         }
 
+        // GET: Admin/EditMovie/id
+        public ViewResult EditMovie(int id)
+        {
+            var movie = unitOfWork.Movies.GetById(id);
+            var moviesViewModel = new AdminSectionGenericViewModel<Movie>
+            {
+                Entity = movie,
+                Genres = Enum.GetNames(typeof(Genre))
+            };
+
+            return View(moviesViewModel);
+        }
+
+        // POST: Admin/SaveMovie
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public RedirectToRouteResult SaveMovie(Movie entity)
+        {
+            if (entity.Id == 0)
+                unitOfWork.Movies.Add(entity);
+            else
+            {
+                var movieInDb = unitOfWork.Movies.GetById(entity.Id);
+                movieInDb.Name = entity.Name;
+                movieInDb.ImageUrl = entity.ImageUrl;
+                movieInDb.Description = entity.Description;
+                movieInDb.ReleaseDate = entity.ReleaseDate;
+                movieInDb.Genre = entity.Genre;
+                movieInDb.BasicSeatPrice = entity.BasicSeatPrice;
+                movieInDb.SilverSeatPrice = entity.SilverSeatPrice;
+                movieInDb.GoldSeatPrice = entity.GoldSeatPrice;
+            }
+
+            unitOfWork.Save();
+            return RedirectToAction("Movies");
+        }
+
+        // POST: Admin/DeleteMovie/id
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public RedirectToRouteResult DeleteMovie(int id)
+        {
+            var movie = unitOfWork.Movies.GetById(id);
+            unitOfWork.Movies.Remove(movie);
+            unitOfWork.Save();
+
+            return RedirectToAction("Movies");
+        }
+
+        #endregion
+
+        //GET: Admin/Sessions
         public ViewResult Sessions()
         {
-            return View();
+            var auditoriums = unitOfWork.Auditoriums.Get();
+            var movies = unitOfWork.Movies.Get();
+            var movieSessions = unitOfWork.MovieSessions.Get();
+            var movieSessionsViewModel = new AdminMovieSessionsViewModel
+            {
+                Auditoriums = auditoriums,
+                Movies = movies,
+                MovieSessions = movieSessions,
+                MovieSession = new MovieSession()
+            };
+
+            return View(movieSessionsViewModel);
+        }
+
+        // POST: Admin/SaveSession
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public RedirectToRouteResult SaveSession(MovieSession movieSession)
+        {
+            if (movieSession.Id == 0)
+                unitOfWork.MovieSessions.Add(movieSession);
+
+            unitOfWork.Save();
+            return RedirectToAction("Sessions");
         }
 
         public ViewResult Orders()

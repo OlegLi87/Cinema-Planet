@@ -1,0 +1,21 @@
+﻿@model CinemaPlanet.WebUI.ViewModels.AdminSectionGenericViewModel<CinemaPlanet.Domain.Core.DomainModels.Movie>
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Edit Movie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HeaderText = "Edit Movie";
+    ViewBag.TargetAction = "Movies";
+    ViewBag.TargetController = "Admin";
+}
+
+<div class="col-12 col-sm-10 col-md-8 mx-auto mt-4">
+    @Html.Partial("_MovieForm")
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryValidation")
+    <script src="~/Scripts/customScripts/numberInputControl.js"></script>
+}
+

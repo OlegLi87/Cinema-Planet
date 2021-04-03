@@ -1,0 +1,91 @@
+﻿@model CinemaPlanet.WebUI.ViewModels.AdminSectionGenericViewModel<CinemaPlanet.Domain.Core.DomainModels.Movie>
+
+@{
+    string dateFormat = "yyyy-MM-dd";
+    string dateValue;
+    if (Model.Entity.Id == 0)
+    {
+        dateValue = DateTime.Now.ToString(dateFormat);
+    }
+    else
+    {
+        dateValue = Model.Entity.ReleaseDate.ToString(dateFormat);
+    }
+}
+
+@using (Html.BeginForm("SaveMovie", "Admin"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Entity.Name, new { @class = "form-label text-warning" })
+        @Html.TextBoxFor(m => m.Entity.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Entity.Name, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Entity.ImageUrl, new { @class = "form-label text-warning" })
+        @Html.TextBoxFor(m => m.Entity.ImageUrl, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Entity.ImageUrl, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Entity.Description, new { @class = "form-label text-warning" })
+        @Html.TextAreaFor(m => m.Entity.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Entity.Description, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Entity.ReleaseDate, new { @class = "form-label text-warning" })
+
+        @Html.TextBoxFor(m => m.Entity.ReleaseDate,
+       new
+       {
+           @class = "form-control",
+           @Type = "date",
+           @Value = dateValue
+       })
+
+        @Html.ValidationMessageFor(m => m.Entity.ReleaseDate, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Entity.Genre, new { @class = "form-label text-warning" })
+        @Html.DropDownListFor(m => m.Entity.Genre, new SelectList(Model.Genres), null, new { @class = "form-control" })
+    </div>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-between">
+        <div class="form-group mr-sm-3">
+            @Html.LabelFor(m => m.Entity.BasicSeatPrice, new { @class = "form-label text-warning" })
+            @Html.TextBoxFor(m => m.Entity.BasicSeatPrice, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(m => m.Entity.BasicSeatPrice, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group mr-sm-3">
+            @Html.LabelFor(m => m.Entity.SilverSeatPrice, new { @class = "form-label text-warning" })
+            @Html.TextBoxFor(m => m.Entity.SilverSeatPrice, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(m => m.Entity.SilverSeatPrice, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Entity.GoldSeatPrice, new { @class = "form-label text-warning" })
+            @Html.TextBoxFor(m => m.Entity.GoldSeatPrice, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(m => m.Entity.GoldSeatPrice, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.Entity.Id)
+
+    <div class="w-100 mx-auto text-center mt-2">
+        <button class="btn btn-primary mr-3" type="submit">Save</button>
+        <button class="btn btn-warning" type="reset">Reset</button>
+    </div>
+}
+
+@if ((ViewContext.RouteData.Values["action"] as string).Contains("Edit"))
+{
+    using (Html.BeginForm("DeleteMovie", "Admin", new { id = Model.Entity.Id }))
+    {
+        @Html.AntiForgeryToken();
+        <div class="w-100 text-center mt-3">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    }
+}

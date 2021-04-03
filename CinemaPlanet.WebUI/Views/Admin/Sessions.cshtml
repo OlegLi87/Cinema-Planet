@@ -1,8 +1,49 @@
-﻿
+﻿@using System.Web.Optimization
+@model CinemaPlanet.WebUI.ViewModels.AdminMovieSessionsViewModel
+
 @{
     ViewBag.Title = "Sessions";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HeaderText = "Sessions Manager";
 }
 
-<h2>Sessions</h2>
+@section AddToHead
+{
+    <link rel="stylesheet" href="~/Content/CustomStyles/admin/navTabs.css" />
+}
+
+@Html.Action("NavTabsContent", "Navigation", new { callingAction = ViewContext.RouteData.Values["action"] })
+
+<div class="tab-content mt-3" id="managerTabContent">
+    <div class="tab-pane fade show active" id="listContent" role="tabpanel" aria-labelledby="list-tab">
+        @foreach (var session in Model.MovieSessions)
+        {
+            <p class="text-warning">#@session.Id</p>
+            <p class="text-warning">@session.Auditorium.Name</p>
+            <p class="text-warning">@session.Movie.Name</p>
+            <p class="text-warning">@session.SessionDate</p>
+            <p class="text-warning">@session.Orders.Count</p>
+            <p class="text-warning">Number of total seats : @session.Auditorium.GetSeatsCapacity()</p>
+            <p class="text-warning">Number of left seats : @(session.Auditorium.GetSeatsCapacity() - session.Orders.Count)</p>
+
+            foreach (var order in session.Orders)
+            {
+                <p class="text-primary">@order.SeatNumber</p>
+                <p class="text-primary">@order.UserId</p>
+            }
+        }
+    </div>
+
+    <div class="tab-pane fade col-12 col-sm-10 col-md-6 mx-auto mt-4" id="createContent" role="tabpanel" aria-labelledby="create-tab">
+        @Html.Partial("_MovieSessionForm")
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/customScripts/navTabsToggle.js"></script>
+}
+
+
+
 
