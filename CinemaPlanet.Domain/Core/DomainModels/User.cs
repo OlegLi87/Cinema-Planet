@@ -26,6 +26,6 @@ namespace CinemaPlanet.Domain.Core.DomainModels
         public DateTime BirthDate { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

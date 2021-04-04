@@ -59,9 +59,11 @@ namespace CinemaPlanet.WebUI.Controllers
         }
 
         // GET: Admin/EditAuditorium/id
-        public ViewResult EditAuditorium(int id)
+        public ActionResult EditAuditorium(int id)
         {
             var auditorium = unitOfWork.Auditoriums.GetById(id);
+            if (auditorium == null) return HttpNotFound();
+
             var auditViewModel = new AdminSectionGenericViewModel<Auditorium> { Entity = auditorium };
             return View(auditViewModel);
         }
@@ -87,12 +89,14 @@ namespace CinemaPlanet.WebUI.Controllers
             return RedirectToAction("Auditoriums");
         }
 
-        // POST: Admin/DeleteAuditorium
+        // POST: Admin/DeleteAuditorium/id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public RedirectToRouteResult DeleteAuditorium(int id)
+        public ActionResult DeleteAuditorium(int id)
         {
             var auditorium = unitOfWork.Auditoriums.GetById(id);
+            if (auditorium == null) return HttpNotFound();
+
             unitOfWork.Auditoriums.Remove(auditorium);
             unitOfWork.Save();
             return RedirectToAction("Auditoriums");
@@ -115,9 +119,11 @@ namespace CinemaPlanet.WebUI.Controllers
         }
 
         // GET: Admin/EditMovie/id
-        public ViewResult EditMovie(int id)
+        public ActionResult EditMovie(int id)
         {
             var movie = unitOfWork.Movies.GetById(id);
+            if (movie == null) return HttpNotFound();
+
             var moviesViewModel = new AdminSectionGenericViewModel<Movie>
             {
                 Entity = movie,
@@ -154,9 +160,11 @@ namespace CinemaPlanet.WebUI.Controllers
         // POST: Admin/DeleteMovie/id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public RedirectToRouteResult DeleteMovie(int id)
+        public ActionResult DeleteMovie(int id)
         {
             var movie = unitOfWork.Movies.GetById(id);
+            if (movie == null) return HttpNotFound();
+
             unitOfWork.Movies.Remove(movie);
             unitOfWork.Save();
 
@@ -206,10 +214,29 @@ namespace CinemaPlanet.WebUI.Controllers
             return View(filteredMovieSessions);
         }
 
-        public ViewResult Customers(int sessionId)
+        // POST: Admin/DeleteSession/id
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSession(int id)
         {
-            var users = unitOfWork.MovieSessions.GetAllCustomersForSession(sessionId);
-            return View(users);
+            var session = unitOfWork.MovieSessions.GetById(id);
+            if (session == null) return HttpNotFound();
+
+            unitOfWork.MovieSessions.Remove(session);
+            unitOfWork.Save();
+
+            return RedirectToAction("Sessions");
+        }
+
+        // GET: Admin/Customers/id
+        public ActionResult Customers(int id)
+        {
+            var session = unitOfWork.MovieSessions.GetById(id);
+            if (session == null) return HttpNotFound();
+
+            var customers = session.GetSessionCustomers();
+
+            return View(customers);
         }
 
         protected override void Dispose(bool disposing)

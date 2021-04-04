@@ -2,7 +2,7 @@
 @model IEnumerable<CinemaPlanet.Domain.Core.DomainModels.MovieSession>
 
 @{
-    ViewBag.Title = "SessionsList";
+    ViewBag.Title = "Sessions List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.HeaderText = "Sessions List";
     ViewBag.TargetAction = "Sessions";
@@ -16,43 +16,49 @@
 
 @if (Model.Count() > 0)
 {
-    <div class="col-12 d-flex flex-column flex-sm-row flex-sm-wrap justify-content-center justify-content-md-start">
+    <div class="col-12 d-flex flex-column flex-sm-row flex-sm-wrap justify-content-center">
         @foreach (var session in Model)
         {
-        <div class="list-item-container bg-warning p-3 m-3">
-            <div class="list-item-data bg-dark text-warning">ID #@session.Id</div>
-            <div class="list-item-data bg-dark text-warning">Auditorium: @session.Auditorium.Name</div>
-            <div class="list-item-data bg-dark text-warning">Movie: @session.Movie.Name</div>
-            <div class="list-item-data bg-dark text-warning">
-                Session Date: @session.SessionDate.ToString("dd/MM/yyyy")
-            </div>
-
-            <div class="list-item-data bg-dark text-warning">
-                <div class="text-container">
-                    <i class="fas fa-chair text-primary"></i>
-                    Basic Seats Ordered: @session.GetOrderedSeatsNumber(SeatType.Basic) / @session.Auditorium.BasicSeatsCapacity
+            <div class="list-item-container bg-warning p-3 m-3">
+                <div class="list-item-data bg-dark text-warning">ID #@session.Id</div>
+                <div class="list-item-data bg-dark text-warning">Auditorium: @session.Auditorium.Name</div>
+                <div class="list-item-data bg-dark text-warning">Movie: @session.Movie.Name</div>
+                <div class="list-item-data bg-dark text-warning">
+                    Session Date: @session.SessionDate.ToString("dd/MM/yyyy")
                 </div>
-            </div>
 
-            <div class="list-item-data bg-dark text-warning">
-                <div class="text-container">
-                    <i id="silverChairIcon" class="fas fa-chair"></i>
-                    Silver Seats Ordered: @session.GetOrderedSeatsNumber(SeatType.Silver) / @session.Auditorium.SilverSeatsCapacity
+                <div class="list-item-data bg-dark text-warning">
+                    <div class="text-container">
+                        <i class="fas fa-chair text-primary"></i>
+                        Basic Seats Ordered: @session.GetOrderedSeatsNumber(SeatType.Basic) / @session.Auditorium.BasicSeatsCapacity
+                    </div>
                 </div>
-            </div>
 
-            <div class="list-item-data bg-dark text-warning">
-                <div class="text-container">
-                    <i class="fas fa-chair text-warning mr-1"></i>
-                    Gold Seats Ordered: @session.GetOrderedSeatsNumber(SeatType.Gold) / @session.Auditorium.GoldSeatsCapacity
+                <div class="list-item-data bg-dark text-warning">
+                    <div class="text-container">
+                        <i id="silverChairIcon" class="fas fa-chair"></i>
+                        Silver Seats Ordered: @session.GetOrderedSeatsNumber(SeatType.Silver) / @session.Auditorium.SilverSeatsCapacity
+                    </div>
                 </div>
+
+                <div class="list-item-data bg-dark text-warning">
+                    <div class="text-container">
+                        <i class="fas fa-chair text-warning mr-1"></i>
+                        Gold Seats Ordered: @session.GetOrderedSeatsNumber(SeatType.Gold) / @session.Auditorium.GoldSeatsCapacity
+                    </div>
+                </div>
+
+                <div class="list-item-data bg-dark text-warning">Total Expected Revenue: @session.GetExpectedRevenue()$</div>
+                <div class="list-item-data bg-dark text-warning">Current Revenue: @session.GetCurrentRevenue()$</div>
+
+                @Html.ActionLink("To Customers List", "Customers", "Admin", new { id = session.Id }, new { @class = "btn btn-primary w-100" })
+
+                @using (Html.BeginForm("DeleteSession", "Admin", new { id = session.Id }))
+                {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger w-100 mt-2">Delete Session</button>
+                }
             </div>
-
-            <div class="list-item-data bg-dark text-warning">Expected Total Revenue: @session.GetExpectedRevenue()$</div>
-            <div class="list-item-data bg-dark text-warning">Current Revenue: @session.GetCurrentRevenue()$</div>
-
-            @Html.ActionLink("To Customers List","Customers","Admin",new { sessionId = session.Id },new { @class = "btn btn-primary w-100"})
-        </div>
         }
     </div>
 }

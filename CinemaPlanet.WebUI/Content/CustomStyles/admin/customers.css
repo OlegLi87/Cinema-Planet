@@ -1,9 +1,9 @@
-﻿table,th,td {
+﻿table, th, td {
     border: thin solid #FFC107
 }
 
 table th {
-    font-size: clamp(1rem,3vw,3rem);
+    font-size: clamp(1rem,2vw,1.5rem);
     padding: 1rem
 }
 
@@ -12,13 +12,19 @@ table td {
     padding: 1rem
 }
 
+#notFoundText {
+    white-space: nowrap;
+    font-size: clamp(0.7rem,4.3vw,2.1rem);
+}
+
 
 @media(max-width: 36rem) {
     .container {
-        padding: 0 !important;
+        padding: 1rem 0.2rem !important;
     }
 
-    th,td {
+    th, td {
         padding: 0.7rem !important;
     }
 }
+

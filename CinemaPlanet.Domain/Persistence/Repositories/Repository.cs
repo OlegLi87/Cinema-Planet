@@ -20,7 +20,6 @@ namespace CinemaPlanet.Domain.Persistence.Repositories
         public virtual T GetById(int id)
         {
             T entity = context.Set<T>().Find(id);
-            if (entity == null) throw new ArgumentException();
             return entity;
         }
 

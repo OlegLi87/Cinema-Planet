@@ -48,6 +48,11 @@ namespace CinemaPlanet.Domain.Core.DomainModels
             return forBasicSeatsRevenue + forSilverSeatsRevenue + forGoldSeatsRevenue;
         }
 
+        public IEnumerable<User> GetSessionCustomers()
+        {
+            return Orders.Select(or => or.User);
+        }
+
         public int GetAvailableSeatsLeft()
         {
             return Auditorium.GetSeatsCapacity() - Orders.Count;

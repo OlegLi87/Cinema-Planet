@@ -10,6 +10,5 @@ namespace CinemaPlanet.Domain.Core.Repositories
     public interface IMovieSessionRepository : IRepository<MovieSession>
     {
         IEnumerable<MovieSession> GetFilteredSessions(int auditoriumId, int movieId, DateTime date);
-        IEnumerable<User> GetAllCustomersForSession(int id);
     }
 }

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<CinemaPlanet.Domain.Core.DomainModels.User>
 @{
-    ViewBag.Title = "Customers";
+    ViewBag.Title = "Session Customers";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.HeaderText = "Customers List";
-    ViewBag.TargetAction = "Sessions";
-    ViewBag.TargetController = "Admin";
+    // ViewBag.TargetAction = "Sessions";
+    // ViewBag.TargetController = "Admin";
 }
 
 @section AddToHead
@@ -12,28 +12,34 @@
     <link rel="stylesheet" href="~/Content/CustomStyles/admin/customers.css" />
 }
 
-<table class="text-warning mx-auto">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>User Name</th>
-            <th>Age</th>
-            <th>Overall Orders</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
+@if (Model.Count() > 0)
+{
+    <table class="text-warning mx-auto">
+        <thead>
             <tr>
-                <td>@user.Id</td>
-                <td>@user.UserName</td>
-                <td>@(DateTime.Now.Year - user.BirthDate.Year)</td>
-                <td>@user.Orders.Count</td>
+                <th>ID</th>
+                <th>User Name</th>
+                <th>Age</th>
+                <th>Total Orders</th>
             </tr>
-        }
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@(DateTime.Now.Year - user.BirthDate.Year)</td>
+                    <td>@user.Orders.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h1 id="notFoundText" class="text-center text-warning">No Costumers Yet For This Session <span class="ml-1 text-nowrap">:(</span></h1>
+}
 
 
 

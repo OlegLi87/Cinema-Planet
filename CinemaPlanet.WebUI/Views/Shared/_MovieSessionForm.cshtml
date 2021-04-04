@@ -5,6 +5,8 @@
 
     string targetAction = isAtSearchSection ? "SessionsList" : "SaveSession";
 
+    string labelsPrefix = isAtSearchSection ? "Search by " : "Pick up"; 
+
     string auditDefOption, movieDefOption;
     if (isAtSearchSection)
     {
@@ -46,17 +48,17 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @Html.LabelFor(m => m.MovieSession.AuditoriumId, new { @class = "form-label text-warning" })
+        @Html.LabelFor(m => m.MovieSession.AuditoriumId,labelsPrefix + " Auditorium",new { @class = "form-label text-warning" })
         @Html.DropDownListFor(m => m.MovieSession.AuditoriumId, new SelectList(Model.Auditoriums, "Id", "Name"), auditDefOption, new { @class = "form-control" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.MovieSession.MovieId, new { @class = "form-label text-warning" })
+        @Html.LabelFor(m => m.MovieSession.MovieId, labelsPrefix + " Movie", new { @class = "form-label text-warning" })
         @Html.DropDownListFor(m => m.MovieSession.MovieId, new SelectList(Model.Movies, "Id", "Name"), movieDefOption, new { @class = "form-control" })
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.MovieSession.SessionDate, new { @class = "form-label text-warning" })
+        @Html.LabelFor(m => m.MovieSession.SessionDate, labelsPrefix + " Date", new { @class = "form-label text-warning" })
         @Html.TextBoxFor(m => m.MovieSession.SessionDate, new { @class = "form-control", @Type = "date", @Value = dateValue })
 
         @if (isAtSearchSection)

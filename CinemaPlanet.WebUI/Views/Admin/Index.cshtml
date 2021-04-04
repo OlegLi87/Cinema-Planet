@@ -1,8 +1,4 @@
-﻿@using System.Web.Optimization
-
-@model CinemaPlanet.WebUI.ViewModels.AdminIndexViewModel
-
-@{
+﻿@{
     ViewBag.Title = "Main";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -15,14 +11,12 @@
     <link rel="stylesheet" href="~/Content/CustomStyles/admin/index.css">
 }
 
-<div class="statistics-container">
+<div class="statistics-container mx-auto col-12 col-sm-10 col-md-8 w-auto">
     @foreach (var p in ViewData.ModelMetadata.Properties)
     {
-        <div>
-            <span class="text-warning">Total @p.PropertyName:</span>
-            <div class="d-inline-block ml-3 px-3 bg-warning border-success rounded">
-                <span class="text-success">@p.Model</span>
-            </div>
+        <div class="text-warning h5 mx-md-auto">Total @p.PropertyName:</div>
+        <div class="mx-auto d-flex justify-content-center align-items-center data-container bg-warning border-success rounded">
+            <span class="text-success">@p.Model</span>
         </div>
     }
 </div>

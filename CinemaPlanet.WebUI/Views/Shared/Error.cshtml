@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = ViewBag.Title == null ? "Error" : ViewBag.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HideNavBar = true;
+}
+
+@section AddToHead
+    {
+    <style>
+        h2 {
+            font-size: clamp(1rem,3vw,3rem);
+        }
+
+        .main-page-link {
+            font-size: clamp(0.9rem,3vw,2.5rem);
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+}
+
+<div class="error-container">
+    <h2 class="text-warning text-center">Oooops something went wrong :(</h2>
+    <div class="main-page-link text-center text-warning mt-5 d-flex justify-content-center align-items-center">
+        <a class="text-warning d-flex align-items-center" href=@Url.Action("Index","Home")><i class="fas fa-arrow-circle-left mr-3"></i></a>
+        To main page
+    </div>
+</div>
+

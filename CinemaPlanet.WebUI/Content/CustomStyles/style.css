@@ -31,3 +31,16 @@ body {
     border: 3px solid #DC3545;
     box-shadow : none !important;
 }
+
+.back-link-icon {
+    width: fit-content;
+}
+
+.fas.fa-arrow-circle-left {
+    display:inline-block;
+    font-size: clamp(1.5rem,7vw,3rem);
+}
+
+.back-link-text {
+    font-size: clamp(0.8rem,1.5vw,1rem);
+}

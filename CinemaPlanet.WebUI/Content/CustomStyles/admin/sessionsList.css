@@ -2,12 +2,11 @@
     font-size: clamp(1.2rem,5vw,2.3rem);
 }
 
-
 .list-item-data {
     margin-bottom: 0.5rem;
     padding: 0.3rem 1rem;
     border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;   
     text-align: center;
 }
 
@@ -26,4 +25,14 @@
 
 #silverChairIcon {
     color: #9e9c9c
+}
+
+@media(max-width: 36rem) {
+    .container {
+        padding: 1.5rem 0.2rem !important;
+    }
+
+    .list-item-container {
+        margin: 0.7rem 0 !important;
+    }
 }

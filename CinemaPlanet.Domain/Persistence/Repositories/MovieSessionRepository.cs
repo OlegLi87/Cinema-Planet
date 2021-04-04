@@ -43,10 +43,5 @@ namespace CinemaPlanet.Domain.Persistence.Repositories
                 .Include(ms => ms.Movie)
                 .Include(ms => ms.Orders);
         }
-
-        public IEnumerable<User> GetAllCustomersForSession(int id)
-        {
-            return GetById(id).Orders.Select(or => or.User);
-        }
     }
 }
