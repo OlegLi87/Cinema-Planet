@@ -1,0 +1,32 @@
+﻿@model byte?
+@{
+    ViewBag.Title = "Order Cmpleted";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section AddToHead
+    {
+    <style>
+        h1 {
+            font-size: clamp(1rem,7vw,2rem);
+        }
+
+        h3 {
+            font-size: clamp(0.8rem,6vw,1.5rem);
+        }
+
+        h5 {
+            font-size: clamp(0.7rem,5vw,1.3rem);
+        }
+    </style>
+}
+
+<div class="jumbotron bg-dark text-warning">
+    <h1 class="text-center">Thanks your order is completed!</h1>
+    <hr>
+    <h3 class="text-center">Your seat number is : @Model</h3>
+    <hr>
+    <h5 class="text-center lead">Inspect your orders section for more information.</h5>
+</div>
+
+

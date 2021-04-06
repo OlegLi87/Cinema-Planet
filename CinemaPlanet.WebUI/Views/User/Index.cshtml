@@ -1,18 +1,129 @@
-﻿@model List<CinemaPlanet.Domain.Core.DomainModels.Movie>
+﻿@using CinemaPlanet.WebUI.Infastructure
+@model IEnumerable<CinemaPlanet.Domain.Core.DomainModels.Movie>
 
 @{
     ViewBag.Title = "Main";
 }
 
-<h1 id="mainHeader" class="text-warning text-center display-4">Order your <i class="fas fa-chair"></i></h1>
-<div class="searching-bar mt-4">Seraching Bar</div>
-<div class="movies-container"></div>
+@section AddToHead
+    {
+    <link rel="stylesheet" href="~/Content/CustomStyles/user/index.css">
+}
 
+<h1 id="mainHeader" class="text-warning text-center display-4">Order your <i class="fas fa-chair"></i></h1>
+<div class="movies-container d-flex flex-wrap justify-content-center">
+    @foreach (var movie in Model)
+    {
+        <div class="movie-container m-2">
+            <div class="movie-image-box d-flex justify-content-center align-items-center">
+                <img class="mainImg" src=@movie.ImageUrl>
+                <div class="movie-info-container d-flex bg-dark p-4">
+                    <div class="order-table">
+                        <div class="additional-info-container">
+                            <h5 class="text-warning text-center"> @movie.ReleaseDate.Year (@movie.Genre)</h5>
+                        </div>
+                        <img class="order-table-img" src=@movie.ImageUrl>
+                        <div class="order-form-container p-3">
+                            @using (Html.BeginForm("PlaceOrder", "User", new { movieId = movie.Id }))
+                            {
+                                @Html.AntiForgeryToken();
+
+                                <div class="form-group">
+                                    <label class="form-label text-warning" for="sessionDate">Pick up date</label>
+                                    @Html.SessionDatesForMovieDropDown(movie, "date")
+                                </div>
+                                <div class="form-group text-warning">
+                                    <label for="seatType">Pick up seat</label>
+                                    @Html.AvailableSeatsForMovieDropDown(movie, "seatType")
+                                </div>
+                                <div class="price-container d-inline">
+                                    <span data-seat-type="basic" class="h3 text-warning price basic">@movie.BasicSeatPrice$</span>
+                                    <span data-seat-type="silver" class="h3 text-warning price silver invisible">@movie.SilverSeatPrice$</span>
+                                    <span data-seat-type="gold" class="h3 text-warning price gold invisible">@movie.GoldSeatPrice$</span>
+                                </div>                          
+                                <button type="submit" class="btn btn-success ml-2">Order </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@*<a id="filterLink" href="User">Filter</a>
+
+    <div class="form-group">
+        <label for="genresList" class="form-label">Genre</label>
+        <select id="genresList" class="form-control drop-filter">
+            <option selected>Any Genre</option>
+            @foreach (var genre in Enum.GetNames(typeof(Genre)))
+            {
+                <option>@genre </option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="yearsList" class="form-label">Release Year</label>
+        <select id="yearsList" class="form-control drop-filter">
+            <option selected>Any Year</option>
+            @for (int i = 1990; i <= DateTime.Now.Year; i++)
+            {
+                <option>@i</option>
+            }
+        </select>
+    </div>*@
 
 
 @section Scripts
 {
     <script>
+        $('document').ready(() => {
+            const queryParams = {}
 
+            $('.drop-filter').change((e) => {
+                const selectedVal = $(e.target).val();
+
+                if (selectedVal === 'Any Genre') delete queryParams.genre;
+                else if (selectedVal === 'Any Year') delete queryParams.year;
+                else if (isNaN(parseInt(selectedVal))) queryParams.genre = selectedVal;
+                else queryParams.year = selectedVal;
+
+                const serialized = $.param(queryParams);
+                $('#filterLink').attr('href', 'User' + '?' + serialized);
+            });
+
+            const showMovieInfoClass = 'movie-info-container-displayed';
+
+            $('img').click((e) => {
+                e.stopPropagation();
+                $(e.target).siblings().addClass(showMovieInfoClass);
+            });
+
+            $('.movie-info-container').click((e) => {
+                e.stopPropagation();
+            });
+
+            $(document).click(() => {
+                $('img').siblings().removeClass(showMovieInfoClass);
+            });
+
+            $('.form-control[name="seatType"]').change((e) => {
+                const seatType = $(e.target).val();
+                const priceContainer = $(e.target).parent().next();
+                const priceSpans = priceContainer.children();
+
+                Array.from(priceSpans).forEach(ps => {
+                    if ($(ps).attr("data-seat-type").toLocaleLowerCase() === seatType.toLocaleLowerCase()) {
+                        $(ps).removeClass("invisible");
+                    }
+                    else {
+                        if (!$(ps).hasClass("invisible"))
+                            $(ps).addClass("invisible");
+                    }
+                });
+            });          
+        });
     </script>
 }

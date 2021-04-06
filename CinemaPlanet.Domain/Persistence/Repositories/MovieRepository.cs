@@ -14,5 +14,14 @@ namespace CinemaPlanet.Domain.Persistence.Repositories
         public MovieRepository(DbContext context) : base(context)
         {
         }
+
+        public IEnumerable<Movie> GetAvailableMovies()
+        {
+            return context.Set<MovieSession>()
+                 .Include(ms => ms.Movie)
+                 .Where(ms => ms.Orders.Count < ms.Auditorium.BasicSeatsCapacity + ms.Auditorium.SilverSeatsCapacity + ms.Auditorium.GoldSeatsCapacity)
+                 .Select(ms => ms.Movie)
+                 .Distinct();
+        }
     }
 }

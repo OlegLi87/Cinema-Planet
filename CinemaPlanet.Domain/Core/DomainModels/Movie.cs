@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace CinemaPlanet.Domain.Core.DomainModels
 {
@@ -46,5 +47,12 @@ namespace CinemaPlanet.Domain.Core.DomainModels
         [Display(Name = "Gold seat price")]
         public float GoldSeatPrice { get; set; }
         public virtual ICollection<MovieSession> MovieSessions { get; set; }
+
+        public IEnumerable<DateTime> GetAvailableSessionDatesForMovie()
+        {
+            return (MovieSessions as IEnumerable<MovieSession>)
+                .Where(ms => ms.IsSessionAvailbale())
+                .Select(ms => ms.SessionDate);
+        }
     }
 }

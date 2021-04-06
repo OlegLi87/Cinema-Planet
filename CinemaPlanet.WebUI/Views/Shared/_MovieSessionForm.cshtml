@@ -5,7 +5,7 @@
 
     string targetAction = isAtSearchSection ? "SessionsList" : "SaveSession";
 
-    string labelsPrefix = isAtSearchSection ? "Search by " : "Pick up"; 
+    string labelsPrefix = isAtSearchSection ? "Search by " : "Pick up";
 
     string auditDefOption, movieDefOption;
     if (isAtSearchSection)
@@ -18,18 +18,7 @@
     }
 
     string dateFormat = "yyyy-MM-dd";
-    string dateValue;
-
-    if (Model.MovieSession.Id == 0)
-    {
-
-        dateValue = DateTime.Now.AddDays(1).ToString(dateFormat);
-
-    }
-    else
-    {
-        dateValue = Model.MovieSession.SessionDate.ToString(dateFormat);
-    }
+    string dateValue = DateTime.Now.AddDays(1).ToString(dateFormat);
 
     HtmlString submitBtn;
 
@@ -48,7 +37,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @Html.LabelFor(m => m.MovieSession.AuditoriumId,labelsPrefix + " Auditorium",new { @class = "form-label text-warning" })
+        @Html.LabelFor(m => m.MovieSession.AuditoriumId, labelsPrefix + " Auditorium", new { @class = "form-label text-warning" })
         @Html.DropDownListFor(m => m.MovieSession.AuditoriumId, new SelectList(Model.Auditoriums, "Id", "Name"), auditDefOption, new { @class = "form-control" })
     </div>
 

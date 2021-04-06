@@ -178,12 +178,10 @@ namespace CinemaPlanet.WebUI.Controllers
         {
             var auditoriums = unitOfWork.Auditoriums.Get();
             var movies = unitOfWork.Movies.Get();
-            var movieSessions = unitOfWork.MovieSessions.Get();
             var movieSessionsViewModel = new AdminMovieSessionsViewModel
             {
                 Auditoriums = auditoriums,
                 Movies = movies,
-                MovieSessions = movieSessions,
                 MovieSession = new MovieSession()
             };
 
@@ -195,7 +193,6 @@ namespace CinemaPlanet.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public RedirectToRouteResult SaveSession(MovieSession movieSession)
         {
-            bool foo = movieSession.SessionDate == new DateTime();
             if (movieSession.Id == 0)
                 unitOfWork.MovieSessions.Add(movieSession);
 

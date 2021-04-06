@@ -120,7 +120,9 @@
     <Content Include="Content\CustomStyles\admin\sessionsList.css" />
     <Content Include="Content\CustomStyles\login.css" />
     <Content Include="Content\CustomStyles\style.css" />
+    <Content Include="Content\CustomStyles\user\index.css" />
     <Content Include="Content\Images\loginPage.jpeg" />
+    <Content Include="Content\Images\movieInfoBackground.jpg" />
     <Content Include="Content\Images\userBackground.jfif" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -256,6 +258,7 @@
     </Compile>
     <Compile Include="Infastructure\Auth\AuthUtils.cs" />
     <Compile Include="Infastructure\Auth\CustomRoleProvider.cs" />
+    <Compile Include="Infastructure\CustomHtmlHelpers.cs" />
     <Compile Include="Infastructure\NinjectBinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AdminMovieSessionsViewModel.cs" />
@@ -290,6 +293,7 @@
     <Content Include="Views\Admin\SessionsList.cshtml" />
     <Content Include="Views\Admin\Customers.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\User\PlaceOrder.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -300,7 +304,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Error\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,64 @@ namespace CinemaPlanet.Domain.Core.DomainModels
             return (byte)Orders.Where(or => or.SeatType == seatType).Count();
         }
 
+        public bool IsSeatTypeAvailable(SeatType seatType)
+        {
+            bool isAvailable = false;
+            int orderedSeats = GetOrderedSeatsNumber(seatType);
+
+            switch (seatType)
+            {
+                case SeatType.Basic:
+                    {
+                        isAvailable = Auditorium.BasicSeatsCapacity > orderedSeats;
+                        break;
+                    }
+                case SeatType.Silver:
+                    {
+                        isAvailable = Auditorium.SilverSeatsCapacity > orderedSeats;
+                        break;
+                    }
+                case SeatType.Gold:
+                    {
+                        isAvailable = Auditorium.BasicSeatsCapacity > orderedSeats;
+                        break;
+                    }
+            }
+
+            return isAvailable;
+        }
+
+        public bool IsSessionAvailbale()
+        {
+            return Auditorium.GetSeatsCapacity() > Orders.Count;
+        }
+
+        public byte GetSeatNumber(SeatType seatType)
+        {
+            byte seatNumber = 0;
+
+            // seats are positioned as such that gold seats have the lowest numbers and basic seats have the highest seat numbers.
+            switch (seatType)
+            {
+                case SeatType.Gold:
+                    {
+                        seatNumber = (byte)(GetOrderedSeatsNumber(seatType) + 1);
+                        break;
+                    }
+                case SeatType.Silver:
+                    {
+                        seatNumber = (byte)(GetOrderedSeatsNumber(seatType) + Auditorium.GoldSeatsCapacity + 1);
+                        break;
+                    }
+                case SeatType.Basic:
+                    {
+                        seatNumber = (byte)(GetOrderedSeatsNumber(seatType) + Auditorium.GoldSeatsCapacity + Auditorium.SilverSeatsCapacity + 1);
+                        break;
+                    }
+            }
+            return seatNumber;
+        }
+
         public float GetExpectedRevenue()
         {
             var forBasicSeatsRevenue = Auditorium.BasicSeatsCapacity * Movie.BasicSeatPrice;
