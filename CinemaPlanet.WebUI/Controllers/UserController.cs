@@ -23,7 +23,14 @@ namespace CinemaPlanet.WebUI.Controllers
         // GET: User
         public ActionResult Index(string genre, int? year)
         {
-            var availableMovies = unitOfWork.Movies.GetAvailableMovies().ToList();
+            Genre? g;
+            if (String.IsNullOrEmpty(genre))
+                g = null;
+            else
+                g = (Genre)Enum.Parse(typeof(Genre), genre);
+
+            var availableMovies = unitOfWork.Movies.GetAvailableFilteredMovies(g, year);
+
             return View(availableMovies);
         }
 
@@ -53,6 +60,14 @@ namespace CinemaPlanet.WebUI.Controllers
             unitOfWork.Save();
 
             return View(newOrder.SeatNumber);
+        }
+
+        public ViewResult Orders()
+        {
+            var userName = HttpContext.User.Identity.Name;
+            var user = unitOfWork.Users.GetByCredentials(userName);
+            var orders = user.Orders;
+            return View(orders);
         }
     }
 }

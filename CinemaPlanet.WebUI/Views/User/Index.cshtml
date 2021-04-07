@@ -1,8 +1,11 @@
 ﻿@using CinemaPlanet.WebUI.Infastructure
+@using CinemaPlanet.Domain.Core.DomainModels
 @model IEnumerable<CinemaPlanet.Domain.Core.DomainModels.Movie>
 
 @{
     ViewBag.Title = "Main";
+    ViewBag.HeaderText = "Place your order";
+
 }
 
 @section AddToHead
@@ -10,62 +13,20 @@
     <link rel="stylesheet" href="~/Content/CustomStyles/user/index.css">
 }
 
-<h1 id="mainHeader" class="text-warning text-center display-4">Order your <i class="fas fa-chair"></i></h1>
-<div class="movies-container d-flex flex-wrap justify-content-center">
-    @foreach (var movie in Model)
-    {
-        <div class="movie-container m-2">
-            <div class="movie-image-box d-flex justify-content-center align-items-center">
-                <img class="mainImg" src=@movie.ImageUrl>
-                <div class="movie-info-container d-flex bg-dark p-4">
-                    <div class="order-table">
-                        <div class="additional-info-container">
-                            <h5 class="text-warning text-center"> @movie.ReleaseDate.Year (@movie.Genre)</h5>
-                        </div>
-                        <img class="order-table-img" src=@movie.ImageUrl>
-                        <div class="order-form-container p-3">
-                            @using (Html.BeginForm("PlaceOrder", "User", new { movieId = movie.Id }))
-                            {
-                                @Html.AntiForgeryToken();
-
-                                <div class="form-group">
-                                    <label class="form-label text-warning" for="sessionDate">Pick up date</label>
-                                    @Html.SessionDatesForMovieDropDown(movie, "date")
-                                </div>
-                                <div class="form-group text-warning">
-                                    <label for="seatType">Pick up seat</label>
-                                    @Html.AvailableSeatsForMovieDropDown(movie, "seatType")
-                                </div>
-                                <div class="price-container d-inline">
-                                    <span data-seat-type="basic" class="h3 text-warning price basic">@movie.BasicSeatPrice$</span>
-                                    <span data-seat-type="silver" class="h3 text-warning price silver invisible">@movie.SilverSeatPrice$</span>
-                                    <span data-seat-type="gold" class="h3 text-warning price gold invisible">@movie.GoldSeatPrice$</span>
-                                </div>                          
-                                <button type="submit" class="btn btn-success ml-2">Order </button>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-
-@*<a id="filterLink" href="User">Filter</a>
-
-    <div class="form-group">
-        <label for="genresList" class="form-label">Genre</label>
+<div class="col-10 d-flex flex-column justify-content-center flex-sm-row align-items-sm-end mx-auto">
+    <div class="mr-sm-2 mb-2 mb-sm-0">
+        <label for="genresList" class="form-label text-warning">By Genre</label>
         <select id="genresList" class="form-control drop-filter">
             <option selected>Any Genre</option>
             @foreach (var genre in Enum.GetNames(typeof(Genre)))
             {
-                <option>@genre </option>
+                <option>@genre</option>
             }
         </select>
     </div>
 
-    <div class="form-group">
-        <label for="yearsList" class="form-label">Release Year</label>
+    <div class="mr-sm-2 mb-2 mb-sm-0">
+        <label for="yearsList" class="form-label text-warning">By Release Year</label>
         <select id="yearsList" class="form-control drop-filter">
             <option selected>Any Year</option>
             @for (int i = 1990; i <= DateTime.Now.Year; i++)
@@ -73,7 +34,61 @@
                 <option>@i</option>
             }
         </select>
-    </div>*@
+    </div>
+
+    <a href="user" id="filterLink" class="btn btn-primary h-50 mt-2">Filter</a>
+</div>
+
+@if (Model.Count() > 0)
+{
+    <div class="movies-container d-flex flex-wrap justify-content-center">
+        @foreach (var movie in Model)
+        {
+            <div class="movie-container m-2">
+                <div class="movie-image-box d-flex justify-content-center align-items-center">
+                    <img class="mainImg" src=@movie.ImageUrl>
+                    <div class="movie-info-container bg-dark p-3 bo border border-warning rounded">
+                        <div class="order-table">
+                            <div class="name-container">
+                                <h4 class="text-center text-warning m-0">@movie.Name</h4>
+                                <hr />
+                            </div>
+                            <div class="additional-info-container">
+                                <h5 class="text-warning text-center"> @movie.ReleaseDate.Year (@movie.Genre)</h5>
+                            </div>
+                            <img class="order-table-img" src=@movie.ImageUrl>
+                            <div class="order-form-container px-1 text-center">
+                                @using (Html.BeginForm("PlaceOrder", "User", new { movieId = movie.Id }))
+                                {
+                                    @Html.AntiForgeryToken();
+
+                                    <div class="form-group">
+                                        <label class="form-label text-warning" for="sessionDate">Pick up date</label>
+                                        @Html.SessionDatesForMovieDropDown(movie, "date")
+                                    </div>
+                                    <div class="form-group text-warning">
+                                        <label for="seatType">Pick up seat</label>
+                                        @Html.AvailableSeatsForMovieDropDown(movie, "seatType")
+                                    </div>
+                                    <div class="price-container d-inline">
+                                        <span data-seat-type="basic" class="h3 text-warning price basic">@movie.BasicSeatPrice$</span>
+                                        <span data-seat-type="silver" class="h3 text-warning price silver invisible">@movie.SilverSeatPrice$</span>
+                                        <span data-seat-type="gold" class="h3 text-warning price gold invisible">@movie.GoldSeatPrice$</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-success ml-2">Order </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else 
+{
+  <h3 class="no-entries-message text-warning text-center mt-3">No Entries Found :(</h3>
+}
 
 
 @section Scripts
@@ -96,8 +111,9 @@
 
             const showMovieInfoClass = 'movie-info-container-displayed';
 
-            $('img').click((e) => {
+            $('.mainImg').click((e) => {
                 e.stopPropagation();
+                $('.movie-info-container').removeClass(showMovieInfoClass);
                 $(e.target).siblings().addClass(showMovieInfoClass);
             });
 
@@ -106,7 +122,7 @@
             });
 
             $(document).click(() => {
-                $('img').siblings().removeClass(showMovieInfoClass);
+                $('.mainImg').siblings().removeClass(showMovieInfoClass);
             });
 
             $('.form-control[name="seatType"]').change((e) => {
@@ -123,7 +139,7 @@
                             $(ps).addClass("invisible");
                     }
                 });
-            });          
+            });
         });
     </script>
 }

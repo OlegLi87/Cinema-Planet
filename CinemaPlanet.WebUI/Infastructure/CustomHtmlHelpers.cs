@@ -38,7 +38,6 @@ namespace CinemaPlanet.WebUI.Infastructure
         {
             TagBuilder selectTag = new TagBuilder("select");
             selectTag.AddCssClass("form-control");
-            selectTag.Attributes.Add("id", id);
             selectTag.Attributes.Add("name", id);
 
             foreach (var item in items)

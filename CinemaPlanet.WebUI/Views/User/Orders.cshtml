@@ -1,0 +1,32 @@
+﻿@model IEnumerable<CinemaPlanet.Domain.Core.DomainModels.Order>
+
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HeaderText = ViewContext.RequestContext.HttpContext.User.Identity.Name + "'s" + " orders";
+}
+
+@section AddToHead 
+    {
+      <style>
+          h4 {
+              font-size: clamp(0.6rem ,5vw, 1.15rem);
+              padding-left: 1rem;
+          }
+      </style>
+    }
+
+@foreach (var order in Model)
+{
+    <div class="jumbotron p-2 col-11 col-sm-10 col-md-8 mx-auto bg-warning">
+        <h4>Order ID : #@order.Id</h4>
+        <h4>Movie: @order.MovieSession.Movie.Name</h4>
+        <h4>Auditorium: @order.MovieSession.Auditorium.Name</h4>
+        <h4>Date: @order.MovieSession.SessionDate.ToString("dd-MM-yyyy")</h4>
+        <h4>Seat Number: @order.SeatNumber</h4>
+    </div>
+}
+
+
+
+

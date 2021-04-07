@@ -36,7 +36,7 @@ namespace CinemaPlanet.WebUI.Controllers
                 var userInDb = unitOfWork.Users.GetByCredentials(user.UserName);
                 if (userInDb != null)
                 {
-                    ModelState.AddModelError("UserName", "User Name allready taken.");
+                    ModelState.AddModelError("UserName", "User Name allready exist.");
                     return View("LoginForm");
                 }
 

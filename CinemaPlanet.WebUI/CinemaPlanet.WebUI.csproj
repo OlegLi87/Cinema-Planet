@@ -282,8 +282,6 @@
     <Content Include="Views\Admin\Auditoriums.cshtml" />
     <Content Include="Views\Admin\Movies.cshtml" />
     <Content Include="Views\Admin\Sessions.cshtml" />
-    <Content Include="Views\Admin\Orders.cshtml" />
-    <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Shared\_NavTabs.cshtml" />
     <Content Include="Views\Shared\_AuditoriumForm.cshtml" />
     <Content Include="Views\Admin\EditAuditorium.cshtml" />
@@ -294,6 +292,7 @@
     <Content Include="Views\Admin\Customers.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\User\PlaceOrder.cshtml" />
+    <Content Include="Views\User\Orders.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -304,7 +303,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CinemaPlanet.Domain\CinemaPlanet.Domain.csproj">

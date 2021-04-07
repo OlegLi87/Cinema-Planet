@@ -9,6 +9,6 @@ namespace CinemaPlanet.Domain.Core.Repositories
 {
     public interface IMovieRepository : IRepository<Movie>
     {
-        IEnumerable<Movie> GetAvailableMovies();
+        IEnumerable<Movie> GetAvailableFilteredMovies(Genre? genre, int? releaseYear);
     }
 }

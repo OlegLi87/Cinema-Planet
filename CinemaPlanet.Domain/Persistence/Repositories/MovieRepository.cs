@@ -15,13 +15,32 @@ namespace CinemaPlanet.Domain.Persistence.Repositories
         {
         }
 
-        public IEnumerable<Movie> GetAvailableMovies()
+        public IEnumerable<Movie> GetAvailableFilteredMovies(Genre? genre, int? releaseYear)
         {
-            return context.Set<MovieSession>()
+            var availableMovies = context.Set<MovieSession>()
                  .Include(ms => ms.Movie)
                  .Where(ms => ms.Orders.Count < ms.Auditorium.BasicSeatsCapacity + ms.Auditorium.SilverSeatsCapacity + ms.Auditorium.GoldSeatsCapacity)
                  .Select(ms => ms.Movie)
-                 .Distinct();
+                 .Distinct()
+                 .ToList();
+
+            Func<Movie, bool> genrePredicate, yearPredicate;
+
+            if (genre == null)
+                genrePredicate = m => true;
+            else
+                genrePredicate = m => m.Genre == genre;
+
+            if (releaseYear == null)
+                yearPredicate = m => true;
+            else
+                yearPredicate = m => m.ReleaseDate.Year == releaseYear;
+
+            var filteredMovie = availableMovies
+                                  .Where(genrePredicate)
+                                  .Where(yearPredicate);
+
+            return filteredMovie;
         }
     }
 }
