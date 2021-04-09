@@ -3,8 +3,8 @@
 }
 
 body {
-    background-image: url("../../Content/Images/userBackground.jfif");
-    background-size: cover;
+     background-image: url("../../Content/Images/userBackground.jfif");
+     background-size: cover;
 }
 
 .navbar {
@@ -29,7 +29,7 @@ body {
 
 .form-control.input-validation-error {
     border: 3px solid #DC3545;
-    box-shadow : none !important;
+    box-shadow: none !important;
 }
 
 .back-link-icon {
@@ -37,7 +37,7 @@ body {
 }
 
 .fas.fa-arrow-circle-left {
-    display:inline-block;
+    display: inline-block;
     font-size: clamp(1.5rem,7vw,3rem);
 }
 
