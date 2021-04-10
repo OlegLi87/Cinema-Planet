@@ -26,8 +26,6 @@ namespace CinemaPlanet.Domain.Persistence.EntityConfigurations
             HasMany(u => u.Orders)
                 .WithRequired(o => o.User)
                 .HasForeignKey(o => o.UserId);
-
-
         }
     }
 }

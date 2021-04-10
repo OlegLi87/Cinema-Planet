@@ -18,6 +18,7 @@ namespace CinemaPlanet.Domain.Persistence
         public IMovieSessionRepository MovieSessions { get; private set; }
         public IUserRepository Users { get; private set; }
         public IOrderRepository Orders { get; private set; }
+        public IJWTSecretRepository JWTSecrets { get; set; }
 
         public UnitOfWork(CinemaPlanetContext context)
         {
@@ -27,6 +28,7 @@ namespace CinemaPlanet.Domain.Persistence
             MovieSessions = new MovieSessionRepository(context);
             Users = new UserRepository(context);
             Orders = new OrderRepository(context);
+            JWTSecrets = new JWTSecretRepository(context);
         }
 
         public void Save()

@@ -1,3 +1,4 @@
+using CinemaPlanet.WebApi.Infastructure.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;

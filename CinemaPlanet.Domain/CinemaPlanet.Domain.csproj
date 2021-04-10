@@ -81,7 +81,9 @@
     <Compile Include="Core\DomainModels\Order.cs" />
     <Compile Include="Core\DomainModels\SeatType.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\DomainModels\JWTSecret.cs" />
     <Compile Include="Core\Repositories\IAuditoriumRepository.cs" />
+    <Compile Include="Core\Repositories\IJWTSecretRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
     <Compile Include="Core\Repositories\IMovieRepository.cs" />
     <Compile Include="Core\Repositories\IMovieSessionRepository.cs" />
@@ -127,14 +129,29 @@
     <Compile Include="Migrations\202104021621014_SessionDateColumnAddedToMovieSessionTable.designer.cs">
       <DependentUpon>202104021621014_SessionDateColumnAddedToMovieSessionTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104101541391_JWTSecretsTableAdded.cs" />
+    <Compile Include="Migrations\202104101541391_JWTSecretsTableAdded.designer.cs">
+      <DependentUpon>202104101541391_JWTSecretsTableAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104101556167_NameColumnAddedToJWTSecretsTable.cs" />
+    <Compile Include="Migrations\202104101556167_NameColumnAddedToJWTSecretsTable.designer.cs">
+      <DependentUpon>202104101556167_NameColumnAddedToJWTSecretsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104101639063_JWTTokenColumnAddedToUsersTable.cs" />
+    <Compile Include="Migrations\202104101639063_JWTTokenColumnAddedToUsersTable.designer.cs">
+      <DependentUpon>202104101639063_JWTTokenColumnAddedToUsersTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\CinemaPlanetContext.cs" />
     <Compile Include="Persistence\EntityConfigurations\AuditoriumConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\JWTSecretConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\RoleConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\MovieConfiguration.cs" />
     <Compile Include="Persistence\EntityConfigurations\MovieSessionConfiguration.cs" />
     <Compile Include="Persistence\Repositories\AuditoriumRepository.cs" />
+    <Compile Include="Persistence\Repositories\DBContext.cs" />
+    <Compile Include="Persistence\Repositories\JWTSecretRepository.cs" />
     <Compile Include="Persistence\Repositories\UserRepository.cs" />
     <Compile Include="Persistence\Repositories\MovieRepository.cs" />
     <Compile Include="Persistence\Repositories\MovieSessionRepository.cs" />
@@ -178,6 +195,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104021621014_SessionDateColumnAddedToMovieSessionTable.resx">
       <DependentUpon>202104021621014_SessionDateColumnAddedToMovieSessionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104101541391_JWTSecretsTableAdded.resx">
+      <DependentUpon>202104101541391_JWTSecretsTableAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104101556167_NameColumnAddedToJWTSecretsTable.resx">
+      <DependentUpon>202104101556167_NameColumnAddedToJWTSecretsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104101639063_JWTTokenColumnAddedToUsersTable.resx">
+      <DependentUpon>202104101639063_JWTTokenColumnAddedToUsersTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

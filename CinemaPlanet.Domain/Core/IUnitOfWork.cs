@@ -14,6 +14,7 @@ namespace CinemaPlanet.Domain.Core
         IMovieSessionRepository MovieSessions { get; }
         IUserRepository Users { get; }
         IOrderRepository Orders { get; }
+        IJWTSecretRepository JWTSecrets { get; }
         void Save();
     }
 }
