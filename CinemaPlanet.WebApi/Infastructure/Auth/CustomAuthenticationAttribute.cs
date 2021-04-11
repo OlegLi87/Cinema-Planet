@@ -18,7 +18,6 @@ namespace CinemaPlanet.WebApi.Infastructure.Auth
     {
         public async Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
-            string authParameter = string.Empty;
             HttpRequestMessage request = context.Request;
             AuthenticationHeaderValue authHeader = request.Headers.Authorization;
 

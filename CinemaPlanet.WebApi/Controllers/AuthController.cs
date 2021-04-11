@@ -9,7 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Controllers;
 
 namespace CinemaPlanet.WebApi.Controllers
 {
@@ -24,6 +27,7 @@ namespace CinemaPlanet.WebApi.Controllers
         }
 
         [HttpPost]
+        [Route("api/auth/signup")]
         public HttpResponseMessage SignUp(User newUser)
         {
             var userIndb = unitOfWork.Users.GetByCredentials(newUser.UserName);
@@ -40,18 +44,36 @@ namespace CinemaPlanet.WebApi.Controllers
             unitOfWork.Save();
 
             return Request.CreateResponse(HttpStatusCode.Created, token);
+
+
+        }
+
+        [HttpPost]
+        [Route("api/auth/signin")]
+        public HttpResponseMessage SignIn(User user)
+        {
+            var hashedPasword = AuthUtils.GenerateBase64HashPassword(user.Password);
+            var userInDb = unitOfWork.Users.GetByCredentials(user.UserName, hashedPasword);
+            if (userInDb == null)
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Credentials are invalid");
+
+            var token = TokenManager.GenerateToken(userInDb);
+            userInDb.JWTToken = token;
+            unitOfWork.Save();
+            return Request.CreateResponse(HttpStatusCode.OK, token);
         }
 
         [HttpGet]
-        public HttpResponseMessage SignIn(User user)
+        [CustomAuthentication]
+        [Route("api/auth/signout")]
+        public HttpResponseMessage SignOut()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, "Logged id.");
+            var username = ControllerContext.RequestContext.Principal.Identity.Name;
+            var userInDb = unitOfWork.Users.GetByCredentials(username);
+            userInDb.JWTToken = null;
+            unitOfWork.Save();
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
-
-        //public void SignOut()
-        //{
-
-        //}
 
         protected override void Dispose(bool disposing)
         {

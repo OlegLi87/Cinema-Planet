@@ -9,6 +9,7 @@ using System.Web.Http;
 namespace CinemaPlanet.WebApi.Controllers
 {
     [CustomAuthentication]
+    [Authorize(Roles = "Admin")]
     public class AdminController : ApiController
     {
         public string Get()
