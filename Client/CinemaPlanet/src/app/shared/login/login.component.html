@@ -1,1 +1,58 @@
-<p>login works!</p>
+<div class="container h-100">
+  <div class="row h-100 d-flex justify-content-center align-items-center">
+    <div class="col-md-8 col-lg-6 mx-auto">
+      <div class="form-container rounded py-5 px-4 p-sm-5">
+        <form #signUpForm="ngForm">
+          <div class="form-group">
+            <label for="username" class="form-label">User Name</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              required
+              minlength="5"
+              name="username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              required
+              minlength="6"
+              name="password"
+            />
+          </div>
+          <div class="form-group" *ngIf="isInSignUpMode">
+            <label for="birthDate">Birth Date</label>
+            <input type="date" id="birthDate" class="form-control" />
+          </div>
+          <div class="form-group buttons mt-4">
+            <button type="submit" class="btn btn-success">Login</button>
+            <button type="reset" class="btn btn-warning ml-4">Reset</button>
+          </div>
+          <div class="text-white mt-2 text-right">
+            <div class="login-mode-text" *ngIf="!isInSignUpMode">
+              New User?
+              <span
+                class="text-success lead change-mode-link ml-1"
+                (click)="toggleLoginMode()"
+                >Sign Up</span
+              >
+            </div>
+            <div class="login-mode-text" *ngIf="isInSignUpMode">
+              Got an Account?
+              <span
+                class="text-success lead change-mode-link ml-1"
+                (click)="toggleLoginMode()"
+                >Sign In</span
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
