@@ -1,6 +1,6 @@
 import { HttpAuthService } from './http_services/httpAuthService.service';
 import { BehaviorSubject } from 'rxjs';
-import { USER_STREAM } from './dependency_providers/user.provider';
+import { USER_STREAM } from '../infastructure/dependency_providers/userStream.provider';
 import { LocalStorageService } from './localStorage.service';
 import { Inject, Injectable } from '@angular/core';
 import { User } from '../models/user';

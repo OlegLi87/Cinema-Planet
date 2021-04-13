@@ -1,9 +1,8 @@
-import { HttpAuthService } from './services/http_services/httpAuthService.service';
 import { BehaviorSubject } from 'rxjs';
 import { User } from './models/user';
-import { LocalStorageService } from './services/localStorage.service';
 import { Component, Inject, OnInit } from '@angular/core';
-import { USER_STREAM } from './services/dependency_providers/user.provider';
+import { USER_STREAM } from './infastructure/dependency_providers/userStream.provider';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,16 +11,15 @@ import { USER_STREAM } from './services/dependency_providers/user.provider';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private service: LocalStorageService,
-    private httpAuthService: HttpAuthService,
-    @Inject(USER_STREAM) readonly $stream: BehaviorSubject<User>
+    @Inject(USER_STREAM) readonly $userStream: BehaviorSubject<User>,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    console.log('app initialized');
-  }
-
-  send() {
-    //this.httpAuthService.validateToken();
+    this.$userStream.subscribe((user) => {
+      if (!user) this.router.navigate(['login']);
+      else if (user.role === 'Admin') this.router.navigate(['admin/main']);
+      else if (user.role === 'User') this.router.navigate(['main']);
+    });
   }
 }
