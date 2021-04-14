@@ -13,9 +13,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using System.Web.Http.Cors;
 
 namespace CinemaPlanet.WebApi.Controllers
 {
+    [EnableCors(headers: "*", origins: "*", methods: "*")]
     public class AuthController : ApiController
     {
         IUnitOfWork unitOfWork;
@@ -44,8 +46,6 @@ namespace CinemaPlanet.WebApi.Controllers
             unitOfWork.Save();
 
             return Request.CreateResponse(HttpStatusCode.Created, token);
-
-
         }
 
         [HttpPost]
@@ -55,7 +55,7 @@ namespace CinemaPlanet.WebApi.Controllers
             var hashedPasword = AuthUtils.GenerateBase64HashPassword(user.Password);
             var userInDb = unitOfWork.Users.GetByCredentials(user.UserName, hashedPasword);
             if (userInDb == null)
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Credentials are invalid");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Credentials are invalid.");
 
             var token = TokenManager.GenerateToken(userInDb);
             userInDb.JWTToken = token;
@@ -68,10 +68,16 @@ namespace CinemaPlanet.WebApi.Controllers
         [Route("api/auth/signout")]
         public HttpResponseMessage SignOut()
         {
-            var username = ControllerContext.RequestContext.Principal.Identity.Name;
-            var userInDb = unitOfWork.Users.GetByCredentials(username);
-            userInDb.JWTToken = null;
-            unitOfWork.Save();
+            string token = Request.Headers.Authorization.Parameter;
+            TokenManager.RemoveToken(token);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpGet]
+        [CustomAuthentication]
+        [Route("api/auth/validateToken")]
+        public HttpResponseMessage ValidateToken()
+        {
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 

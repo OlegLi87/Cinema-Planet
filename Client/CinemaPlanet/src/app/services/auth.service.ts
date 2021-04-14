@@ -1,9 +1,10 @@
+import { LoginCredentials } from './../models/login-credentials.model';
 import { HttpAuthService } from './http_services/httpAuthService.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { USER_STREAM } from '../infastructure/dependency_providers/userStream.provider';
 import { LocalStorageService } from './localStorage.service';
 import { Inject, Injectable } from '@angular/core';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import jwtDecode from 'jwt-decode';
 
 @Injectable({
@@ -18,33 +19,62 @@ export class AuthService {
     @Inject(USER_STREAM) private $userStream: BehaviorSubject<User>
   ) {}
 
-  async streamUser(): Promise<void> {
+  async streamUserAtAppInit(): Promise<void> {
     const user = await this.getUser();
     this.$userStream.next(user);
   }
 
-  private async getUser(): Promise<User> {
-    try {
-      const token = this.localStorageService.getItem(this.LOCAL_STORAGE_KEY);
-      const payload: { [key: string]: string } = jwtDecode(token);
-      const isValidToken = await this.validateToken(token);
-      if (!isValidToken) {
-        this.localStorageService.removeItem(this.LOCAL_STORAGE_KEY);
-        return null;
-      } else return new User(payload.userName, payload.role, token);
-    } catch (e) {
-      return null;
-    }
+  login(loginCredentials: LoginCredentials): Promise<void | string> {
+    let $loginStream: Observable<any>;
+    if (loginCredentials.birthDate)
+      $loginStream = this.httpAuthService.signUp(loginCredentials);
+    else $loginStream = this.httpAuthService.signIn(loginCredentials);
+
+    return new Promise((res, rej) => {
+      // imitating network latency
+      setTimeout(() => {
+        $loginStream.subscribe(
+          (token) => {
+            const user = this.createUserFromToken(token);
+            if (user)
+              this.localStorageService.saveItem(this.LOCAL_STORAGE_KEY, token);
+            //this.$userStream.next(user);
+            console.log('in auth', user);
+            res();
+          },
+          (err) => rej(err)
+        );
+      }, 2000);
+    });
   }
 
-  private async validateToken(token: string): Promise<boolean> {
+  private async getUser(): Promise<User> {
+    const token = this.localStorageService.getItem(this.LOCAL_STORAGE_KEY);
+    if (!token) return null;
+    const isValidToken = await this.validateToken(token);
+    if (!isValidToken) {
+      this.localStorageService.removeItem(this.LOCAL_STORAGE_KEY);
+      return null;
+    } else return this.createUserFromToken(token);
+  }
+
+  private validateToken(token: string): Promise<boolean> {
     const $validationStream = this.httpAuthService.validateToken(token);
-    const isValid: boolean = await new Promise((res) => {
+    return new Promise((res) => {
       $validationStream.subscribe(
         (rs) => res(true),
         (err) => res(false)
       );
     });
-    return isValid;
+  }
+
+  private createUserFromToken(token: string): User {
+    try {
+      const payload: { [key: string]: string } = jwtDecode(token);
+      const user = new User(payload.name, payload.role, token);
+      return user;
+    } catch (err) {
+      return null;
+    }
   }
 }

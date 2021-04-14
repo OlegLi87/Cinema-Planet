@@ -2,36 +2,124 @@
   <div class="row h-100 d-flex justify-content-center align-items-center">
     <div class="col-md-8 col-lg-6 mx-auto">
       <div class="form-container rounded py-5 px-4 p-sm-5">
-        <form #signUpForm="ngForm">
+        <div
+          class="login-error-container text-center"
+          *ngIf="loginErrorMessage"
+        >
+          <span class="text-danger">{{ loginErrorMessage }}</span>
+        </div>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
           <div class="form-group">
             <label for="username" class="form-label">User Name</label>
-            <input
-              type="text"
-              id="username"
-              class="form-control"
-              required
-              minlength="5"
-              name="username"
-            />
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <span><i class="fas fa-user"></i></span>
+                </div>
+              </div>
+              <input
+                type="text"
+                id="username"
+                class="form-control"
+                required
+                minlength="4"
+                ngModel
+                name="username"
+                #username="ngModel"
+              />
+            </div>
+            <div
+              class="error-message-container text-danger"
+              *ngIf="username.touched && username.invalid"
+            >
+              <small *ngIf="username.errors.required"
+                >User name required.</small
+              >
+              <small *ngIf="username.errors.minlength"
+                >Must be 4 characters at least.</small
+              >
+            </div>
           </div>
           <div class="form-group">
             <label for="password" class="form-label">Password</label>
-            <input
-              type="password"
-              id="password"
-              class="form-control"
-              required
-              minlength="6"
-              name="password"
-            />
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <span><i class="fas fa-key"></i></span>
+                </div>
+              </div>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                required
+                minlength="5"
+                ngModel
+                name="password"
+                #password="ngModel"
+              />
+            </div>
+            <div
+              class="error-message-container text-danger"
+              *ngIf="password.touched && password.invalid"
+            >
+              <small *ngIf="password.errors.required">Password required.</small>
+              <small *ngIf="password.errors.minlength"
+                >Must be 5 characters at least.</small
+              >
+            </div>
           </div>
           <div class="form-group" *ngIf="isInSignUpMode">
             <label for="birthDate">Birth Date</label>
-            <input type="date" id="birthDate" class="form-control" />
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <span class="far fa-calendar"></span>
+                </div>
+              </div>
+              <input
+                type="date"
+                id="birthDate"
+                class="form-control"
+                required
+                birthDate
+                ngModel
+                name="birthDate"
+                #birthDate="ngModel"
+              />
+            </div>
+            <div
+              class="error-message-container text-danger"
+              *ngIf="birthDate.touched && birthDate.invalid"
+            >
+              <small *ngIf="birthDate.errors.required"
+                >Birth Date required.</small
+              >
+              <small *ngIf="!birthDate.errors.required && birthDate.errors.age"
+                >You must be 18 years old at least.</small
+              >
+            </div>
           </div>
           <div class="form-group buttons mt-4">
-            <button type="submit" class="btn btn-success">Login</button>
-            <button type="reset" class="btn btn-warning ml-4">Reset</button>
+            <button
+              id="btnSubmit"
+              type="submit"
+              class="btn"
+              [ngClass]="{
+                'btn-outline-success': !form.invalid,
+                'btn-outline-danger': form.invalid
+              }"
+              [disabled]="form.invalid"
+            >
+              {{ isInSignUpMode ? "Sign Up" : "Sign In" }}
+            </button>
+            <button
+              id="btnReset"
+              type="reset"
+              class="btn btn-outline-warning ml-4"
+            >
+              Reset
+            </button>
           </div>
           <div class="text-white mt-2 text-right">
             <div class="login-mode-text" *ngIf="!isInSignUpMode">
@@ -52,6 +140,9 @@
             </div>
           </div>
         </form>
+        <div class="spinner-container" *ngIf="isLoading">
+          <loading-spinner></loading-spinner>
+        </div>
       </div>
     </div>
   </div>

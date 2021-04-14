@@ -1,12 +1,12 @@
 import { BehaviorSubject } from 'rxjs';
-import { User } from './models/user';
+import { User } from './models/user.model';
 import { Component, Inject, OnInit } from '@angular/core';
 import { USER_STREAM } from './infastructure/dependency_providers/userStream.provider';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: '<router-outlet></router-outlet>',
   styleUrls: ['./app.component.sass'],
 })
 export class AppComponent implements OnInit {

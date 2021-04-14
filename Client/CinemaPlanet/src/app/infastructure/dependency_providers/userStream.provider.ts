@@ -1,4 +1,4 @@
-import { User } from '../../models/user';
+import { User } from '../../models/user.model';
 import { InjectionToken, Provider } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 

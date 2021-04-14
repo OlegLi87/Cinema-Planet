@@ -58,8 +58,11 @@ namespace CinemaPlanet.WebApi.Infastructure.Auth
                 ClaimsPrincipal principal = tokenHandler.ValidateToken(token, validationParams, out securityToken);
                 return principal;
             }
-            catch
+            catch (Exception ex)
             {
+                if (ex is SecurityTokenValidationException)
+                    RemoveToken(token);
+
                 return null;
             }
         }
@@ -80,19 +83,39 @@ namespace CinemaPlanet.WebApi.Infastructure.Auth
                 return false;
             }
 
-            Claim usernNameClaim = identity.FindFirst(ClaimTypes.Name);
-            string username = usernNameClaim.Value;
+            Claim userNameClaim = identity.FindFirst(ClaimTypes.Name);
+            string username = userNameClaim.Value;
 
             IKernel kernel = new StandardKernel(new NinjectBinding());
             IUnitOfWork unitOfWork = kernel.Get<IUnitOfWork>();
 
-            var user = unitOfWork.Users.GetByCredentials(username);
+            var userInDb = unitOfWork.Users.GetByCredentials(username);
             unitOfWork.Dispose();
 
-            if (user == null || user.JWTToken != token)
+            if (userInDb == null || userInDb.JWTToken != token)
                 return false;
 
             return true;
+        }
+
+        public static void RemoveToken(string token)
+        {
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jwtToken = (JwtSecurityToken)handler.ReadToken(token);
+            string username = (string)(jwtToken.Payload.ContainsKey("name") ? jwtToken.Payload["name"] : null);
+            if (username == null) return;
+
+            IKernel kernel = new StandardKernel(new NinjectBinding());
+            using (IUnitOfWork unitOfWork = kernel.Get<IUnitOfWork>())
+            {
+                var userInDb = unitOfWork.Users.GetByCredentials(username);
+                if (userInDb == null) return;
+                if (userInDb.JWTToken == token)
+                {
+                    userInDb.JWTToken = null;
+                    unitOfWork.Save();
+                }
+            }
         }
 
         static string getSecretKey()

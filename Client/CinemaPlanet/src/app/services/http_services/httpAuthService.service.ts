@@ -1,5 +1,6 @@
+import { LoginCredentials } from './../../models/login-credentials.model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,16 +11,19 @@ export class HttpAuthService {
 
   constructor(private httpClient: HttpClient) {}
 
-  signUp() {}
+  signUp(loginCredentials: LoginCredentials): Observable<any> {
+    return this.httpClient.post(this.URL + '/signup', loginCredentials);
+  }
 
-  signIn() {}
+  signIn(loginCredentials: LoginCredentials): Observable<any> {
+    return this.httpClient.post(this.URL + '/signin', loginCredentials);
+  }
 
   signOut() {}
 
-  validateToken(token: string): Observable<HttpResponse<any>> {
+  validateToken(token: string): Observable<any> {
     return this.httpClient.get(this.URL + '/validateToken', {
       headers: { Authorization: 'Bearer ' + token },
-      observe: 'response',
     });
   }
 }

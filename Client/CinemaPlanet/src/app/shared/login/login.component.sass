@@ -1,3 +1,8 @@
+@import "../../_partial"
+
+$mainGreen: map-get($colors,"mainGreen")
+$mainYellow: map-get($colors,"mainYellow")
+
 :host
     display: block
     height: 100vh
@@ -8,6 +13,7 @@
         
 .form-container
     background: rgba(1,23,82,0.5)
+    position: relative
 
     form
         label
@@ -16,7 +22,31 @@
         .change-mode-link
             cursor: pointer
             &:hover
-                color: rgb(52, 235, 164) !important
+                color: $mainGreen !important
 
+        .ng-invalid.ng-touched
+            @include invalidInputField()
+            
+        .error-message-container
+            line-height: 1rem
 
-  
+        #btnSubmit.btn-outline-success
+            color: $mainGreen !important
+            border-color: $mainGreen !important
+            &:hover            
+                color: #fff !important
+                background-color: $mainGreen
+
+        #btnReset
+            border-color: $mainYellow !important
+            color: $mainYellow !important
+            &:hover
+                color: #000 !important
+                background-color: $mainYellow
+   
+    .spinner-container
+        height: 100%
+        width: 100%
+        position: absolute
+        left:0 
+        top: 0
