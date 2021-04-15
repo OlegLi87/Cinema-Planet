@@ -18,8 +18,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.$userStream.subscribe((user) => {
       if (!user) this.router.navigate(['login']);
-      else if (user.role === 'Admin') this.router.navigate(['admin/main']);
-      else if (user.role === 'User') this.router.navigate(['main']);
+      else if (user.role === 'User') this.router.navigate(['']);
+      else if (user.role === 'Admin') this.router.navigate(['admin']);
     });
   }
 }

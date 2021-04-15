@@ -38,13 +38,20 @@ export class AuthService {
             const user = this.createUserFromToken(token);
             if (user)
               this.localStorageService.saveItem(this.LOCAL_STORAGE_KEY, token);
-            //this.$userStream.next(user);
-            console.log('in auth', user);
+            this.$userStream.next(user);
             res();
           },
           (err) => rej(err)
         );
       }, 2000);
+    });
+  }
+
+  logout(): void {
+    const token = this.localStorageService.getItem(this.LOCAL_STORAGE_KEY);
+    this.httpAuthService.signOut(token).subscribe((res) => {
+      this.localStorageService.removeItem(this.LOCAL_STORAGE_KEY);
+      this.$userStream.next(null);
     });
   }
 

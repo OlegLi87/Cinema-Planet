@@ -19,7 +19,11 @@ export class HttpAuthService {
     return this.httpClient.post(this.URL + '/signin', loginCredentials);
   }
 
-  signOut() {}
+  signOut(token: string): Observable<any> {
+    return this.httpClient.get(this.URL + '/signout', {
+      headers: { Authorization: 'Bearer ' + token },
+    });
+  }
 
   validateToken(token: string): Observable<any> {
     return this.httpClient.get(this.URL + '/validateToken', {

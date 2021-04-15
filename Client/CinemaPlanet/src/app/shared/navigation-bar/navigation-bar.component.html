@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a
+    class="navbar-brand"
+    [routerLink]="navigationContext.homeUrl"
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    ><i class="fas fa-film"></i> Cinema Planet</a
+  >
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navContent"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navContent">
+    <div class="navbar-nav">
+      <a
+        *ngFor="let link of navigationContext.navLinks"
+        class="nav-item nav-link"
+        [routerLink]="link.url"
+        [routerLinkActive]="'active'"
+        >{{ link.linkName }}</a
+      >
+      <a class="nav-item nav-link" href="#" (click)="logout($event)">Log out</a>
+    </div>
+  </div>
+</nav>
