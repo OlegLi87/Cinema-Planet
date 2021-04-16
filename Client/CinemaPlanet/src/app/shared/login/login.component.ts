@@ -1,4 +1,3 @@
-import { logging } from 'protractor';
 import { AuthService } from './../../services/auth.service';
 import { LoginCredentials } from './../../models/login-credentials.model';
 import { Component, OnInit } from '@angular/core';

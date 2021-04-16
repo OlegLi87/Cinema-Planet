@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../../models/user.model';
+import { AuthRole, User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +25,9 @@ export class MainGuardService implements CanActivate {
 
     if (path === 'login' && !user) {
       return true;
-    } else if (path === 'admin' && user?.role === 'Admin') {
+    } else if (path === 'admin' && user?.role === AuthRole.Admin) {
       return true;
-    } else if (path === '' && user?.role === 'User') return true;
+    } else if (path === 'app' && user?.role === AuthRole.User) return true;
 
     return false;
   }

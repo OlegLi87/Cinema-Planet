@@ -1,4 +1,4 @@
-import { User } from './../models/user.model';
+import { AuthRole, User } from './../models/user.model';
 import { BehaviorSubject } from 'rxjs';
 import { USER_STREAM } from './../infastructure/dependency_providers/userStream.provider';
 import { Inject, Injectable } from '@angular/core';
@@ -17,7 +17,7 @@ export class NavigationContextProviderService {
   getNavigationContext(): NavigationContext {
     const user = this.$userStream.value;
     if (!user) return null;
-    else if (user.role === 'Admin')
+    else if (user.role === AuthRole.Admin)
       return {
         homeUrl: '/admin',
         navLinks: [

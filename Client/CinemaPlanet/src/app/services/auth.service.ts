@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { USER_STREAM } from '../infastructure/dependency_providers/userStream.provider';
 import { LocalStorageService } from './localStorage.service';
 import { Inject, Injectable } from '@angular/core';
-import { User } from '../models/user.model';
+import { AuthRole, User } from '../models/user.model';
 import jwtDecode from 'jwt-decode';
 
 @Injectable({
@@ -78,7 +78,8 @@ export class AuthService {
   private createUserFromToken(token: string): User {
     try {
       const payload: { [key: string]: string } = jwtDecode(token);
-      const user = new User(payload.name, payload.role, token);
+      const role = payload.role === 'Admin' ? AuthRole.Admin : AuthRole.User;
+      const user = new User(payload.name, role, token);
       return user;
     } catch (err) {
       return null;

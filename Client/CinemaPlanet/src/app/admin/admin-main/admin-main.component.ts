@@ -13,7 +13,10 @@ export class AdminMainComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
-        if (e.url === '/admin') return;
+        if (e.url === '/admin') {
+          this.showStatistics = true;
+          return;
+        }
         this.showStatistics = false;
       }
     });

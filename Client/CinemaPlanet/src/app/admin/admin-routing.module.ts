@@ -3,7 +3,8 @@ import { MoviesComponent } from './movies/movies.component';
 import { AuditoriumsComponent } from './auditoriums/auditoriums.component';
 import { MainGuardService } from '../services/route_guards/mainGuard.service';
 import { AdminMainComponent } from './admin-main/admin-main.component';
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
   {
@@ -17,3 +18,9 @@ export const routes: Routes = [
     ],
   },
 ];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class AdminRoutingModule {}

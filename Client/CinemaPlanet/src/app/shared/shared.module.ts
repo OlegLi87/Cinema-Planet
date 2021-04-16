@@ -1,5 +1,4 @@
-import { routes } from './routes';
-import { RouterModule } from '@angular/router';
+import { SharedRoutingModule } from './shared-routing.module';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +16,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     NavigationBarComponent,
     NotFoundComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes), FormsModule],
+  imports: [CommonModule, SharedRoutingModule, FormsModule],
   exports: [NavigationBarComponent],
 })
 export class SharedModule {}
