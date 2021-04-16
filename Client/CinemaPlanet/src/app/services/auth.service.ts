@@ -1,5 +1,5 @@
 import { LoginCredentials } from './../models/login-credentials.model';
-import { HttpAuthService } from './http_services/httpAuthService.service';
+import { HttpAuthService } from './http_services/httpAuth.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { USER_STREAM } from '../infastructure/dependency_providers/userStream.provider';
 import { LocalStorageService } from './localStorage.service';

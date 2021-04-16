@@ -4,6 +4,8 @@
     [routerLink]="navigationContext.homeUrl"
     [routerLinkActive]="'active'"
     [routerLinkActiveOptions]="{ exact: true }"
+    (mouseover)="onLogoHoverOn($event)"
+    (mouseleave)="onLogoHoverOff($event)"
     ><i class="fas fa-film"></i> Cinema Planet</a
   >
   <button

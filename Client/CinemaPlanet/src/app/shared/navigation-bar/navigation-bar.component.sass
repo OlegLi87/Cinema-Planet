@@ -1,4 +1,14 @@
 @import '../../_partial'
 
+:host
+    display: block
+
+.navbar-brand
+    color: rgba(255,255,255,0.5) !important
+
+.logo-hovered
+    color: rgba(255,255,255,0.75) !important
+       
 .active
     color: map-get($colors,"mainGreen" ) !important
+    text-shadow: 0 0 2px map-get($colors,"mainGreen")

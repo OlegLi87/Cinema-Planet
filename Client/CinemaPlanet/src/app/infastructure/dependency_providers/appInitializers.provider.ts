@@ -7,7 +7,7 @@ function initUser(authService: AuthService): Function {
   };
 }
 
-export const initUserAtAppStart: Provider = {
+export const initUserAtAppStartProvider: Provider = {
   provide: APP_INITIALIZER,
   useFactory: initUser,
   deps: [AuthService],

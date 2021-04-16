@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import {
   NavigationContext,
@@ -26,5 +27,15 @@ export class NavigationBarComponent implements OnInit {
   logout(event: Event): void {
     event.preventDefault();
     this.authService.logout();
+  }
+
+  onLogoHoverOn(event: Event): void {
+    const logo = event.target as HTMLAnchorElement;
+    if (logo.classList.contains('active')) return;
+    logo.classList.add('logo-hovered');
+  }
+
+  onLogoHoverOff(event: Event): void {
+    (event.target as HTMLAnchorElement).classList.remove('logo-hovered');
   }
 }

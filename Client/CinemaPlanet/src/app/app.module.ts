@@ -1,7 +1,9 @@
+import { overallStatStreamProvider } from './infastructure/dependency_providers/overallStatStream.provider';
+import { httpInterceptorProvider } from './infastructure/dependency_providers/httpInterceptor.provider';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { SharedModule } from './shared/shared.module';
-import { initUserAtAppStart } from './infastructure/dependency_providers/appInitializers.provider';
+import { initUserAtAppStartProvider } from './infastructure/dependency_providers/appInitializers.provider';
 import { userStreamProvider } from './infastructure/dependency_providers/userStream.provider';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -17,7 +19,12 @@ import { AppComponent } from './app.component';
     AdminModule,
     AppRoutingModule,
   ],
-  providers: [initUserAtAppStart, userStreamProvider],
+  providers: [
+    initUserAtAppStartProvider,
+    httpInterceptorProvider,
+    userStreamProvider,
+    overallStatStreamProvider,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
