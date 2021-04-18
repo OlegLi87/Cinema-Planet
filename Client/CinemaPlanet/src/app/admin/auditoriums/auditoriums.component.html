@@ -5,5 +5,12 @@
   <auditorium
     *ngFor="let audit of auditoriums"
     [auditorium]="audit"
+    (editBtnClicked)="toggleShowForm($event)"
   ></auditorium>
 </div>
+
+<auditorium-form
+  *ngIf="showForm"
+  [auditoriumContext]="selectedAuditorium"
+  (formClosed)="toggleShowForm()"
+></auditorium-form>

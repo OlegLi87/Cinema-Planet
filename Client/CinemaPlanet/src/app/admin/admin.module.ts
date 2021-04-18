@@ -8,6 +8,9 @@ import { AuditoriumsComponent } from './auditoriums/auditoriums.component';
 import { MoviesComponent } from './movies/movies.component';
 import { MovieSessionsComponent } from './movie-sessions/movie-sessions.component';
 import { AuditoriumComponent } from './auditoriums/auditorium/auditorium.component';
+import { AuditoriumFormComponent } from './auditoriums/auditorium-form/auditorium-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgFileValidatorLibModule } from 'angular-file-validator';
 
 @NgModule({
   declarations: [
@@ -17,8 +20,15 @@ import { AuditoriumComponent } from './auditoriums/auditorium/auditorium.compone
     MovieSessionsComponent,
     OverallStatPropertyPipe,
     AuditoriumComponent,
+    AuditoriumFormComponent,
   ],
-  imports: [SharedModule, CommonModule, AdminRoutingModule],
+  imports: [
+    SharedModule,
+    CommonModule,
+    ReactiveFormsModule,
+    AdminRoutingModule,
+    NgFileValidatorLibModule,
+  ],
   exports: [],
 })
 export class AdminModule {}

@@ -1,5 +1,5 @@
 import { Auditorium } from './../../../models/domain_models/auditorium.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'auditorium',
@@ -8,7 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AuditoriumComponent implements OnInit {
   @Input() auditorium: Auditorium;
+  @Output() editBtnClicked = new EventEmitter<Auditorium>();
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  onEditBtnClick(): void {
+    this.editBtnClicked.next(this.auditorium);
+  }
 }

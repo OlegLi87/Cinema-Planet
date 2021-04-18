@@ -12,6 +12,9 @@ export class AuditoriumsComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   auditoriums: Auditorium[] = [];
 
+  showForm = false;
+  selectedAuditorium: Auditorium;
+
   constructor(
     @Inject(AUDITORIUMS_STREAM)
     private $auditoriumsStream: BehaviorSubject<Auditorium[]>
@@ -20,8 +23,13 @@ export class AuditoriumsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.$auditoriumsStream.subscribe((audit) => {
       if (!audit) return;
-      this.auditoriums = [...audit];
+      audit.forEach((a) => this.auditoriums.push({ ...a }));
     });
+  }
+
+  toggleShowForm(auditorium: Auditorium) {
+    this.showForm = !this.showForm;
+    this.selectedAuditorium = auditorium;
   }
 
   ngOnDestroy(): void {

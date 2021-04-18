@@ -2,11 +2,33 @@
   <div class="name-container text-center border-bottom border-dark">
     {{ auditorium.name }}
   </div>
-  <div
-    class="img-container mt-1"
-    [ngStyle]="{
-      'background-image': 'url(' + auditorium.imageUrl + ')'
-    }"
-  ></div>
-  <div class="additional-stat-container"></div>
+  <div class="img-container">
+    <div
+      class="img my-1 mx-auto"
+      [ngStyle]="{
+        'background-image': 'url(' + auditorium.imageUrl + ')'
+      }"
+    ></div>
+    <edit-button (click)="onEditBtnClick()"></edit-button>
+  </div>
+  <div class="additional-stat-container">
+    <div class="seats-info-container bg-dark text-center px-3 rounded">
+      <span class="text-primary"
+        >Total Basic Seats: {{ auditorium.basicSeatsCapacity }}</span
+      >
+    </div>
+    <div class="seats-info-container bg-dark text-center mt-1 px-3 rounded">
+      <span class="text-muted"
+        >Total Silver Seats: {{ auditorium.silverSeatsCapacity }}</span
+      >
+    </div>
+    <div class="seats-info-container bg-dark text-center mt-1 px-3 rounded">
+      <span class="text-warning"
+        >Total Gold Seats: {{ auditorium.goldSeatsCapacity }}</span
+      >
+    </div>
+    <div class="seats-info-container bg-dark text-center mt-1 px-3 rounded">
+      <span>Active Sessions: {{ auditorium.activeSessions }}</span>
+    </div>
+  </div>
 </div>

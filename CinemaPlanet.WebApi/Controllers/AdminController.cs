@@ -58,7 +58,7 @@ namespace CinemaPlanet.WebApi.Controllers
                 name = audit.Name,
                 imageUrl = audit.ImageUrl,
                 basicSeatsCapacity = audit.BasicSeatsCapacity,
-                silerSeatsCapacity = audit.SilverSeatsCapacity,
+                silverSeatsCapacity = audit.SilverSeatsCapacity,
                 goldSeatsCapacity = audit.GoldSeatsCapacity,
                 activeSessions = audit.MovieSessions.Count
             }).ToList();
