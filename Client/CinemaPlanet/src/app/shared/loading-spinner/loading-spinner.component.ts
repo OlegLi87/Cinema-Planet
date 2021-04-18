@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'loading-spinner',
@@ -6,7 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loading-spinner.component.sass'],
 })
 export class LoadingSpinnerComponent implements OnInit {
+  @Input() backgroundColor: string;
+  @Input() circleColor: string;
+
+  @HostBinding('style.background-color') background;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.background = this.backgroundColor;
+  }
 }

@@ -1,0 +1,12 @@
+<div class="data-container text-dark">
+  <div class="name-container text-center border-bottom border-dark">
+    {{ auditorium.name }}
+  </div>
+  <div
+    class="img-container mt-1"
+    [ngStyle]="{
+      'background-image': 'url(' + auditorium.imageUrl + ')'
+    }"
+  ></div>
+  <div class="additional-stat-container"></div>
+</div>

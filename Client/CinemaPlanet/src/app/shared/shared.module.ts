@@ -17,6 +17,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
     NotFoundComponent,
   ],
   imports: [CommonModule, SharedRoutingModule, FormsModule],
-  exports: [NavigationBarComponent],
+  exports: [NavigationBarComponent, LoadingSpinnerComponent],
 })
 export class SharedModule {}

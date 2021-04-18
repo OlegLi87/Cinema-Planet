@@ -1,3 +1,5 @@
+import { isLoadingDataStreamProvider } from './infastructure/dependency_providers/isLoadingDataStream.provider';
+import { auditoriumsStreamProvider } from './infastructure/dependency_providers/auditoriumsStream.provider';
 import { overallStatStreamProvider } from './infastructure/dependency_providers/overallStatStream.provider';
 import { httpInterceptorProvider } from './infastructure/dependency_providers/httpInterceptor.provider';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,7 +25,9 @@ import { AppComponent } from './app.component';
     initUserAtAppStartProvider,
     httpInterceptorProvider,
     userStreamProvider,
+    isLoadingDataStreamProvider,
     overallStatStreamProvider,
+    auditoriumsStreamProvider,
   ],
   bootstrap: [AppComponent],
 })

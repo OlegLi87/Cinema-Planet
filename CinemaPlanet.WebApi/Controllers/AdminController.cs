@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -43,8 +44,27 @@ namespace CinemaPlanet.WebApi.Controllers
                 totalUsers = totalUsers
             };
 
+            //Thread.Sleep(500);
             return Request.CreateResponse(HttpStatusCode.OK, overallStat);
+        }
 
+        [HttpGet]
+        [Route("api/admin/getAuditoriums")]
+        public HttpResponseMessage GetAuditoriums()
+        {
+            var auditoriums = unitOfWork.Auditoriums.Get().Select(audit => new
+            {
+                id = audit.Id,
+                name = audit.Name,
+                imageUrl = audit.ImageUrl,
+                basicSeatsCapacity = audit.BasicSeatsCapacity,
+                silerSeatsCapacity = audit.SilverSeatsCapacity,
+                goldSeatsCapacity = audit.GoldSeatsCapacity,
+                activeSessions = audit.MovieSessions.Count
+            }).ToList();
+
+            //Thread.Sleep(500);
+            return Request.CreateResponse(HttpStatusCode.OK, auditoriums);
         }
     }
 }

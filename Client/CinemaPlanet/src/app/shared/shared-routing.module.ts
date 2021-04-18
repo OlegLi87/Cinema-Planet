@@ -4,7 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [MainGuardService] },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [MainGuardService],
+  },
 ];
 
 @NgModule({

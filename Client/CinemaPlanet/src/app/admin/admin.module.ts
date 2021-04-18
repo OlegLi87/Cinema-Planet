@@ -7,6 +7,7 @@ import { AdminMainComponent } from './admin-main/admin-main.component';
 import { AuditoriumsComponent } from './auditoriums/auditoriums.component';
 import { MoviesComponent } from './movies/movies.component';
 import { MovieSessionsComponent } from './movie-sessions/movie-sessions.component';
+import { AuditoriumComponent } from './auditoriums/auditorium/auditorium.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { MovieSessionsComponent } from './movie-sessions/movie-sessions.componen
     MoviesComponent,
     MovieSessionsComponent,
     OverallStatPropertyPipe,
+    AuditoriumComponent,
   ],
   imports: [SharedModule, CommonModule, AdminRoutingModule],
   exports: [],

@@ -21,7 +21,7 @@ export class MainGuardService implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     const user = this.$userStream.value;
-    const path = route.url[0].path;
+    const path = route.url[0].path.toLocaleLowerCase();
 
     if (path === 'login' && !user) {
       return true;

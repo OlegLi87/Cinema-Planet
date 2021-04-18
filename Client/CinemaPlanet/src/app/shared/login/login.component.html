@@ -141,7 +141,9 @@
           </div>
         </form>
         <div class="spinner-container" *ngIf="isLoading">
-          <loading-spinner></loading-spinner>
+          <loading-spinner
+            [backgroundColor]="'rgba(1,23,84,0.75)'"
+          ></loading-spinner>
         </div>
       </div>
     </div>

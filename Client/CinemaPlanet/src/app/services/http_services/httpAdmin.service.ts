@@ -1,3 +1,4 @@
+import { Auditorium } from './../../models/domain_models/auditorium.model';
 import { OverallStat } from './../../models/domain_models/overallStat.model';
 import { Observable } from 'rxjs';
 import { environment } from './../../../environments/environment';
@@ -14,5 +15,9 @@ export class HttpAdminService {
 
   getOverallStatistics(): Observable<OverallStat> {
     return this.httpClient.get<OverallStat>(this.URL + '/getOverallStat');
+  }
+
+  getAuditoriums(): Observable<Auditorium[]> {
+    return this.httpClient.get<Auditorium[]>(this.URL + '/getAuditoriums');
   }
 }
