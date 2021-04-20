@@ -1,4 +1,6 @@
-$colors: ("mainGreen" : rgb(52, 235, 164),"mainYellow": rgb(237, 202, 28))
+$colors: ("mainGreen" : rgb(52, 235, 164),"mainYellow": rgb(237, 202, 28),"mainBlack": rgba(0,0,0,0.85))
+
+$mainGreen: map-get($colors,"mainGreen")
 
 @mixin invalidInputField()
    border: 2px solid #ff4e11
@@ -7,9 +9,17 @@ $colors: ("mainGreen" : rgb(52, 235, 164),"mainYellow": rgb(237, 202, 28))
     background: rgba(33,37,41,0.7)
     border-top-left-radius: 25px
     border-bottom-right-radius: 25px
-    box-shadow: 0 0 10px map-get($colors,"mainGreen")
-    color: map-get($colors,"mainGreen" )
+    box-shadow: 0 0 10px $mainGreen
+    color: $mainGreen
 
 @mixin header
     letter-spacing: 0.25rem
-    border-bottom: 1px solid map-get($colors,"mainGreen")
+    border-bottom: 1px solid $mainGreen
+
+@mixin successBtn
+    color: $mainGreen
+    border-color: $mainGreeen
+
+    &:hover
+        background-color: $mainGreeen
+        color: map-get($colors,"mainBlack")

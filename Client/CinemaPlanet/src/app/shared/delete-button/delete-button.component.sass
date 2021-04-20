@@ -1,0 +1,24 @@
+@import '../../_partial'
+
+:host
+  display: block
+  width: 2.3rem
+  height: 2.3rem
+  background: rgba(250,55,43,0.8)
+  box-shadow: 0 0 3px 2px #31312f
+  border-radius: 50%
+  cursor: pointer
+  transition: background-color 0.2s 0s linear
+  display: flex
+  justify-content: center
+  align-items: center
+
+  &:hover
+    background-color: #343a40
+
+    i
+      color: map-get($colors,"mainGreen")
+      transition: color 0.2s 0s linear
+
+  &:active
+      box-shadow: 0 0 10px 2px #31312f

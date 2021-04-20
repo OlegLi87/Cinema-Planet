@@ -1,17 +1,3 @@
-<!-- <button class="btn btn-success" (click)="onClose()">click</button> -->
-
-<div class="vertical-strip p-2 mr-5 d-flex justify-content-center">
-  <h1 class="m-0 pt-5">EDIT FORM</h1>
-  <div class="black-box"></div>
-  <div class="black-box"></div>
-  <div
-    class="close-btn-container d-flex flex-column align-items-center"
-    (click)="onClose()"
-  >
-    Close<i class="fas fa-times fa-3x"></i>
-  </div>
-</div>
-
 <div class="form-container py-5">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <!-- name field -->
@@ -25,7 +11,10 @@
       />
       <div
         class="error-message-container text-danger"
-        *ngIf="!form.get('name').valid && form.get('name').touched"
+        *ngIf="
+          !form?.get('name').valid &&
+          (form.get('name').touched || submitBtnClicked)
+        "
       >
         <small>Name is required.</small>
       </div>
@@ -42,13 +31,16 @@
       />
       <div
         class="error-message-container text-danger"
-        *ngIf="!form.get('imageUrl').valid && form.get('imageUrl').touched"
+        *ngIf="
+          !form.get('imageUrl').valid &&
+          (form.get('imageUrl').touched || submitBtnClicked)
+        "
       >
         <small *ngIf="form.get('imageUrl').errors.required"
           >Image URL is required.</small
         >
         <small *ngIf="form.get('imageUrl').errors.pattern"
-          >Invalid image format.</small
+          >Invalid image URL format.</small
         >
       </div>
     </div>
@@ -63,22 +55,28 @@
           min="0"
           max="255"
           class="form-control"
-          formControlName="basicSeats"
+          formControlName="basicSeatsCapacity"
         />
         <div
           class="error-message-container text-danger"
           *ngIf="
-            !form.get('numericalInputs.basicSeats').valid &&
-            form.get('numericalInputs.basicSeats').touched
+            !form.get('numericalInputs.basicSeatsCapacity').valid &&
+            (form.get('numericalInputs.basicSeatsCapacity').touched ||
+              submitBtnClicked)
           "
         >
-          <small *ngIf="form.get('numericalInputs.basicSeats').errors.required"
+          <small
+            *ngIf="
+              form.get('numericalInputs.basicSeatsCapacity').errors.required
+            "
             >Value is required.</small
           >
-          <small *ngIf="form.get('numericalInputs.basicSeats').errors.max"
+          <small
+            *ngIf="form.get('numericalInputs.basicSeatsCapacity').errors.max"
             >Must not exceed 255.</small
           >
-          <small *ngIf="form.get('numericalInputs.basicSeats').errors.min"
+          <small
+            *ngIf="form.get('numericalInputs.basicSeatsCapacity').errors.min"
             >Must be a positive number.</small
           >
         </div>
@@ -93,22 +91,28 @@
           min="0"
           max="255"
           class="form-control"
-          formControlName="silverSeats"
+          formControlName="silverSeatsCapacity"
         />
         <div
           class="error-message-container text-danger"
           *ngIf="
-            !form.get('numericalInputs.silverSeats').valid &&
-            form.get('numericalInputs.silverSeats').touched
+            !form.get('numericalInputs.silverSeatsCapacity').valid &&
+            (form.get('numericalInputs.silverSeatsCapacity').touched ||
+              submitBtnClicked)
           "
         >
-          <small *ngIf="form.get('numericalInputs.silverSeats').errors.required"
+          <small
+            *ngIf="
+              form.get('numericalInputs.silverSeatsCapacity').errors.required
+            "
             >Value is required.</small
           >
-          <small *ngIf="form.get('numericalInputs.silverSeats').errors.max"
+          <small
+            *ngIf="form.get('numericalInputs.silverSeatsCapacity').errors.max"
             >Must not exceed 255.</small
           >
-          <small *ngIf="form.get('numericalInputs.silverSeats').errors.min"
+          <small
+            *ngIf="form.get('numericalInputs.silverSeatsCapacity').errors.min"
             >Must be a positive number.</small
           >
         </div>
@@ -123,22 +127,28 @@
           min="0"
           max="255"
           class="form-control"
-          formControlName="goldSeats"
+          formControlName="goldSeatsCapacity"
         />
         <div
           class="error-message-container text-danger"
           *ngIf="
-            !form.get('numericalInputs.goldSeats').valid &&
-            form.get('numericalInputs.goldSeats').touched
+            !form.get('numericalInputs.goldSeatsCapacity').valid &&
+            (form.get('numericalInputs.goldSeatsCapacity').touched ||
+              submitBtnClicked)
           "
         >
-          <small *ngIf="form.get('numericalInputs.goldSeats').errors.required"
+          <small
+            *ngIf="
+              form.get('numericalInputs.goldSeatsCapacity').errors.required
+            "
             >Value is required.</small
           >
-          <small *ngIf="form.get('numericalInputs.goldSeats').errors.max"
+          <small
+            *ngIf="form.get('numericalInputs.goldSeatsCapacity').errors.max"
             >Must not exceed 255.</small
           >
-          <small *ngIf="form.get('numericalInputs.goldSeats').errors.min"
+          <small
+            *ngIf="form.get('numericalInputs.goldSeatsCapacity').errors.min"
             >Must be a positive number.</small
           >
         </div>
@@ -146,6 +156,11 @@
     </div>
 
     <input type="submit" class="btn btn-outline-success" value="Save" />
-    <input type="reset" class="btn btn-outline-warning ml-3" value="Reset" />
+    <input type="reset" class="btn btn-outline-danger ml-3" value="Clear" />
   </form>
+
+  <loading-spinner
+    [backgroundColor]="'rgba(0,0,0,0.85)'"
+    *ngIf="isLoading"
+  ></loading-spinner>
 </div>

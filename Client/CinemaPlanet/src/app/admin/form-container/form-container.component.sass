@@ -1,0 +1,62 @@
+@import '../../_partial'
+
+$mainBlack: map-get($colors,"mainBlack")
+
+:host
+    display: flex
+    justify-content: center
+    position: fixed
+    left: 0
+    width: 100vw
+    height: 100vh
+    background: $mainBlack
+    animation: slideIn 0.35s ease-out forwards
+    
+    &.slideOut
+        animation: slideOut 0.35s ease-in forwards
+
+.vertical-strip
+    position: relative
+    color: $mainBlack
+    background-color: map-get($colors,"mainGreen" )
+
+    h1
+        writing-mode: vertical-lr
+        text-orientation: upright
+
+    .black-box
+        position: absolute
+        background: $mainBlack
+        width: 3rem
+        height: 3rem
+        top: -1.5rem
+        transform: rotate(45deg)
+
+        &:nth-child(2)
+            top: calc(100vh - 1.5rem)
+            background: $mainBlack
+
+    .close-btn-container
+        position: absolute
+        top: calc(100vh - 7rem)
+
+        i
+            cursor: pointer
+            transition: transform 0.3s 0s linear
+
+            &:hover
+                transform: rotate(360deg)
+
+@keyframes slideIn
+    0%
+        top: 100vh      
+    100%
+        top: 0
+
+@keyframes slideOut
+    0%
+        top: 0 
+    100%
+        top: -100vh
+        
+        

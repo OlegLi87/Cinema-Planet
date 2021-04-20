@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +15,20 @@ export class HttpAdminService {
   constructor(private httpClient: HttpClient) {}
 
   getOverallStatistics(): Observable<OverallStat> {
-    return this.httpClient.get<OverallStat>(this.URL + '/getOverallStat');
+    return this.httpClient
+      .get<OverallStat>(this.URL + '/getOverallStat')
+      .pipe(delay(500));
   }
 
   getAuditoriums(): Observable<Auditorium[]> {
-    return this.httpClient.get<Auditorium[]>(this.URL + '/getAuditoriums');
+    return this.httpClient
+      .get<Auditorium[]>(this.URL + '/getAuditoriums')
+      .pipe(delay(500));
+  }
+
+  saveAuditorium(auditorium: Auditorium): Observable<Auditorium> {
+    return this.httpClient
+      .post<Auditorium>(this.URL + '/saveAuditorium', auditorium)
+      .pipe(delay(500));
   }
 }

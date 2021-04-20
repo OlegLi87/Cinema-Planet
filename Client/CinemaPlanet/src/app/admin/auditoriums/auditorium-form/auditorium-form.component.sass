@@ -1,60 +1,13 @@
 @import '../../../_partial'
 
-:host
-    display: flex
-    justify-content: center
+$mainGreeen: map-get($colors,"mainGreen")
+
+input[type="submit"] 
+    @include successBtn
+    
+loading-spinner
     position: fixed
-    left: 0
     width: 100vw
     height: 100vh
-    background: rgba(0,0,0,0.85)
-    animation: slideIn 0.35s ease-out forwards
-    
-    &.slideOut
-        animation: slideOut 0.35s ease-in forwards
-
-.vertical-strip
-    position: relative
-    color: rgba(0,0,0,0.85)
-    background-color: map-get($colors,"mainGreen" )
-
-    h1
-        writing-mode: vertical-lr
-        text-orientation: upright
-
-    .black-box
-        position: absolute
-        background: rgba(0,0,0,0.85)
-        width: 3rem
-        height: 3rem
-        top: -1.5rem
-        transform: rotate(45deg)
-
-        &:nth-child(2)
-            top: calc(100vh - 1.5rem)
-            background: rgba(0,0,0,0.85)
-
-    .close-btn-container
-        position: absolute
-        top: calc(100vh - 7rem)
-
-        i
-            cursor: pointer
-            transition: transform 0.3s 0s linear
-
-            &:hover
-                transform: rotate(360deg)
-
-@keyframes slideIn
-    0%
-        top: 100vh      
-    100%
-        top: 0
-
-@keyframes slideOut
-    0%
-        top: 0 
-    100%
-        top: -100vh
-        
-        
+    top: 0 
+    left: 0

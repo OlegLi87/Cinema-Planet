@@ -30,12 +30,7 @@
   <div class="row" *ngIf="!isOnAdminMainRoute">
     <div class="col-12 child-content-container">
       <h3 class="text-center header-text">{{ childComponentHeader }}</h3>
-      <div class="loading-spinner-container" *ngIf="isLoading">
-        <loading-spinner></loading-spinner>
-      </div>
-      <div class="outlet-container" *ngIf="!isLoading">
-        <router-outlet></router-outlet>
-      </div>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

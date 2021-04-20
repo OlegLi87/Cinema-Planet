@@ -1,0 +1,13 @@
+<div class="vertical-strip p-2 mr-5 d-flex justify-content-center">
+  <h1 class="m-0 pt-5">{{ stripText | uppercase }}</h1>
+  <div class="black-box"></div>
+  <div class="black-box"></div>
+  <div
+    class="close-btn-container d-flex flex-column align-items-center"
+    (click)="onClose()"
+  >
+    Close<i class="fas fa-times fa-3x"></i>
+  </div>
+</div>
+
+<auditorium-form [auditoriumContext]="formContext.contextObj"></auditorium-form>

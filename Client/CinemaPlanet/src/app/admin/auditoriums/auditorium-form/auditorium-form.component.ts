@@ -1,36 +1,41 @@
-import { Auditorium } from './../../../models/domain_models/auditorium.model';
 import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+  isLoadingStreamProvider,
+  IS_LOADING_STREAM,
+} from './../../../infastructure/dependency_providers/isLoadingStream.provider';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { DataRepositoryService } from './../../../services/dataRepository.service';
+import { Auditorium } from './../../../models/domain_models/auditorium.model';
+import { Component, Inject, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FileCheck } from 'angular-file-validator';
 
 @Component({
   selector: 'auditorium-form',
   templateUrl: './auditorium-form.component.html',
   styleUrls: ['./auditorium-form.component.sass'],
+  providers: [isLoadingStreamProvider],
 })
-export class AuditoriumFormComponent implements OnInit {
+export class AuditoriumFormComponent implements OnInit, OnDestroy {
+  private subscription: Subscription;
+
   @Input() auditoriumContext: Auditorium;
-  @Output() formClosed = new EventEmitter<void>();
-
-  @HostBinding('class.slideOut') slideOut = false;
-  @HostListener('animationend')
-  animationEnd(): void {
-    if (this.slideOut) this.formClosed.next();
-  }
-
   form: FormGroup;
+  submitBtnClicked = false;
+  isLoading = false;
 
-  constructor() {}
+  constructor(
+    private dataRepository: DataRepositoryService,
+    @Inject(IS_LOADING_STREAM)
+    private $isLoadingStream: BehaviorSubject<boolean>
+  ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.subscription = this.$isLoadingStream.subscribe(
+      (isLoading) => (this.isLoading = isLoading)
+    );
+  }
+
+  private initForm(): void {
     const numberInputValidators = [
       Validators.required,
       Validators.min(0),
@@ -39,20 +44,22 @@ export class AuditoriumFormComponent implements OnInit {
 
     this.form = new FormGroup({
       name: new FormControl(this.auditoriumContext?.name, Validators.required),
-      imageUrl: new FormControl(this.auditoriumContext?.imageUrl, {
-        validators: Validators.required,
-        asyncValidators: [FileCheck.ngFileValidator(['png', 'jpeg', 'jpg'])],
-      }),
+      imageUrl: new FormControl(this.auditoriumContext?.imageUrl, [
+        Validators.required,
+        Validators.pattern(
+          /^http[^ \!@\$\^&\(\)\+\=]+(\.png|\.jpeg|\.gif|\.jpg)$/
+        ),
+      ]),
       numericalInputs: new FormGroup({
-        basicSeats: new FormControl(
+        basicSeatsCapacity: new FormControl(
           this.auditoriumContext?.basicSeatsCapacity,
           numberInputValidators
         ),
-        silverSeats: new FormControl(
+        silverSeatsCapacity: new FormControl(
           this.auditoriumContext?.silverSeatsCapacity,
           numberInputValidators
         ),
-        goldSeats: new FormControl(
+        goldSeatsCapacity: new FormControl(
           this.auditoriumContext?.goldSeatsCapacity,
           numberInputValidators
         ),
@@ -61,10 +68,21 @@ export class AuditoriumFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.form);
+    this.submitBtnClicked = true;
+    if (!this.form.valid) return;
+
+    this.dataRepository.saveAuditorium(
+      {
+        id: this.auditoriumContext.id,
+        name: this.form.value.name,
+        imageUrl: this.form.value.imageUrl,
+        ...this.form.value.numericalInputs,
+      },
+      this.$isLoadingStream
+    );
   }
 
-  onClose(): void {
-    this.slideOut = true;
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

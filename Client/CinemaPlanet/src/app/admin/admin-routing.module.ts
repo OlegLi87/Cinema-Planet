@@ -1,4 +1,3 @@
-import { AdminRoutesResolverService } from '../services/route_resolvers/adminRoutesResolver.service';
 import { MovieSessionsComponent } from './movie-sessions/movie-sessions.component';
 import { MoviesComponent } from './movies/movies.component';
 import { AuditoriumsComponent } from './auditoriums/auditoriums.component';
@@ -11,13 +10,11 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminMainComponent,
-    resolve: { res: AdminRoutesResolverService },
     canActivate: [MainGuardService],
     children: [
       {
         path: 'auditoriums',
         component: AuditoriumsComponent,
-        resolve: { res: AdminRoutesResolverService },
       },
       { path: 'movies', component: MoviesComponent },
       { path: 'movieSessions', component: MovieSessionsComponent },

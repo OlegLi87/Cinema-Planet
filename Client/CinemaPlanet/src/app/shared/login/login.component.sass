@@ -1,6 +1,5 @@
 @import "../../_partial"
 
-$mainGreen: map-get($colors,"mainGreen")
 $mainYellow: map-get($colors,"mainYellow")
 
 :host
@@ -31,11 +30,8 @@ $mainYellow: map-get($colors,"mainYellow")
             line-height: 1rem
 
         #btnSubmit.btn-outline-success
-            color: $mainGreen !important
-            border-color: $mainGreen !important
-            &:hover            
-                color: #fff !important
-                background-color: $mainGreen
+            @include successBtn
+            color: #fff !important
 
         #btnReset
             border-color: $mainYellow !important

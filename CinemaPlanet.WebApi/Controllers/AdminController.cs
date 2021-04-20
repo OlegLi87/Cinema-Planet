@@ -44,7 +44,6 @@ namespace CinemaPlanet.WebApi.Controllers
                 totalUsers = totalUsers
             };
 
-            //Thread.Sleep(500);
             return Request.CreateResponse(HttpStatusCode.OK, overallStat);
         }
 
@@ -63,8 +62,40 @@ namespace CinemaPlanet.WebApi.Controllers
                 activeSessions = audit.MovieSessions.Count
             }).ToList();
 
-            //Thread.Sleep(500);
             return Request.CreateResponse(HttpStatusCode.OK, auditoriums);
+        }
+
+        [HttpPost]
+        [Route("api/admin/saveAuditorium")]
+        public HttpResponseMessage SaveAuditorium(Auditorium auditorium)
+        {
+            if (!ModelState.IsValid)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Provided data is invalid.");
+
+            if (auditorium.Id == 0)
+            {
+                unitOfWork.Auditoriums.Add(auditorium);
+                unitOfWork.Save();
+
+                return Request.CreateResponse(HttpStatusCode.Created, auditorium);
+            }
+            var auditoriumInDb = unitOfWork.Auditoriums.GetById(auditorium.Id);
+            if (auditoriumInDb == null)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Provide ID is invalid.");
+
+            auditoriumInDb.Name = auditorium.Name;
+            auditoriumInDb.ImageUrl = auditorium.ImageUrl;
+            auditoriumInDb.BasicSeatsCapacity = auditorium.BasicSeatsCapacity;
+            auditoriumInDb.SilverSeatsCapacity = auditorium.SilverSeatsCapacity;
+            auditoriumInDb.GoldSeatsCapacity = auditorium.GoldSeatsCapacity;
+
+            unitOfWork.Save();
+            return Request.CreateResponse(HttpStatusCode.OK, auditorium);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
         }
     }
 }

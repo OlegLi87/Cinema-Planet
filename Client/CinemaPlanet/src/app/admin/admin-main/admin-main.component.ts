@@ -1,4 +1,9 @@
-import { IS_LOADING_DATA_STREAM } from './../../infastructure/dependency_providers/isLoadingDataStream.provider';
+import { DataRepositoryService } from './../../services/dataRepository.service';
+import { distinctUntilChanged } from 'rxjs/operators';
+import {
+  isLoadingStreamProvider,
+  IS_LOADING_STREAM,
+} from './../../infastructure/dependency_providers/isLoadingStream.provider';
 import { OverallStat } from './../../models/domain_models/overallStat.model';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
@@ -11,6 +16,7 @@ declare const $: any;
   selector: 'admin-main',
   templateUrl: './admin-main.component.html',
   styleUrls: ['./admin-main.component.sass'],
+  providers: [isLoadingStreamProvider],
 })
 export class AdminMainComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -22,8 +28,9 @@ export class AdminMainComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    @Inject(IS_LOADING_DATA_STREAM)
-    private $isLoadingDataStream: BehaviorSubject<boolean>,
+    private dataRepositoryService: DataRepositoryService,
+    @Inject(IS_LOADING_STREAM)
+    private $isLoadingStream: BehaviorSubject<boolean>,
     @Inject(OVERALL_STAT_STREAM)
     private $overallStatStream: BehaviorSubject<OverallStat>
   ) {}
@@ -40,14 +47,18 @@ export class AdminMainComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.subscriptions[1] = this.$isLoadingDataStream.subscribe((isLoading) => {
-      if (isLoading === null) return;
-      this.isLoading = isLoading;
-    });
+    this.subscriptions[1] = this.$isLoadingStream
+      .pipe(distinctUntilChanged())
+      .subscribe((isLoading) => {
+        this.isLoading = isLoading;
+      });
 
     this.subscriptions[2] = this.$overallStatStream.subscribe((stat) => {
-      if (stat === null || $.isEmptyObject(stat)) return;
-
+      if (!stat)
+        return this.dataRepositoryService.streamOverallStat(
+          this.$isLoadingStream
+        );
+      if ($.isEmptyObject(stat)) return;
       this.overallStat = { ...stat };
     });
   }

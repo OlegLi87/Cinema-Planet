@@ -8,6 +8,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { EditButtonComponent } from './edit-button/edit-button.component';
+import { DeleteButtonComponent } from './delete-button/delete-button.component';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,15 @@ import { EditButtonComponent } from './edit-button/edit-button.component';
     NavigationBarComponent,
     NotFoundComponent,
     EditButtonComponent,
+    DeleteButtonComponent,
+    ConfirmModalComponent,
   ],
   imports: [CommonModule, SharedRoutingModule, FormsModule],
   exports: [
     NavigationBarComponent,
     LoadingSpinnerComponent,
     EditButtonComponent,
+    DeleteButtonComponent,
   ],
 })
 export class SharedModule {}
