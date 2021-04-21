@@ -39,11 +39,21 @@ export class DataRepositoryService {
     $isLoadingStream?: BehaviorSubject<boolean>
   ): void {
     $isLoadingStream?.next(true);
-    console.log(auditorium);
     this.httpAdminService.saveAuditorium(auditorium).subscribe((data) => {
       $isLoadingStream?.next(false);
       this.streamAuditoriums($isLoadingStream);
       if (!auditorium.id) this.streamOverallStat();
+    });
+  }
+
+  deleteAuditoirum(
+    id: number,
+    $isLoadingStream?: BehaviorSubject<boolean>
+  ): void {
+    $isLoadingStream?.next(true);
+    this.httpAdminService.deleteAuditorium(id).subscribe(() => {
+      this.streamOverallStat();
+      this.streamAuditoriums($isLoadingStream);
     });
   }
 }

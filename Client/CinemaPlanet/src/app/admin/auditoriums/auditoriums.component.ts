@@ -1,10 +1,10 @@
+import { FormContext } from './../form-container/form-container.component';
 import { DataRepositoryService } from './../../services/dataRepository.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {
   isLoadingStreamProvider,
   IS_LOADING_STREAM,
 } from './../../infastructure/dependency_providers/isLoadingStream.provider';
-import { FormContext } from './../form-container/form-container.component';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AUDITORIUMS_STREAM } from './../../infastructure/dependency_providers/auditoriumsStream.provider';
 import { Auditorium } from './../../models/domain_models/auditorium.model';
@@ -18,11 +18,9 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 })
 export class AuditoriumsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
-
   auditoriums: Auditorium[];
   isLoading = false;
   showForm = false;
-  selectedAuditorium: Auditorium;
 
   constructor(
     private dataRepositoryService: DataRepositoryService,
@@ -45,17 +43,17 @@ export class AuditoriumsComponent implements OnInit, OnDestroy {
 
       this.auditoriums = [];
       audit.forEach((a) => this.auditoriums.push({ ...a }));
+      this.showForm = false;
     });
   }
 
-  toggleShowForm(auditorium: Auditorium) {
+  toggleShowForm(): void {
     this.showForm = !this.showForm;
-    this.selectedAuditorium = auditorium ? auditorium : ({} as Auditorium);
   }
 
   getFormContext(): FormContext {
     return {
-      contextObj: this.selectedAuditorium,
+      contextObj: null,
       contextName: 'auditorium',
     };
   }

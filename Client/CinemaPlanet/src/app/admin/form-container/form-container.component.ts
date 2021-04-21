@@ -1,6 +1,3 @@
-import { AuditoriumFormComponent } from './../auditoriums/auditorium-form/auditorium-form.component';
-import { Auditorium } from './../../models/domain_models/auditorium.model';
-
 import {
   Component,
   EventEmitter,
@@ -27,7 +24,7 @@ export class FormContainerComponent implements OnInit {
   @HostBinding('class.slideOut') slideOut = false;
   @HostListener('animationend')
   animationEnd(): void {
-    if (this.slideOut) this.formClosed.next();
+    if (this.slideOut) this.formClosed.emit();
   }
 
   stripText: string;
@@ -35,7 +32,7 @@ export class FormContainerComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.stripText = this.formContext.contextObj.id ? 'edit form' : 'new form';
+    this.stripText = this.formContext.contextObj ? 'edit form' : 'new form';
   }
 
   onClose(): void {

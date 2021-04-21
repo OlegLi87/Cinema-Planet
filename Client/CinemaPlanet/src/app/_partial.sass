@@ -18,8 +18,15 @@ $mainGreen: map-get($colors,"mainGreen")
 
 @mixin successBtn
     color: $mainGreen
-    border-color: $mainGreeen
+    border-color: $mainGreen
 
     &:hover
-        background-color: $mainGreeen
+        background-color: $mainGreen
         color: map-get($colors,"mainBlack")
+
+@mixin absoluteCoverArea
+    position: fixed
+    width: 100vw
+    height: 100vh
+    top: 0
+    left: 0

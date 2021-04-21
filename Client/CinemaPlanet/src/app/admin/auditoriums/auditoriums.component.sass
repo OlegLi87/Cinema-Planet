@@ -1,1 +1,15 @@
 @import '../../_partial'
+
+.add-container
+  width: 12.5rem
+
+  &:hover
+    cursor: pointer
+
+    & > *
+        text-shadow: 0 0 13px map-get($colors,"mainGreen")
+        transition: text-shadow 0.1s linear
+   
+    &:active > *
+        color: map-get($colors,"mainBlack")
+        

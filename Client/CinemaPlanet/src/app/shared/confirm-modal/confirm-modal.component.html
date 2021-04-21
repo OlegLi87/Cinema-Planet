@@ -1,7 +1,14 @@
 <div class="jumbotron">
-  <h2>{{ message }}</h2>
-  <div class="buttons-container">
-    <button class="btn-outline-success">Yes</button>
-    <button class="btn-outline-danger">No</button>
+  <h2 class="text-center">{{ message }}</h2>
+  <div class="buttons-container text-center">
+    <button class="btn btn-outline-success btn-lg" (click)="onBtnClick(true)">
+      Yes
+    </button>
+    <button
+      class="btn btn-outline-danger btn-lg ml-3"
+      (click)="onBtnClick(false)"
+    >
+      No
+    </button>
   </div>
 </div>

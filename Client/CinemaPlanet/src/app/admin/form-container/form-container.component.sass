@@ -5,12 +5,10 @@ $mainBlack: map-get($colors,"mainBlack")
 :host
     display: flex
     justify-content: center
-    position: fixed
-    left: 0
-    width: 100vw
-    height: 100vh
+    @include absoluteCoverArea
     background: $mainBlack
     animation: slideIn 0.35s ease-out forwards
+    z-index: 30
     
     &.slideOut
         animation: slideOut 0.35s ease-in forwards

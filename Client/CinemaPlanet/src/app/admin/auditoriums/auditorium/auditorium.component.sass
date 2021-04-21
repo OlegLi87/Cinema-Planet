@@ -27,3 +27,12 @@ edit-button
   position: absolute
   top: -0.2rem
   right: 0.5rem
+
+confirm-modal
+  @include absoluteCoverArea
+  z-index: 10
+
+loading-spinner
+  @include absoluteCoverArea
+  z-index: 20
+  background: map-get($colors,"mainBlack")

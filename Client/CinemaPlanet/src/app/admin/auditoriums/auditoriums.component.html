@@ -1,17 +1,28 @@
 <loading-spinner *ngIf="isLoading"></loading-spinner>
-<div class="d-flex flex-wrap mt-3 justify-content-center" *ngIf="!isLoading">
+
+<div
+  class="d-flex flex-wrap mt-3 justify-content-center align-items-center position-relative"
+  *ngIf="!isLoading"
+>
   <div class="text-center w-100" *ngIf="!auditoriums.length">
     <h3>No Entries Found</h3>
   </div>
   <auditorium
     *ngFor="let audit of auditoriums"
     [auditorium]="audit"
-    (editBtnClicked)="toggleShowForm($event)"
   ></auditorium>
+
+  <div
+    class="add-container d-flex flex-column align-items-center mt-2"
+    (click)="toggleShowForm()"
+  >
+    <span class="h2">Add</span>
+    <i class="fas fa-plus-square fa-7x"></i>
+  </div>
 </div>
 
 <form-container
   *ngIf="showForm"
-  (formClosed)="toggleShowForm()"
   [formContext]="getFormContext()"
+  (formClosed)="toggleShowForm()"
 ></form-container>

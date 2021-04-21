@@ -9,7 +9,7 @@
         'background-image': 'url(' + auditorium.imageUrl + ')'
       }"
     ></div>
-    <edit-button (click)="onEditBtnClick()"></edit-button>
+    <edit-button (click)="toggleShowForm()"></edit-button>
   </div>
   <div class="additional-stat-container">
     <div class="seats-info-container bg-dark text-center px-3 rounded">
@@ -32,6 +32,23 @@
     </div>
   </div>
   <div class="delete-btn-container mt-2">
-    <delete-button class="mx-auto w-75 rounded"></delete-button>
+    <delete-button
+      class="mx-auto w-75 rounded"
+      (click)="toggleShowConfirmModal()"
+    ></delete-button>
   </div>
 </div>
+
+<form-container
+  *ngIf="showForm"
+  (formClosed)="toggleShowForm()"
+  [formContext]="getFormContext()"
+></form-container>
+
+<confirm-modal
+  *ngIf="showConfirmModal"
+  [message]="'Are you sure to delete?'"
+  (confirmModalClosed)="confirmModalClosed($event)"
+></confirm-modal>
+
+<loading-spinner *ngIf="isLoading"></loading-spinner>

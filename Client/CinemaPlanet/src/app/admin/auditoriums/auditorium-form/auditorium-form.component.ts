@@ -1,3 +1,4 @@
+import { distinctUntilChanged } from 'rxjs/operators';
 import {
   isLoadingStreamProvider,
   IS_LOADING_STREAM,
@@ -30,9 +31,9 @@ export class AuditoriumFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
-    this.subscription = this.$isLoadingStream.subscribe(
-      (isLoading) => (this.isLoading = isLoading)
-    );
+    this.subscription = this.$isLoadingStream
+      .pipe(distinctUntilChanged())
+      .subscribe((isLoading) => (this.isLoading = isLoading));
   }
 
   private initForm(): void {
@@ -73,7 +74,7 @@ export class AuditoriumFormComponent implements OnInit, OnDestroy {
 
     this.dataRepository.saveAuditorium(
       {
-        id: this.auditoriumContext.id,
+        id: this.auditoriumContext?.id,
         name: this.form.value.name,
         imageUrl: this.form.value.imageUrl,
         ...this.form.value.numericalInputs,

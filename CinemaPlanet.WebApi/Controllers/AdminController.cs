@@ -81,7 +81,7 @@ namespace CinemaPlanet.WebApi.Controllers
             }
             var auditoriumInDb = unitOfWork.Auditoriums.GetById(auditorium.Id);
             if (auditoriumInDb == null)
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Provide ID is invalid.");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Provided ID is invalid.");
 
             auditoriumInDb.Name = auditorium.Name;
             auditoriumInDb.ImageUrl = auditorium.ImageUrl;
@@ -91,6 +91,20 @@ namespace CinemaPlanet.WebApi.Controllers
 
             unitOfWork.Save();
             return Request.CreateResponse(HttpStatusCode.OK, auditorium);
+        }
+
+        [HttpDelete]
+        [Route("api/admin/deleteAuditorium")]
+        public HttpResponseMessage DeleteAuditorium(int id)
+        {
+            var auditorium = unitOfWork.Auditoriums.GetById(id);
+            if (auditorium == null)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Provided ID is invalid ");
+
+            unitOfWork.Auditoriums.Remove(auditorium);
+            unitOfWork.Save();
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         protected override void Dispose(bool disposing)

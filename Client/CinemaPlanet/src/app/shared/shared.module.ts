@@ -28,6 +28,7 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
     LoadingSpinnerComponent,
     EditButtonComponent,
     DeleteButtonComponent,
+    ConfirmModalComponent,
   ],
 })
 export class SharedModule {}
