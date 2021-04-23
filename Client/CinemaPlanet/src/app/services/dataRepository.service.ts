@@ -40,7 +40,6 @@ export class DataRepositoryService {
   ): void {
     $isLoadingStream?.next(true);
     this.httpAdminService.saveAuditorium(auditorium).subscribe((data) => {
-      $isLoadingStream?.next(false);
       this.streamAuditoriums($isLoadingStream);
       if (!auditorium.id) this.streamOverallStat();
     });

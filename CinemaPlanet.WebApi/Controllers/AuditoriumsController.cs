@@ -1,6 +1,5 @@
-﻿using CinemaPlanet.Domain.Core;
-using CinemaPlanet.Domain.Core.DomainModels;
-using CinemaPlanet.WebApi.Infastructure;
+﻿using CinemaPlanet.Domain.Core.DomainModels;
+using CinemaPlanet.Domain.Core;
 using CinemaPlanet.WebApi.Infastructure.Auth;
 using Ninject;
 using System;
@@ -8,20 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using CinemaPlanet.WebApi.Infastructure;
 
 namespace CinemaPlanet.WebApi.Controllers
 {
     [CustomAuthentication]
     [Authorize(Roles = "Admin")]
     [EnableCors(headers: "*", origins: "*", methods: "*")]
-    public class AdminController : ApiController
+    public class AuditoriumsController : ApiController
     {
         IUnitOfWork unitOfWork;
 
-        public AdminController()
+        public AuditoriumsController()
         {
             IKernel kernel = new StandardKernel(new NinjectBinding());
             unitOfWork = kernel.Get<IUnitOfWork>();
