@@ -8,12 +8,12 @@
     <h3>No Entries Found</h3>
   </div>
   <auditorium
-    *ngFor="let audit of auditoriums"
+    *ngFor="let audit of auditoriums; trackBy: auditoriumIdentity"
     [auditorium]="audit"
   ></auditorium>
 
   <div
-    class="add-container d-flex flex-column align-items-center mt-2"
+    class="add-container d-flex flex-column align-items-center"
     (click)="toggleShowForm()"
   >
     <span class="h2">Add</span>

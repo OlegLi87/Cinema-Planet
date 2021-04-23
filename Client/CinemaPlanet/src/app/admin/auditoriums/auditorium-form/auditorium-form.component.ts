@@ -6,7 +6,15 @@ import {
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DataRepositoryService } from './../../../services/dataRepository.service';
 import { Auditorium } from './../../../models/domain_models/auditorium.model';
-import { Component, Inject, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -19,6 +27,7 @@ export class AuditoriumFormComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   @Input() auditoriumContext: Auditorium;
+  @Output() formProcessingEnd = new EventEmitter<void>();
   form: FormGroup;
   submitBtnClicked = false;
   isLoading = false;
@@ -33,7 +42,10 @@ export class AuditoriumFormComponent implements OnInit, OnDestroy {
     this.initForm();
     this.subscription = this.$isLoadingStream
       .pipe(distinctUntilChanged())
-      .subscribe((isLoading) => (this.isLoading = isLoading));
+      .subscribe((isLoading) => {
+        this.isLoading = isLoading;
+        if (this.submitBtnClicked && !isLoading) this.formProcessingEnd.emit();
+      });
   }
 
   private initForm(): void {

@@ -27,7 +27,6 @@ export class AuditoriumComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('in constructr');
     this.$isLoadingStream
       .pipe(distinctUntilChanged())
       .subscribe((isLoading) => (this.isLoading = isLoading));

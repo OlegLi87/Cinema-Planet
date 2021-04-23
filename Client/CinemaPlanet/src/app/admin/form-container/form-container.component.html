@@ -10,4 +10,7 @@
   </div>
 </div>
 
-<auditorium-form [auditoriumContext]="formContext.contextObj"></auditorium-form>
+<auditorium-form
+  [auditoriumContext]="formContext.contextObj"
+  (formProcessingEnd)="onClose()"
+></auditorium-form>

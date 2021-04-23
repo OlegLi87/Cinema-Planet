@@ -43,7 +43,6 @@ export class AuditoriumsComponent implements OnInit, OnDestroy {
 
       this.auditoriums = [];
       audit.forEach((a) => this.auditoriums.push({ ...a }));
-      this.showForm = false;
     });
   }
 
@@ -56,6 +55,10 @@ export class AuditoriumsComponent implements OnInit, OnDestroy {
       contextObj: null,
       contextName: 'auditorium',
     };
+  }
+
+  auditoriumIdentity(index: number, auditorium: Auditorium): number {
+    return auditorium.id;
   }
 
   ngOnDestroy(): void {
