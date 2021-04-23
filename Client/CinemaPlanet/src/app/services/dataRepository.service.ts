@@ -20,6 +20,7 @@ export class DataRepositoryService {
     $isLoadingStream?.next(true);
 
     this.httpAdminService.getOverallStatistics().subscribe((data) => {
+      console.log(data);
       this.$overallStatStream.next(data);
       $isLoadingStream?.next(false);
     });
@@ -29,6 +30,7 @@ export class DataRepositoryService {
     $isLoadingStream?.next(true);
 
     this.httpAdminService.getAuditoriums().subscribe((data) => {
+      console.log(data);
       this.$auditoriumsStream.next(data);
       $isLoadingStream?.next(false);
     });

@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using CinemaPlanet.WebApi.Infastructure;
+using CinemaPlanet.WebApi.Dtos;
 
 namespace CinemaPlanet.WebApi.Controllers
 {
@@ -30,46 +31,34 @@ namespace CinemaPlanet.WebApi.Controllers
         [Route("api/admin/getAuditoriums")]
         public HttpResponseMessage GetAuditoriums()
         {
-            var auditoriums = unitOfWork.Auditoriums.Get().Select(audit => new
-            {
-                id = audit.Id,
-                name = audit.Name,
-                imageUrl = audit.ImageUrl,
-                basicSeatsCapacity = audit.BasicSeatsCapacity,
-                silverSeatsCapacity = audit.SilverSeatsCapacity,
-                goldSeatsCapacity = audit.GoldSeatsCapacity,
-                activeSessions = audit.MovieSessions.Count
-            }).ToList();
-
-            return Request.CreateResponse(HttpStatusCode.OK, auditoriums);
+            var auditoriumDtos = unitOfWork.Auditoriums.Get().Select(ApiUtils.MapToAuditoriumDto);
+            return Request.CreateResponse(HttpStatusCode.OK, auditoriumDtos);
         }
 
         [HttpPost]
         [Route("api/admin/saveAuditorium")]
-        public HttpResponseMessage SaveAuditorium(Auditorium auditorium)
+        public HttpResponseMessage SaveAuditorium(AuditoriumDto auditoriumDto)
         {
-            if (!ModelState.IsValid)
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Provided data is invalid.");
+            if (!ModelState.IsValid || auditoriumDto == null)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ApiUtils.ErrorMessages["data"]);
 
-            if (auditorium.Id == 0)
+            if (auditoriumDto.Id == 0)
             {
-                unitOfWork.Auditoriums.Add(auditorium);
+                var newAuditorium = ApiUtils.MapToAuditorium(new Auditorium(), auditoriumDto);
+                unitOfWork.Auditoriums.Add(newAuditorium);
                 unitOfWork.Save();
 
-                return Request.CreateResponse(HttpStatusCode.Created, auditorium);
+                return Request.CreateResponse(HttpStatusCode.Created, auditoriumDto);
             }
-            var auditoriumInDb = unitOfWork.Auditoriums.GetById(auditorium.Id);
-            if (auditoriumInDb == null)
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Provided ID is invalid.");
 
-            auditoriumInDb.Name = auditorium.Name;
-            auditoriumInDb.ImageUrl = auditorium.ImageUrl;
-            auditoriumInDb.BasicSeatsCapacity = auditorium.BasicSeatsCapacity;
-            auditoriumInDb.SilverSeatsCapacity = auditorium.SilverSeatsCapacity;
-            auditoriumInDb.GoldSeatsCapacity = auditorium.GoldSeatsCapacity;
+            var auditoriumInDb = unitOfWork.Auditoriums.GetById(auditoriumDto.Id);
+            if (auditoriumInDb == null)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ApiUtils.ErrorMessages["id"]);
+
+            ApiUtils.MapToAuditorium(auditoriumInDb, auditoriumDto);
 
             unitOfWork.Save();
-            return Request.CreateResponse(HttpStatusCode.OK, auditorium);
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpDelete]
@@ -78,12 +67,12 @@ namespace CinemaPlanet.WebApi.Controllers
         {
             var auditorium = unitOfWork.Auditoriums.GetById(id);
             if (auditorium == null)
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Provided ID is invalid ");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ApiUtils.ErrorMessages["id"]);
 
             unitOfWork.Auditoriums.Remove(auditorium);
             unitOfWork.Save();
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)

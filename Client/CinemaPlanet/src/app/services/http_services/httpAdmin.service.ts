@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -17,19 +17,20 @@ export class HttpAdminService {
 
   getOverallStatistics(): Observable<OverallStat> {
     return this.httpClient
-      .get<OverallStat>(this.URL + '/getOverallStat')
-      .pipe(delay(this.DELAY));
+      .get<any>(this.URL + '/getOverallStat')
+      .pipe(delay(this.DELAY), map<any, OverallStat>(this.mapToLowerCase));
   }
 
   getAuditoriums(): Observable<Auditorium[]> {
-    return this.httpClient
-      .get<Auditorium[]>(this.URL + '/getAuditoriums')
-      .pipe(delay(this.DELAY));
+    return this.httpClient.get<any[]>(this.URL + '/getAuditoriums').pipe(
+      delay(this.DELAY),
+      map((data) => data.map<Auditorium>(this.mapToLowerCase))
+    );
   }
 
-  saveAuditorium(auditorium: Auditorium): Observable<Auditorium> {
+  saveAuditorium(auditorium: Auditorium): Observable<any> {
     return this.httpClient
-      .post<Auditorium>(this.URL + '/saveAuditorium', auditorium)
+      .post<any>(this.URL + '/saveAuditorium', auditorium)
       .pipe(delay(this.DELAY));
   }
 
@@ -37,5 +38,16 @@ export class HttpAdminService {
     return this.httpClient
       .delete<void>(this.URL + `/deleteAuditorium/?id=${id}`)
       .pipe(delay(this.DELAY));
+  }
+
+  private mapToLowerCase<T>(dataObj: object): T {
+    const keys = Object.keys(dataObj);
+    const res = {} as T;
+
+    keys.forEach((k) => {
+      const keyStartWithLower = k[0].toLowerCase() + k.substring(1);
+      res[keyStartWithLower] = dataObj[k];
+    });
+    return res;
   }
 }

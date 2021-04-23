@@ -36,10 +36,10 @@ namespace CinemaPlanet.WebApi.Controllers
 
             var overallStat = new
             {
-                totalAuditoriums = totalAuditoriums,
-                totalMovies = totalMovies,
-                totalMovieSessions = totalMovieSessions,
-                totalUsers = totalUsers
+                TotalAuditoriums = totalAuditoriums,
+                TotalMovies = totalMovies,
+                TotalMovieSessions = totalMovieSessions,
+                TotalUsers = totalUsers
             };
 
             return Request.CreateResponse(HttpStatusCode.OK, overallStat);

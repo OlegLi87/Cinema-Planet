@@ -118,12 +118,15 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Dtos\AuditoriumDto.cs" />
+    <Compile Include="Dtos\MovieDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infastructure\Auth\CustomAuthenticationAttribute.cs" />
     <Compile Include="Infastructure\Auth\TokenManager.cs" />
     <Compile Include="Infastructure\NinjectBinding.cs" />
+    <Compile Include="Infastructure\ApiUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
