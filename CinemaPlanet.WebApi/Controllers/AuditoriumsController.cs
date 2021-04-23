@@ -27,26 +27,6 @@ namespace CinemaPlanet.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/admin/getOverallStat")]
-        public HttpResponseMessage GetOverallStat()
-        {
-            var totalAuditoriums = unitOfWork.Auditoriums.Get().Count;
-            var totalMovies = unitOfWork.Movies.Get().Count;
-            var totalMovieSessions = unitOfWork.MovieSessions.Get().Count;
-            var totalUsers = unitOfWork.Users.Get().Where(u => u.RoleId != 2).Count();
-
-            var overallStat = new
-            {
-                totalAuditoriums = totalAuditoriums,
-                totalMovies = totalMovies,
-                totalMovieSessions = totalMovieSessions,
-                totalUsers = totalUsers
-            };
-
-            return Request.CreateResponse(HttpStatusCode.OK, overallStat);
-        }
-
-        [HttpGet]
         [Route("api/admin/getAuditoriums")]
         public HttpResponseMessage GetAuditoriums()
         {

@@ -31,5 +31,10 @@ namespace CinemaPlanet.WebApi.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
+        }
     }
 }
