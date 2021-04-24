@@ -5,7 +5,7 @@ import {
   isLoadingStreamProvider,
   IS_LOADING_STREAM,
 } from './../../infastructure/dependency_providers/isLoadingStream.provider';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { AUDITORIUMS_STREAM } from './../../infastructure/dependency_providers/auditoriumsStream.provider';
 import { Auditorium } from './../../models/domain_models/auditorium.model';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
@@ -25,7 +25,7 @@ export class AuditoriumsComponent implements OnInit, OnDestroy {
   constructor(
     private dataRepositoryService: DataRepositoryService,
     @Inject(IS_LOADING_STREAM)
-    private $isLoadingStream: BehaviorSubject<boolean>,
+    private $isLoadingStream: Subject<boolean>,
     @Inject(AUDITORIUMS_STREAM)
     private $auditoriumsStream: BehaviorSubject<Auditorium[]>
   ) {}

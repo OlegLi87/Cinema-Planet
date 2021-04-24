@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { InjectionToken } from '@angular/core';
 import { Provider } from '@angular/core';
 
@@ -6,8 +6,8 @@ export const IS_LOADING_STREAM = new InjectionToken(
   'A stream of boolean value reflecting there is loading process currently on'
 );
 
-function getIsLoadingStream(): BehaviorSubject<boolean> {
-  return new BehaviorSubject<boolean>(false);
+function getIsLoadingStream(): Subject<boolean> {
+  return new Subject<boolean>();
 }
 
 export const isLoadingStreamProvider: Provider = {

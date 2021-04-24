@@ -3,7 +3,7 @@ import {
   isLoadingStreamProvider,
   IS_LOADING_STREAM,
 } from './../../../infastructure/dependency_providers/isLoadingStream.provider';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { DataRepositoryService } from './../../../services/dataRepository.service';
 import { Auditorium } from './../../../models/domain_models/auditorium.model';
 import {
@@ -35,7 +35,7 @@ export class AuditoriumFormComponent implements OnInit, OnDestroy {
   constructor(
     private dataRepository: DataRepositoryService,
     @Inject(IS_LOADING_STREAM)
-    private $isLoadingStream: BehaviorSubject<boolean>
+    private $isLoadingStream: Subject<boolean>
   ) {}
 
   ngOnInit(): void {

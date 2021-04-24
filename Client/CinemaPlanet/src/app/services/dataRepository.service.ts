@@ -1,7 +1,7 @@
 import { Auditorium } from './../models/domain_models/auditorium.model';
 import { AUDITORIUMS_STREAM } from './../infastructure/dependency_providers/auditoriumsStream.provider';
 import { OverallStat } from './../models/domain_models/overallStat.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { OVERALL_STAT_STREAM } from './../infastructure/dependency_providers/overallStatStream.provider';
 import { Inject, Injectable } from '@angular/core';
 import { HttpAdminService } from './http_services/httpAdmin.service';
@@ -16,29 +16,35 @@ export class DataRepositoryService {
     private $auditoriumsStream: BehaviorSubject<Auditorium[]>
   ) {}
 
-  streamOverallStat($isLoadingStream?: BehaviorSubject<boolean>): void {
+  streamOverallStat($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
     this.httpAdminService.getOverallStatistics().subscribe((data) => {
-      console.log(data);
       this.$overallStatStream.next(data);
       $isLoadingStream?.next(false);
     });
   }
 
-  streamAuditoriums($isLoadingStream?: BehaviorSubject<boolean>): void {
+  streamAuditoriums($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
     this.httpAdminService.getAuditoriums().subscribe((data) => {
-      console.log(data);
       this.$auditoriumsStream.next(data);
       $isLoadingStream?.next(false);
     });
   }
 
+  streamMovies($isLoadingStream?: Subject<boolean>): void {
+    $isLoadingStream?.next(true);
+
+    this.httpAdminService.getMovies().subscribe((data) => {
+      console.log(data);
+    });
+  }
+
   saveAuditorium(
     auditorium: Auditorium,
-    $isLoadingStream?: BehaviorSubject<boolean>
+    $isLoadingStream?: Subject<boolean>
   ): void {
     $isLoadingStream?.next(true);
     this.httpAdminService.saveAuditorium(auditorium).subscribe((data) => {
@@ -47,10 +53,7 @@ export class DataRepositoryService {
     });
   }
 
-  deleteAuditoirum(
-    id: number,
-    $isLoadingStream?: BehaviorSubject<boolean>
-  ): void {
+  deleteAuditoirum(id: number, $isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
     this.httpAdminService.deleteAuditorium(id).subscribe(() => {
       this.streamOverallStat();

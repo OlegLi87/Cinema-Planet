@@ -1,5 +1,5 @@
 import { distinctUntilChanged } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { IS_LOADING_STREAM } from 'src/app/infastructure/dependency_providers/isLoadingStream.provider';
 import { DataRepositoryService } from './../../../services/dataRepository.service';
 import { isLoadingStreamProvider } from './../../../infastructure/dependency_providers/isLoadingStream.provider';
@@ -23,7 +23,7 @@ export class AuditoriumComponent implements OnInit {
   constructor(
     private dataRepositoryService: DataRepositoryService,
     @Inject(IS_LOADING_STREAM)
-    private $isLoadingStream: BehaviorSubject<boolean>
+    private $isLoadingStream: Subject<boolean>
   ) {}
 
   ngOnInit(): void {

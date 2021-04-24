@@ -1,3 +1,4 @@
+import { Movie } from './../../models/domain_models/movie.model';
 import { Auditorium } from './../../models/domain_models/auditorium.model';
 import { OverallStat } from './../../models/domain_models/overallStat.model';
 import { Observable } from 'rxjs';
@@ -25,6 +26,13 @@ export class HttpAdminService {
     return this.httpClient.get<any[]>(this.URL + '/getAuditoriums').pipe(
       delay(this.DELAY),
       map((data) => data.map<Auditorium>(this.mapToLowerCase))
+    );
+  }
+
+  getMovies(): Observable<Movie[]> {
+    return this.httpClient.get<any[]>(this.URL + '/getMovies').pipe(
+      delay(this.DELAY),
+      map((data) => data.map<Movie>(this.mapToLowerCase))
     );
   }
 

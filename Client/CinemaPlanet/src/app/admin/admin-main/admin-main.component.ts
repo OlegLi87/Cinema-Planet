@@ -5,7 +5,7 @@ import {
   IS_LOADING_STREAM,
 } from './../../infastructure/dependency_providers/isLoadingStream.provider';
 import { OverallStat } from './../../models/domain_models/overallStat.model';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { OVERALL_STAT_STREAM } from 'src/app/infastructure/dependency_providers/overallStatStream.provider';
@@ -30,7 +30,7 @@ export class AdminMainComponent implements OnInit, OnDestroy {
     private router: Router,
     private dataRepositoryService: DataRepositoryService,
     @Inject(IS_LOADING_STREAM)
-    private $isLoadingStream: BehaviorSubject<boolean>,
+    private $isLoadingStream: Subject<boolean>,
     @Inject(OVERALL_STAT_STREAM)
     private $overallStatStream: BehaviorSubject<OverallStat>
   ) {}
