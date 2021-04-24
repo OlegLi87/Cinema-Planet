@@ -1,3 +1,4 @@
+import { moviesStreamProvider } from './infastructure/dependency_providers/moviesStream.provider';
 import { auditoriumsStreamProvider } from './infastructure/dependency_providers/auditoriumsStream.provider';
 import { overallStatStreamProvider } from './infastructure/dependency_providers/overallStatStream.provider';
 import { httpInterceptorProvider } from './infastructure/dependency_providers/httpInterceptor.provider';
@@ -26,6 +27,7 @@ import { AppComponent } from './app.component';
     userStreamProvider,
     overallStatStreamProvider,
     auditoriumsStreamProvider,
+    moviesStreamProvider,
   ],
   bootstrap: [AppComponent],
 })

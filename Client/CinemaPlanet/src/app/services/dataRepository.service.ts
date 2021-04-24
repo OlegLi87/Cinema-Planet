@@ -5,6 +5,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { OVERALL_STAT_STREAM } from './../infastructure/dependency_providers/overallStatStream.provider';
 import { Inject, Injectable } from '@angular/core';
 import { HttpAdminService } from './http_services/httpAdmin.service';
+import { MOVIES_STREAM } from '../infastructure/dependency_providers/moviesStream.provider';
+import { Movie } from '../models/domain_models/movie.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class DataRepositoryService {
@@ -13,33 +16,44 @@ export class DataRepositoryService {
     @Inject(OVERALL_STAT_STREAM)
     private $overallStatStream: BehaviorSubject<OverallStat>,
     @Inject(AUDITORIUMS_STREAM)
-    private $auditoriumsStream: BehaviorSubject<Auditorium[]>
+    private $auditoriumsStream: BehaviorSubject<Auditorium[]>,
+    @Inject(MOVIES_STREAM)
+    private $moviesStream: BehaviorSubject<Movie[]>
   ) {}
 
   streamOverallStat($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService.getOverallStatistics().subscribe((data) => {
-      this.$overallStatStream.next(data);
-      $isLoadingStream?.next(false);
-    });
+    this.httpAdminService
+      .getOverallStatistics()
+      .pipe(map<any, OverallStat>(this.mapToLowerCase))
+      .subscribe((data) => {
+        this.$overallStatStream.next(data);
+        $isLoadingStream?.next(false);
+      });
   }
 
   streamAuditoriums($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService.getAuditoriums().subscribe((data) => {
-      this.$auditoriumsStream.next(data);
-      $isLoadingStream?.next(false);
-    });
+    this.httpAdminService
+      .getAuditoriums()
+      .pipe(map((data) => data.map<Auditorium>(this.mapToLowerCase)))
+      .subscribe((data) => {
+        this.$auditoriumsStream.next(data);
+        $isLoadingStream?.next(false);
+      });
   }
 
   streamMovies($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService.getMovies().subscribe((data) => {
-      console.log(data);
-    });
+    this.httpAdminService
+      .getMovies()
+      .pipe(map((data) => data.map<Movie>(this.mapToLowerCase)))
+      .subscribe((data) => {
+        this.$moviesStream.next(data);
+      });
   }
 
   saveAuditorium(
@@ -47,10 +61,14 @@ export class DataRepositoryService {
     $isLoadingStream?: Subject<boolean>
   ): void {
     $isLoadingStream?.next(true);
-    this.httpAdminService.saveAuditorium(auditorium).subscribe((data) => {
-      this.streamAuditoriums($isLoadingStream);
-      if (!auditorium.id) this.streamOverallStat();
-    });
+
+    this.httpAdminService
+      .saveAuditorium(auditorium)
+      .pipe(map<any, Auditorium>(this.mapToLowerCase))
+      .subscribe((data) => {
+        this.streamAuditoriums($isLoadingStream);
+        if (!auditorium.id) this.streamOverallStat();
+      });
   }
 
   deleteAuditoirum(id: number, $isLoadingStream?: Subject<boolean>): void {
@@ -59,5 +77,16 @@ export class DataRepositoryService {
       this.streamOverallStat();
       this.streamAuditoriums($isLoadingStream);
     });
+  }
+
+  private mapToLowerCase<T>(dataObj: object): T {
+    const keys = Object.keys(dataObj);
+    const result = {} as T;
+
+    keys.forEach((k) => {
+      const keyStartWithLower = k[0].toLowerCase() + k.substring(1);
+      result[keyStartWithLower] = dataObj[k];
+    });
+    return result;
   }
 }

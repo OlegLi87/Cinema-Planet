@@ -9,6 +9,7 @@ import {
 import { Inject, Injectable, Provider } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/models/user.model';
+import { delay } from 'rxjs/operators';
 
 @Injectable()
 class HttpInterceptorService implements HttpInterceptor {
@@ -27,7 +28,7 @@ class HttpInterceptorService implements HttpInterceptor {
       const modifiedReq = req.clone({
         headers: req.headers.append('Authorization', 'Bearer ' + token),
       });
-      return next.handle(modifiedReq);
+      return next.handle(modifiedReq).pipe(delay(250)); // imitating network latency
     }
   }
 }
