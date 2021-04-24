@@ -1,0 +1,15 @@
+<loading-spinner *ngIf="isLoading"></loading-spinner>
+
+<div
+  class="d-flex flex-wrap mt-3 justify-content-center align-items-center position-relative"
+  *ngIf="!isLoading"
+>
+  <div class="text-center w-100" *ngIf="!movies.length">
+    <h3>No Entries Found</h3>
+  </div>
+
+  <data-container
+    *ngFor="let movie of movies; trackBy: movieIdentity"
+    [dataContext]="movie"
+  ></data-container>
+</div>

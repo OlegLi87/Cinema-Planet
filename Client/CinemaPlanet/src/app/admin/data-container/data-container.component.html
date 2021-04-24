@@ -1,0 +1,74 @@
+<div
+  class="data-container text-dark"
+  (mouseleave)="toggleShowEnlargedImage($event)"
+>
+  <div
+    class="name-container position-relative text-center border-bottom border-dark"
+  >
+    {{ dataContext.name | stringTrimmer }}
+    <small class="release-date" *ngIf="dataContext.releaseDate"
+      >({{ dataContext.releaseDate | date: "shortDate" }})</small
+    >
+    <div
+      class="enlarged-image-container position-absolute p-3 rounded"
+      *ngIf="showEnlargedImage"
+    >
+      <h5 class="text-center">{{ dataContext.name }}</h5>
+      <img [src]="dataContext.imageUrl" />
+      <div class="desc-container">
+        <small>{{ dataContext.description }}</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="img-container">
+    <div
+      class="img my-1 mx-auto"
+      [ngStyle]="{
+        'background-image': 'url(' + dataContext.imageUrl + ')'
+      }"
+      (mouseover)="toggleShowEnlargedImage($event)"
+    ></div>
+    <edit-button (click)="toggleShowForm()"></edit-button>
+  </div>
+
+  <div class="additional-info-container">
+    <div
+      class="additional-info bg-dark text-center mt-1 px-3 rounded"
+      *ngFor="let prop of additionalInfoProperties"
+    >
+      <span [ngClass]="getTextColorClasses(prop)"
+        >{{ prop | propertyNameCorrector }}:
+        <span
+          *ngIf="prop.toLocaleLowerCase().includes('price'); else noCurrency"
+        >
+          {{ dataContext[prop] | customCurrency }}</span
+        >
+        <ng-template #noCurrency>
+          <span> {{ dataContext[prop] }}</span>
+        </ng-template>
+      </span>
+    </div>
+  </div>
+
+  <div class="delete-btn-container mt-2">
+    <delete-button
+      class="mx-auto w-75 rounded"
+      (click)="toggleShowConfirmModal()"
+    ></delete-button>
+  </div>
+</div>
+
+<form-container
+  *ngIf="showForm"
+  (formClosed)="toggleShowForm()"
+  [formContext]="getFormContext()"
+></form-container>
+
+<confirm-modal
+  *ngIf="showConfirmModal"
+  [message]="'Are you sure to delete?'"
+  (confirmModalClosed)="confirmModalClosed($event)"
+></confirm-modal>
+
+<loading-spinner *ngIf="isLoading"></loading-spinner>

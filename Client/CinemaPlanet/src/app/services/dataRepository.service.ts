@@ -1,3 +1,4 @@
+import { Movie } from './../models/domain_models/movie.model';
 import { Auditorium } from './../models/domain_models/auditorium.model';
 import { AUDITORIUMS_STREAM } from './../infastructure/dependency_providers/auditoriumsStream.provider';
 import { OverallStat } from './../models/domain_models/overallStat.model';
@@ -6,7 +7,6 @@ import { OVERALL_STAT_STREAM } from './../infastructure/dependency_providers/ove
 import { Inject, Injectable } from '@angular/core';
 import { HttpAdminService } from './http_services/httpAdmin.service';
 import { MOVIES_STREAM } from '../infastructure/dependency_providers/moviesStream.provider';
-import { Movie } from '../models/domain_models/movie.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -50,9 +50,18 @@ export class DataRepositoryService {
 
     this.httpAdminService
       .getMovies()
-      .pipe(map((data) => data.map<Movie>(this.mapToLowerCase)))
+      .pipe(
+        map((data) => data.map<Movie>(this.mapToLowerCase)),
+        map((data) => {
+          return data.map((movie) => {
+            movie.releaseDate = this.mapToDate(movie.releaseDate);
+            return movie;
+          });
+        })
+      )
       .subscribe((data) => {
         this.$moviesStream.next(data);
+        $isLoadingStream.next(false);
       });
   }
 
@@ -80,6 +89,7 @@ export class DataRepositoryService {
   }
 
   private mapToLowerCase<T>(dataObj: object): T {
+    if (!dataObj) return;
     const keys = Object.keys(dataObj);
     const result = {} as T;
 
@@ -88,5 +98,9 @@ export class DataRepositoryService {
       result[keyStartWithLower] = dataObj[k];
     });
     return result;
+  }
+
+  mapToDate(dateStr: any): Date {
+    return new Date(Date.parse(dateStr));
   }
 }

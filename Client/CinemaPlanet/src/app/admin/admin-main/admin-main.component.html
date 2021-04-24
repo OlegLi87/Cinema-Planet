@@ -19,7 +19,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let key of getOverallStatKeys()">
-            <td>{{ key | overallStatProperty }}</td>
+            <td>{{ key | propertyNameCorrector }}</td>
             <td>{{ overallStat[key] }}</td>
           </tr>
         </tbody>

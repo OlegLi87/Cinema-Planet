@@ -7,10 +7,11 @@
   <div class="text-center w-100" *ngIf="!auditoriums.length">
     <h3>No Entries Found</h3>
   </div>
-  <auditorium
+
+  <data-container
     *ngFor="let audit of auditoriums; trackBy: auditoriumIdentity"
-    [auditorium]="audit"
-  ></auditorium>
+    [dataContext]="audit"
+  ></data-container>
 
   <div
     class="add-container d-flex flex-column align-items-center"
