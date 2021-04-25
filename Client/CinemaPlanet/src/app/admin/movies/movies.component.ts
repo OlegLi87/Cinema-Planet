@@ -1,3 +1,4 @@
+import { FormContext } from './../form-container/form-container.component';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { IS_LOADING_STREAM } from 'src/app/infastructure/dependency_providers/isLoadingStream.provider';
 import { Movie } from './../../models/domain_models/movie.model';
@@ -18,6 +19,7 @@ export class MoviesComponent implements OnInit, OnDestroy {
 
   movies: Movie[];
   isLoading = false;
+  showForm = false;
 
   constructor(
     private dataRepositoryService: DataRepositoryService,
@@ -37,6 +39,17 @@ export class MoviesComponent implements OnInit, OnDestroy {
       this.movies = [];
       movies.forEach((m) => this.movies.push({ ...m }));
     });
+  }
+
+  toggleShowForm(): void {
+    this.showForm = !this.showForm;
+  }
+
+  get formContext(): FormContext {
+    return {
+      contextObj: null,
+      contextName: 'movie',
+    };
   }
 
   movieIdentity(index: number, movie: Movie): number {

@@ -1,0 +1,104 @@
+<form [formGroup]="form">
+  <!-- name field -->
+  <div class="form-group">
+    <label for="name" class="form-label">Movie Name</label>
+    <input id="name" type="text" class="form-control" formControlName="name" />
+  </div>
+
+  <!-- image url field -->
+  <div class="form-group">
+    <label for="imageUrl" class="form-label">Image URL</label>
+    <input
+      id="imageUrl"
+      type="text"
+      class="form-control"
+      formControlName="imageUrl"
+    />
+  </div>
+
+  <!-- description field -->
+  <div class="form-group">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      id="description"
+      rows="5"
+      class="form-control"
+      formControlName="description"
+    ></textarea>
+  </div>
+
+  <!-- genre field -->
+  <div class="form-group">
+    <label for="genre" class="form-label">Genre</label>
+    <select
+      id="genre"
+      formControlName="genre"
+      class="form-control"
+      (change)="setGenre($event.target.value)"
+    >
+      <option value="" *ngIf="!movieContext" selected data-default>
+        Choose Genre
+      </option>
+      <option
+        *ngFor="let genre of genres"
+        [value]="genre"
+        [selected]="movieContext?.genre === genre"
+      >
+        {{ genre }}
+      </option>
+    </select>
+  </div>
+
+  <!-- relase date field  -->
+  <div class="form-group">
+    <label for="releaseDate" class="form-label">Release Date</label>
+    <input
+      id="releaseDate"
+      type="date"
+      class="form-control"
+      formControlName="releaseDate"
+    />
+  </div>
+
+  <!-- seat price fields -->
+  <div formGroupName="seatPriceFields">
+    <!-- basic seat price -->
+    <div class="form-group">
+      <label for="basicSeatPrice" class="form-label">Basic Seat Price</label>
+      <input
+        id="basicSeatPrice"
+        type="number"
+        min="0"
+        class="form-control"
+        formControlName="basicSeatPrice"
+      />
+    </div>
+
+    <!-- silver seat price -->
+    <div class="form-group">
+      <label for="silverSeatPrice" class="form-label">Silver Seat Price</label>
+      <input
+        id="silverSeatPrice"
+        type="number"
+        min="0"
+        class="form-control"
+        formControlName="silverSeatPrice"
+      />
+    </div>
+
+    <!-- gold seat price -->
+    <div class="form-group">
+      <label for="goldSeatPrice" class="form-label">Gold Seat Price</label>
+      <input
+        id="goldSeatPrice"
+        type="number"
+        min="0"
+        class="form-control"
+        formControlName="goldSeatPrice"
+      />
+    </div>
+  </div>
+
+  <input type="submit" class="btn btn-outline-success" value="Save" />
+  <input type="reset" class="btn btn-outline-danger ml-3" value="Clear" />
+</form>

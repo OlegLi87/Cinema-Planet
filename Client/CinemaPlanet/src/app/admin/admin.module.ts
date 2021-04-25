@@ -13,6 +13,8 @@ import { AuditoriumFormComponent } from './auditoriums/auditorium-form/auditoriu
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormContainerComponent } from './form-container/form-container.component';
 import { DataContainerComponent } from './data-container/data-container.component';
+import { AddDataContainerComponent } from './add-data-container/add-data-container.component';
+import { MovieFormComponent } from './movies/movie-form/movie-form.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { DataContainerComponent } from './data-container/data-container.componen
     DataContainerComponent,
     CustomCurrencyPipe,
     StringTrimmerPipe,
+    AddDataContainerComponent,
+    MovieFormComponent,
   ],
   imports: [
     SharedModule,

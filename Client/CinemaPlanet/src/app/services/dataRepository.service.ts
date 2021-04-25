@@ -8,6 +8,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpAdminService } from './http_services/httpAdmin.service';
 import { MOVIES_STREAM } from '../infastructure/dependency_providers/moviesStream.provider';
 import { map } from 'rxjs/operators';
+import { GENRES_STREAM } from '../infastructure/dependency_providers/genresStream.provider';
 
 @Injectable({ providedIn: 'root' })
 export class DataRepositoryService {
@@ -18,7 +19,8 @@ export class DataRepositoryService {
     @Inject(AUDITORIUMS_STREAM)
     private $auditoriumsStream: BehaviorSubject<Auditorium[]>,
     @Inject(MOVIES_STREAM)
-    private $moviesStream: BehaviorSubject<Movie[]>
+    private $moviesStream: BehaviorSubject<Movie[]>,
+    @Inject(GENRES_STREAM) private $genresStream: BehaviorSubject<string[]>
   ) {}
 
   streamOverallStat($isLoadingStream?: Subject<boolean>): void {
@@ -63,6 +65,10 @@ export class DataRepositoryService {
         this.$moviesStream.next(data);
         $isLoadingStream.next(false);
       });
+
+    this.httpAdminService
+      .getGenres()
+      .subscribe((data) => this.$genresStream.next(data));
   }
 
   saveAuditorium(

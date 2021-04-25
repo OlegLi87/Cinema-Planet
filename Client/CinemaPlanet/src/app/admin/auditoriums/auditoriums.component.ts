@@ -50,7 +50,7 @@ export class AuditoriumsComponent implements OnInit, OnDestroy {
     this.showForm = !this.showForm;
   }
 
-  getFormContext(): FormContext {
+  get formContext(): FormContext {
     return {
       contextObj: null,
       contextName: 'auditorium',

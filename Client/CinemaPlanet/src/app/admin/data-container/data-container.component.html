@@ -1,7 +1,4 @@
-<div
-  class="data-container text-dark"
-  (mouseleave)="toggleShowEnlargedImage($event)"
->
+<div class="data-container text-dark">
   <div
     class="name-container position-relative text-center border-bottom border-dark"
   >
@@ -9,16 +6,6 @@
     <small class="release-date" *ngIf="dataContext.releaseDate"
       >({{ dataContext.releaseDate | date: "shortDate" }})</small
     >
-    <div
-      class="enlarged-image-container position-absolute p-3 rounded"
-      *ngIf="showEnlargedImage"
-    >
-      <h5 class="text-center">{{ dataContext.name }}</h5>
-      <img [src]="dataContext.imageUrl" />
-      <div class="desc-container">
-        <small>{{ dataContext.description }}</small>
-      </div>
-    </div>
   </div>
 
   <div class="img-container">
@@ -28,7 +15,19 @@
         'background-image': 'url(' + dataContext.imageUrl + ')'
       }"
       (mouseover)="toggleShowEnlargedImage($event)"
-    ></div>
+      (mouseleave)="toggleShowEnlargedImage($event)"
+    >
+      <div
+        class="enlarged-image-container position-absolute p-3 rounded text-center"
+        *ngIf="showEnlargedImage"
+      >
+        <h5 class="text-center">{{ dataContext.name }}</h5>
+        <img [src]="dataContext.imageUrl" />
+        <div class="desc-container">
+          <small>{{ dataContext.description }}</small>
+        </div>
+      </div>
+    </div>
     <edit-button (click)="toggleShowForm()"></edit-button>
   </div>
 
@@ -62,7 +61,7 @@
 <form-container
   *ngIf="showForm"
   (formClosed)="toggleShowForm()"
-  [formContext]="getFormContext()"
+  [formContext]="formContext"
 ></form-container>
 
 <confirm-modal

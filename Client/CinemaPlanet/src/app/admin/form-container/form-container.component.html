@@ -10,7 +10,15 @@
   </div>
 </div>
 
-<auditorium-form
-  [auditoriumContext]="formContext.contextObj"
-  (formProcessingEnd)="onClose()"
-></auditorium-form>
+<div class="form-container py-5 pr-4">
+  <auditorium-form
+    *ngIf="formContext.contextName === 'auditorium'"
+    [auditoriumContext]="formContext.contextObj"
+    (formProcessingEnd)="onClose()"
+  ></auditorium-form>
+
+  <movie-form
+    *ngIf="formContext.contextName === 'movie'"
+    [movieContext]="formContext.contextObj"
+  ></movie-form>
+</div>

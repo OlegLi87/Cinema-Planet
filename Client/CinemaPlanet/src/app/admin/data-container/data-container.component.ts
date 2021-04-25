@@ -69,10 +69,10 @@ export class DataContainerComponent implements OnInit {
       );
   }
 
-  getFormContext(): FormContext {
+  get formContext(): FormContext {
     return {
       contextObj: this.dataContext,
-      contextName: 'auditorium',
+      contextName: this.dataContext.genre ? 'movie' : 'auditorium',
     };
   }
 

@@ -71,6 +71,14 @@ namespace CinemaPlanet.WebApi.Controllers
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
+        [HttpGet]
+        [Route("api/admin/getGenres")]
+        public HttpResponseMessage GetGenres()
+        {
+            var genres = Enum.GetNames(typeof(Genre));
+            return Request.CreateResponse(HttpStatusCode.OK, genres);
+        }
+
         protected override void Dispose(bool disposing)
         {
             unitOfWork.Dispose();

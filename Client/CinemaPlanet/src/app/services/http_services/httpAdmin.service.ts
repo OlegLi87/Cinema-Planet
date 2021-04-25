@@ -24,6 +24,10 @@ export class HttpAdminService {
     return this.httpClient.get<any[]>(this.URL + '/getMovies');
   }
 
+  getGenres(): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.URL + '/getGenres');
+  }
+
   saveAuditorium(auditorium: Auditorium): Observable<any> {
     return this.httpClient.post<any>(this.URL + '/saveAuditorium', auditorium);
   }

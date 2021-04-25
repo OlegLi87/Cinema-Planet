@@ -13,17 +13,11 @@
     [dataContext]="audit"
   ></data-container>
 
-  <div
-    class="add-container d-flex flex-column align-items-center"
-    (click)="toggleShowForm()"
-  >
-    <span class="h2">Add</span>
-    <i class="fas fa-plus-square fa-7x"></i>
-  </div>
+  <add-data-container (click)="toggleShowForm()"></add-data-container>
 </div>
 
 <form-container
   *ngIf="showForm"
-  [formContext]="getFormContext()"
+  [formContext]="formContext"
   (formClosed)="toggleShowForm()"
 ></form-container>

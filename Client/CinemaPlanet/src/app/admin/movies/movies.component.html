@@ -12,4 +12,12 @@
     *ngFor="let movie of movies; trackBy: movieIdentity"
     [dataContext]="movie"
   ></data-container>
+
+  <add-data-container (click)="toggleShowForm()"></add-data-container>
 </div>
+
+<form-container
+  *ngIf="showForm"
+  [formContext]="formContext"
+  (formClosed)="toggleShowForm()"
+></form-container>
