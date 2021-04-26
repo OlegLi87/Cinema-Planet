@@ -1,8 +1,17 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <!-- name field -->
   <div class="form-group">
     <label for="name" class="form-label">Movie Name</label>
     <input id="name" type="text" class="form-control" formControlName="name" />
+    <div
+      class="error-message-container text-danger"
+      *ngIf="
+        !form.controls.name.valid &&
+        (form.controls.name.touched || isFormSubmitted)
+      "
+    >
+      <small>Movie name is required.</small>
+    </div>
   </div>
 
   <!-- image url field -->
@@ -14,6 +23,20 @@
       class="form-control"
       formControlName="imageUrl"
     />
+    <div
+      class="error-message-container text-danger"
+      *ngIf="
+        !form.controls.imageUrl.valid &&
+        (form.controls.imageUrl.touched || isFormSubmitted)
+      "
+    >
+      <small *ngIf="form.controls.imageUrl.errors.required"
+        >Image URL is required.</small
+      >
+      <small *ngIf="form.controls.imageUrl.errors.pattern"
+        >Invalid image URL format.</small
+      >
+    </div>
   </div>
 
   <!-- description field -->
@@ -25,6 +48,15 @@
       class="form-control"
       formControlName="description"
     ></textarea>
+    <div
+      class="error-message-container text-danger"
+      *ngIf="
+        !form.controls.description.valid &&
+        (form.controls.description.touched || isFormSubmitted)
+      "
+    >
+      <small>Description is required.</small>
+    </div>
   </div>
 
   <!-- genre field -->
@@ -35,10 +67,9 @@
       formControlName="genre"
       class="form-control"
       (change)="setGenre($event.target.value)"
+      (click)="onSelectFieldClicked()"
+      #genresSelect
     >
-      <option value="" *ngIf="!movieContext" selected data-default>
-        Choose Genre
-      </option>
       <option
         *ngFor="let genre of genres"
         [value]="genre"
@@ -46,7 +77,24 @@
       >
         {{ genre }}
       </option>
+      <option
+        value=""
+        *ngIf="!movieContext"
+        selected="selected"
+        [selected]="true"
+        disabled
+      >
+        Choose Genre
+      </option>
     </select>
+    <div
+      class="error-message-container text-danger"
+      *ngIf="
+        !form.controls.genre.valid && (isSelectFieldClicked || isFormSubmitted)
+      "
+    >
+      <small>Genre name is required.</small>
+    </div>
   </div>
 
   <!-- relase date field  -->
@@ -58,9 +106,25 @@
       class="form-control"
       formControlName="releaseDate"
     />
+    <div
+      class="error-message-container text-danger"
+      *ngIf="
+        !form.controls.releaseDate.valid &&
+        (form.controls.releaseDate.touched || isFormSubmitted)
+      "
+    >
+      <small>Release date is required.</small>
+    </div>
   </div>
 
   <!-- seat price fields -->
+  <ng-template #seatPriceRequiredValidation let-text="seatType">
+    <small>{{ text }} seat price is required.</small>
+  </ng-template>
+  <ng-template #seatPriceMinValidation
+    ><small>Must not be negative number.</small></ng-template
+  >
+
   <div formGroupName="seatPriceFields">
     <!-- basic seat price -->
     <div class="form-group">
@@ -72,6 +136,25 @@
         class="form-control"
         formControlName="basicSeatPrice"
       />
+      <div
+        class="error-message-container text-danger"
+        *ngIf="
+          !form.get('seatPriceFields.basicSeatPrice').valid &&
+          (form.get('seatPriceFields.basicSeatPrice').touched ||
+            isFormSubmitted)
+        "
+      >
+        <ng-template
+          *ngIf="form.get('seatPriceFields.basicSeatPrice').errors.required"
+          [ngTemplateOutlet]="seatPriceRequiredValidation"
+          [ngTemplateOutletContext]="{ seatType: 'Basic' }"
+        ></ng-template>
+        <ng-template
+          *ngIf="form.get('seatPriceFields.basicSeatPrice').errors.min"
+          [ngTemplateOutlet]="seatPriceMinValidation"
+          [ngTemplateOutletContext]="{ seatType: 'Basic' }"
+        ></ng-template>
+      </div>
     </div>
 
     <!-- silver seat price -->
@@ -84,6 +167,25 @@
         class="form-control"
         formControlName="silverSeatPrice"
       />
+      <div
+        class="error-message-container text-danger"
+        *ngIf="
+          !form.get('seatPriceFields.silverSeatPrice').valid &&
+          (form.get('seatPriceFields.silverSeatPrice').touched ||
+            isFormSubmitted)
+        "
+      >
+        <ng-template
+          *ngIf="form.get('seatPriceFields.silverSeatPrice').errors.required"
+          [ngTemplateOutlet]="seatPriceRequiredValidation"
+          [ngTemplateOutletContext]="{ seatType: 'Silver' }"
+        ></ng-template>
+        <ng-template
+          *ngIf="form.get('seatPriceFields.silverSeatPrice').errors.min"
+          [ngTemplateOutlet]="seatPriceMinValidation"
+          [ngTemplateOutletContext]="{ seatType: 'Silver' }"
+        ></ng-template>
+      </div>
     </div>
 
     <!-- gold seat price -->
@@ -96,6 +198,24 @@
         class="form-control"
         formControlName="goldSeatPrice"
       />
+      <div
+        class="error-message-container text-danger"
+        *ngIf="
+          !form.get('seatPriceFields.goldSeatPrice').valid &&
+          (form.get('seatPriceFields.goldSeatPrice').touched || isFormSubmitted)
+        "
+      >
+        <ng-template
+          *ngIf="form.get('seatPriceFields.goldSeatPrice').errors.required"
+          [ngTemplateOutlet]="seatPriceRequiredValidation"
+          [ngTemplateOutletContext]="{ seatType: 'Gold' }"
+        ></ng-template>
+        <ng-template
+          *ngIf="form.get('seatPriceFields.goldSeatPrice').errors.min"
+          [ngTemplateOutlet]="seatPriceMinValidation"
+          [ngTemplateOutletContext]="{ seatType: 'Gold' }"
+        ></ng-template>
+      </div>
     </div>
   </div>
 

@@ -10,7 +10,7 @@
         (form.get('name').touched || submitBtnClicked)
       "
     >
-      <small>Name is required.</small>
+      <small>Auditorium name is required.</small>
     </div>
   </div>
 
@@ -67,7 +67,7 @@
           >Must not exceed 255.</small
         >
         <small *ngIf="form.get('numericalInputs.basicSeatsCapacity').errors.min"
-          >Must be a positive number.</small
+          >Must not be negative number.</small
         >
       </div>
     </div>
@@ -103,7 +103,7 @@
         >
         <small
           *ngIf="form.get('numericalInputs.silverSeatsCapacity').errors.min"
-          >Must be a positive number.</small
+          >Must not be negative number.</small
         >
       </div>
     </div>
@@ -135,7 +135,7 @@
           >Must not exceed 255.</small
         >
         <small *ngIf="form.get('numericalInputs.goldSeatsCapacity').errors.min"
-          >Must be a positive number.</small
+          >Must not be negative number.</small
         >
       </div>
     </div>

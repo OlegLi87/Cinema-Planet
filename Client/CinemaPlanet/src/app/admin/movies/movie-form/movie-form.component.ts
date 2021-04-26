@@ -12,6 +12,8 @@ import { formatDate } from '@angular/common';
 })
 export class MovieFormComponent implements OnInit {
   @Input() movieContext: Movie;
+  isSelectFieldClicked = false;
+  isFormSubmitted = false;
   genres: string[];
   form: FormGroup;
 
@@ -71,5 +73,14 @@ export class MovieFormComponent implements OnInit {
   setGenre(genre: string): void {
     this.form.value.genre = genre;
     console.log(this.form);
+  }
+
+  onSelectFieldClicked(): void {
+    this.isSelectFieldClicked = true;
+  }
+
+  onSubmit(): void {
+    this.isFormSubmitted = true;
+    if (!this.form.valid) return;
   }
 }
