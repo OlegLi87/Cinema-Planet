@@ -84,15 +84,13 @@ export class AuditoriumFormComponent implements OnInit, OnDestroy {
     this.submitBtnClicked = true;
     if (!this.form.valid) return;
 
-    this.dataRepository.saveAuditorium(
-      {
-        id: this.auditoriumContext?.id,
-        name: this.form.value.name,
-        imageUrl: this.form.value.imageUrl,
-        ...this.form.value.numericalInputs,
-      },
-      this.$isLoadingStream
-    );
+    const auditorium: Auditorium & { numericalInputs: object } = {
+      id: this.auditoriumContext?.id,
+      ...this.form.value,
+      ...this.form.get('numericalInputs').value,
+    };
+    delete auditorium.numericalInputs;
+    this.dataRepository.saveAuditorium(auditorium, this.$isLoadingStream);
   }
 
   ngOnDestroy(): void {

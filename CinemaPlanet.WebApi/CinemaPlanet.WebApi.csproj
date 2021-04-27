@@ -117,9 +117,11 @@
     <Compile Include="Controllers\AuditoriumsController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\MovieSessionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Dtos\AuditoriumDto.cs" />
     <Compile Include="Dtos\MovieDto.cs" />
+    <Compile Include="Dtos\MovieSessionDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

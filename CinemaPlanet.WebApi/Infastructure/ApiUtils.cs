@@ -67,11 +67,35 @@ namespace CinemaPlanet.WebApi.Infastructure
             movie.ReleaseDate = movieDto.ReleaseDate;
             movie.ImageUrl = movieDto.ImageUrl;
             movie.BasicSeatPrice = movieDto.BasicSeatPrice;
-            movie.SilverSeatPrice = movie.SilverSeatPrice;
-            movie.GoldSeatPrice = movie.GoldSeatPrice;
+            movie.SilverSeatPrice = movieDto.SilverSeatPrice;
+            movie.GoldSeatPrice = movieDto.GoldSeatPrice;
             movie.Genre = (Genre)Enum.Parse(typeof(Genre), movieDto.Genre);
 
             return movie;
+        }
+
+        public static MovieSessionDto MapToMovieSessionDto(MovieSession movieSession)
+        {
+            return new MovieSessionDto
+            {
+                Id = movieSession.Id,
+                AuditoriumId = movieSession.AuditoriumId,
+                AuditoriumName = movieSession.Auditorium.Name,
+                MovieId = movieSession.MovieId,
+                MovieName = movieSession.Movie.Name,
+                SessionDate = movieSession.SessionDate,
+                OrdersAmount = movieSession.Orders.Count
+            };
+        }
+
+        public static MovieSession MapToMovieSession(MovieSession movieSession, MovieSessionDto movieSessionDto)
+        {
+            movieSession.Id = movieSessionDto.Id;
+            movieSession.AuditoriumId = movieSessionDto.AuditoriumId;
+            movieSession.MovieId = movieSessionDto.MovieId;
+            movieSession.SessionDate = movieSession.SessionDate;
+
+            return movieSession;
         }
     }
 }

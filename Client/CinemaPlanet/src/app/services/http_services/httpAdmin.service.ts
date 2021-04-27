@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Movie } from 'src/app/models/domain_models/movie.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,10 @@ export class HttpAdminService {
     return this.httpClient.get<any[]>(this.URL + '/getMovies');
   }
 
+  getMovieSessions(): Observable<any[]> {
+    return this.httpClient.get<any[]>(this.URL + '/getMovieSessions');
+  }
+
   getGenres(): Observable<string[]> {
     return this.httpClient.get<string[]>(this.URL + '/getGenres');
   }
@@ -32,9 +37,17 @@ export class HttpAdminService {
     return this.httpClient.post<any>(this.URL + '/saveAuditorium', auditorium);
   }
 
+  saveMovie(movie: Movie): Observable<any> {
+    return this.httpClient.post(this.URL + '/saveMovie', movie);
+  }
+
   deleteAuditorium(id: number): Observable<void> {
     return this.httpClient.delete<void>(
       this.URL + `/deleteAuditorium/?id=${id}`
     );
+  }
+
+  deleteMovie(id: number): Observable<void> {
+    return this.httpClient.delete<void>(this.URL + `/deleteMovie/?id=${id}`);
   }
 }

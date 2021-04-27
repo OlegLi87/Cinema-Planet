@@ -20,5 +20,6 @@
   <movie-form
     *ngIf="formContext.contextName === 'movie'"
     [movieContext]="formContext.contextObj"
+    (formProcessingEnd)="onClose()"
   ></movie-form>
 </div>

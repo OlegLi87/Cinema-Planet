@@ -9,6 +9,8 @@ import { HttpAdminService } from './http_services/httpAdmin.service';
 import { MOVIES_STREAM } from '../infastructure/dependency_providers/moviesStream.provider';
 import { map } from 'rxjs/operators';
 import { GENRES_STREAM } from '../infastructure/dependency_providers/genresStream.provider';
+import { MOVIE_SESSIONS_STREAM } from '../infastructure/dependency_providers/movieSessionsStream.povider';
+import { MovieSession } from '../models/domain_models/movieSession.model';
 
 @Injectable({ providedIn: 'root' })
 export class DataRepositoryService {
@@ -20,7 +22,9 @@ export class DataRepositoryService {
     private $auditoriumsStream: BehaviorSubject<Auditorium[]>,
     @Inject(MOVIES_STREAM)
     private $moviesStream: BehaviorSubject<Movie[]>,
-    @Inject(GENRES_STREAM) private $genresStream: BehaviorSubject<string[]>
+    @Inject(GENRES_STREAM) private $genresStream: BehaviorSubject<string[]>,
+    @Inject(MOVIE_SESSIONS_STREAM)
+    private $movieSessionsStream: BehaviorSubject<MovieSession[]>
   ) {}
 
   streamOverallStat($isLoadingStream?: Subject<boolean>): void {
@@ -71,19 +75,45 @@ export class DataRepositoryService {
       .subscribe((data) => this.$genresStream.next(data));
   }
 
+  streamMovieSessions($isLoadingStream?: Subject<boolean>): void {
+    $isLoadingStream?.next(true);
+
+    this.httpAdminService
+      .getMovieSessions()
+      .pipe(
+        map((data) => data.map<MovieSession>(this.mapToLowerCase)),
+        map((data) =>
+          data.map((ms) => {
+            ms.sessionDate = this.mapToDate(ms.sessionDate);
+            return ms;
+          })
+        )
+      )
+      .subscribe((data) => {
+        this.$movieSessionsStream.next(data);
+        $isLoadingStream.next(false);
+      });
+  }
+
   saveAuditorium(
     auditorium: Auditorium,
     $isLoadingStream?: Subject<boolean>
   ): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService
-      .saveAuditorium(auditorium)
-      .pipe(map<any, Auditorium>(this.mapToLowerCase))
-      .subscribe((data) => {
-        this.streamAuditoriums($isLoadingStream);
-        if (!auditorium.id) this.streamOverallStat();
-      });
+    this.httpAdminService.saveAuditorium(auditorium).subscribe((data) => {
+      this.streamAuditoriums($isLoadingStream);
+      if (!auditorium.id) this.streamOverallStat();
+    });
+  }
+
+  saveMovie(movie: Movie, $isLoadingStream?: Subject<boolean>): void {
+    $isLoadingStream?.next(true);
+
+    this.httpAdminService.saveMovie(movie).subscribe((data) => {
+      if (!movie.id) this.streamOverallStat();
+      this.streamMovies($isLoadingStream);
+    });
   }
 
   deleteAuditoirum(id: number, $isLoadingStream?: Subject<boolean>): void {
@@ -91,6 +121,15 @@ export class DataRepositoryService {
     this.httpAdminService.deleteAuditorium(id).subscribe(() => {
       this.streamOverallStat();
       this.streamAuditoriums($isLoadingStream);
+    });
+  }
+
+  deleteMovie(id: number, $isLoadingStream?: Subject<boolean>): void {
+    $isLoadingStream?.next(true);
+
+    this.httpAdminService.deleteMovie(id).subscribe(() => {
+      this.streamOverallStat();
+      this.streamMovies($isLoadingStream);
     });
   }
 

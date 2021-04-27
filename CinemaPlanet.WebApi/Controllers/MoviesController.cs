@@ -68,6 +68,8 @@ namespace CinemaPlanet.WebApi.Controllers
             if (movieInDb == null) return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ApiUtils.ErrorMessages["id"]);
 
             unitOfWork.Movies.Remove(movieInDb);
+            unitOfWork.Save();
+
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 

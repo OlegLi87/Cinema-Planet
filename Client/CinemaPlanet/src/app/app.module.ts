@@ -1,3 +1,4 @@
+import { movieSessionsStreamProvider } from './infastructure/dependency_providers/movieSessionsStream.povider';
 import { genresStreamProvider } from './infastructure/dependency_providers/genresStream.provider';
 import { moviesStreamProvider } from './infastructure/dependency_providers/moviesStream.provider';
 import { auditoriumsStreamProvider } from './infastructure/dependency_providers/auditoriumsStream.provider';
@@ -30,6 +31,7 @@ import { AppComponent } from './app.component';
     auditoriumsStreamProvider,
     moviesStreamProvider,
     genresStreamProvider,
+    movieSessionsStreamProvider,
   ],
   bootstrap: [AppComponent],
 })

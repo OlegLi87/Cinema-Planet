@@ -62,11 +62,18 @@ export class DataContainerComponent implements OnInit {
 
   confirmModalClosed(result: boolean): void {
     this.toggleShowConfirmModal();
-    if (result)
-      this.dataRepositoryService.deleteAuditoirum(
-        this.dataContext.id,
-        this.$isLoadingStream
-      );
+    if (result) {
+      if (this.dataContext.genre)
+        this.dataRepositoryService.deleteMovie(
+          this.dataContext.id,
+          this.$isLoadingStream
+        );
+      else
+        this.dataRepositoryService.deleteAuditoirum(
+          this.dataContext.id,
+          this.$isLoadingStream
+        );
+    }
   }
 
   get formContext(): FormContext {

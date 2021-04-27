@@ -7,7 +7,7 @@
       class="error-message-container text-danger"
       *ngIf="
         !form.controls.name.valid &&
-        (form.controls.name.touched || isFormSubmitted)
+        (form.controls.name.touched || submitBtnClicked)
       "
     >
       <small>Movie name is required.</small>
@@ -27,7 +27,7 @@
       class="error-message-container text-danger"
       *ngIf="
         !form.controls.imageUrl.valid &&
-        (form.controls.imageUrl.touched || isFormSubmitted)
+        (form.controls.imageUrl.touched || submitBtnClicked)
       "
     >
       <small *ngIf="form.controls.imageUrl.errors.required"
@@ -52,7 +52,7 @@
       class="error-message-container text-danger"
       *ngIf="
         !form.controls.description.valid &&
-        (form.controls.description.touched || isFormSubmitted)
+        (form.controls.description.touched || submitBtnClicked)
       "
     >
       <small>Description is required.</small>
@@ -86,11 +86,14 @@
       >
         Choose Genre
       </option>
+      <option value="" *ngIf="movieContext" selected="selected" disabled>
+        Choose Genre
+      </option>
     </select>
     <div
       class="error-message-container text-danger"
       *ngIf="
-        !form.controls.genre.valid && (isSelectFieldClicked || isFormSubmitted)
+        !form.controls.genre.valid && (isSelectFieldClicked || submitBtnClicked)
       "
     >
       <small>Genre name is required.</small>
@@ -110,7 +113,7 @@
       class="error-message-container text-danger"
       *ngIf="
         !form.controls.releaseDate.valid &&
-        (form.controls.releaseDate.touched || isFormSubmitted)
+        (form.controls.releaseDate.touched || submitBtnClicked)
       "
     >
       <small>Release date is required.</small>
@@ -141,7 +144,7 @@
         *ngIf="
           !form.get('seatPriceFields.basicSeatPrice').valid &&
           (form.get('seatPriceFields.basicSeatPrice').touched ||
-            isFormSubmitted)
+            submitBtnClicked)
         "
       >
         <ng-template
@@ -172,7 +175,7 @@
         *ngIf="
           !form.get('seatPriceFields.silverSeatPrice').valid &&
           (form.get('seatPriceFields.silverSeatPrice').touched ||
-            isFormSubmitted)
+            submitBtnClicked)
         "
       >
         <ng-template
@@ -202,7 +205,8 @@
         class="error-message-container text-danger"
         *ngIf="
           !form.get('seatPriceFields.goldSeatPrice').valid &&
-          (form.get('seatPriceFields.goldSeatPrice').touched || isFormSubmitted)
+          (form.get('seatPriceFields.goldSeatPrice').touched ||
+            submitBtnClicked)
         "
       >
         <ng-template
@@ -222,3 +226,8 @@
   <input type="submit" class="btn btn-outline-success" value="Save" />
   <input type="reset" class="btn btn-outline-danger ml-3" value="Clear" />
 </form>
+
+<loading-spinner
+  [backgroundColor]="'rgba(0,0,0,0.85)'"
+  *ngIf="isLoading"
+></loading-spinner>

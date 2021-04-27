@@ -1,1 +1,29 @@
 @import '../../_partial'
+
+$tableFontSize: clamp(0.5rem,1.5vw,0.9rem)
+$tablePadding: 0.5rem 0.1rem !important
+
+table
+    font-size: $tableFontSize
+
+    thead 
+       th
+         color: map-get($colors,"mainGreen")
+         text-align: left
+         padding: $tablePadding
+
+         &:first-child
+             padding-left: 0.5rem !important
+
+    td
+        padding: $tablePadding
+
+        &:first-child
+             padding-left: 0.5rem !important
+
+        button
+            font-size: $tableFontSize !important
+
+        @media(max-width:36rem)
+            button
+                padding: 0.1rem !important
