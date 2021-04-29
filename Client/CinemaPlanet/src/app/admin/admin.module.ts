@@ -15,6 +15,7 @@ import { FormContainerComponent } from './form-container/form-container.componen
 import { DataContainerComponent } from './data-container/data-container.component';
 import { AddDataContainerComponent } from './add-data-container/add-data-container.component';
 import { MovieFormComponent } from './movies/movie-form/movie-form.component';
+import { MovieSessionFormComponent } from './movie-sessions/movie-session-form/movie-session-form.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MovieFormComponent } from './movies/movie-form/movie-form.component';
     StringTrimmerPipe,
     AddDataContainerComponent,
     MovieFormComponent,
+    MovieSessionFormComponent,
   ],
   imports: [
     SharedModule,

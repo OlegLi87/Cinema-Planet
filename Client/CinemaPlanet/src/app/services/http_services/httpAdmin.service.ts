@@ -43,11 +43,17 @@ export class HttpAdminService {
 
   deleteAuditorium(id: number): Observable<void> {
     return this.httpClient.delete<void>(
-      this.URL + `/deleteAuditorium/?id=${id}`
+      this.URL + `/deleteAuditorium?id=${id}`
     );
   }
 
   deleteMovie(id: number): Observable<void> {
-    return this.httpClient.delete<void>(this.URL + `/deleteMovie/?id=${id}`);
+    return this.httpClient.delete<void>(this.URL + `/deleteMovie?id=${id}`);
+  }
+
+  deleteMovieSession(id: number): Observable<void> {
+    return this.httpClient.delete<void>(
+      this.URL + `/deleteMovieSession?id=${id}`
+    );
   }
 }

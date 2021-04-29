@@ -1,0 +1,64 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="auditorium" class="form-label">Pick Up Auditorium</label>
+    <select id="auditorium" formControlName="auditoriumId" class="form-control">
+      <option
+        [value]="audit.id"
+        *ngFor="let audit of selectOptionValues.auditoriums"
+        [selected]="movieSessionContext?.auditoriumId === audit.id"
+      >
+        {{ audit.name }}
+      </option>
+      <option
+        *ngIf="!movieSessionContext"
+        [selected]="!movieSessionContext"
+        selected
+        disabled
+      >
+        Choose Auditorium
+      </option>
+      <option *ngIf="movieSessionContext" selected disabled>
+        Choose Auditorium
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="movie" class="form-label">Pick Up Movie</label>
+    <select id="auditorium" formControlName="movieId" class="form-control">
+      <option
+        [value]="movie.id"
+        *ngFor="let movie of selectOptionValues.movies"
+        [selected]="movieSessionContext?.movieId === movie.id"
+      >
+        {{ movie.name }}
+      </option>
+      <option
+        *ngIf="!movieSessionContext"
+        [selected]="!movieSessionContext"
+        selected
+        disabled
+      >
+        Choose Movie
+      </option>
+      <option *ngIf="movieSessionContext" selected disabled>
+        Choose Movie
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="sessionDate" class="form-label">Pick Up Date</label>
+    <input
+      id="sessionDate"
+      type="date"
+      class="form-control"
+      formControlName="sessionDate"
+    />
+  </div>
+
+  <div class="buttons-container">
+    <button type="submit" class="btn btn-success">Save</button>
+    <button type="reset" class="btn btn-danger">Reset</button>
+  </div>
+</form>

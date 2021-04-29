@@ -6,6 +6,7 @@ import { Subject, Subscription, BehaviorSubject } from 'rxjs';
 import { isLoadingStreamProvider } from './../../infastructure/dependency_providers/isLoadingStream.provider';
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MOVIE_SESSIONS_STREAM } from 'src/app/infastructure/dependency_providers/movieSessionsStream.povider';
+import { FormContext } from '../form-container/form-container.component';
 
 @Component({
   selector: 'movie-sessions',
@@ -15,9 +16,12 @@ import { MOVIE_SESSIONS_STREAM } from 'src/app/infastructure/dependency_provider
 })
 export class MovieSessionsComponent implements OnInit, OnDestroy {
   private subscriptions = new Array<Subscription>();
+  private selectedMoveSession: MovieSession;
 
   movieSessions: MovieSession[];
   isLoading = false;
+  showConfirmModal = false;
+  showForm = false;
 
   constructor(
     @Inject(IS_LOADING_STREAM) private $isLoadingStream: Subject<boolean>,
@@ -29,7 +33,13 @@ export class MovieSessionsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions[0] = this.$isLoadingStream
       .pipe(distinctUntilChanged())
-      .subscribe((isLoading) => (this.isLoading = isLoading));
+      .subscribe((isLoading) => {
+        this.isLoading = isLoading;
+        if (!isLoading && this.selectedMoveSession) {
+          this.toggleShowConfirmModal();
+          this.selectedMoveSession = null;
+        }
+      });
 
     this.subscriptions[1] = this.$movieSessionsStream.subscribe(
       (movieSessions) => {
@@ -44,8 +54,49 @@ export class MovieSessionsComponent implements OnInit, OnDestroy {
     );
   }
 
+  onEditBtnClicked(selecetedMovieSession: MovieSession): void {
+    this.selectedMoveSession = selecetedMovieSession;
+    this.toggleShowForm();
+  }
+
+  onDeleteBtnClicked(selectedMovieSession: MovieSession): void {
+    this.selectedMoveSession = selectedMovieSession;
+    this.toggleShowConfirmModal();
+  }
+
+  onConfirmModalClosed(result: boolean) {
+    if (result)
+      this.dataRepositoryService.deleteMovieSession(
+        this.selectedMoveSession.id,
+        this.$isLoadingStream
+      );
+    else {
+      this.toggleShowConfirmModal();
+      this.selectedMoveSession = null;
+    }
+  }
+
+  onAddBtnClicked(): void {
+    this.toggleShowForm();
+  }
+
+  toggleShowForm(): void {
+    this.showForm = !this.showForm;
+  }
+
+  get formContext(): FormContext {
+    return {
+      contextObj: this.selectedMoveSession,
+      contextName: 'movieSession',
+    };
+  }
+
   movieSessionIdentity(index: number, movieSession: MovieSession): number {
     return movieSession.id;
+  }
+
+  private toggleShowConfirmModal(): void {
+    this.showConfirmModal = !this.showConfirmModal;
   }
 
   ngOnDestroy(): void {

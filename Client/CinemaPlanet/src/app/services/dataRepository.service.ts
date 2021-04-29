@@ -119,8 +119,8 @@ export class DataRepositoryService {
   deleteAuditoirum(id: number, $isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
     this.httpAdminService.deleteAuditorium(id).subscribe(() => {
-      this.streamOverallStat();
       this.streamAuditoriums($isLoadingStream);
+      this.streamOverallStat();
     });
   }
 
@@ -128,8 +128,17 @@ export class DataRepositoryService {
     $isLoadingStream?.next(true);
 
     this.httpAdminService.deleteMovie(id).subscribe(() => {
-      this.streamOverallStat();
       this.streamMovies($isLoadingStream);
+      this.streamOverallStat();
+    });
+  }
+
+  deleteMovieSession(id: number, $isLoadingStream?: Subject<boolean>): void {
+    $isLoadingStream?.next(true);
+
+    this.httpAdminService.deleteMovieSession(id).subscribe(() => {
+      this.streamMovieSessions($isLoadingStream);
+      this.streamOverallStat();
     });
   }
 
@@ -145,7 +154,7 @@ export class DataRepositoryService {
     return result;
   }
 
-  mapToDate(dateStr: any): Date {
+  private mapToDate(dateStr: any): Date {
     return new Date(Date.parse(dateStr));
   }
 }

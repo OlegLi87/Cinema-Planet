@@ -2,13 +2,15 @@
 
 $tableFontSize: clamp(0.5rem,1.5vw,0.9rem)
 $tablePadding: 0.5rem 0.1rem !important
+$mainGreen: map-get($colors,"mainGreen")
+$mainBlack: map-get($colors,"mainBlack")
 
 table
     font-size: $tableFontSize
 
     thead 
        th
-         color: map-get($colors,"mainGreen")
+         color: $mainGreen
          text-align: left
          padding: $tablePadding
 
@@ -17,6 +19,7 @@ table
 
     td
         padding: $tablePadding
+        vertical-align: middle  
 
         &:first-child
              padding-left: 0.5rem !important
@@ -26,4 +29,53 @@ table
 
         @media(max-width:36rem)
             button
-                padding: 0.1rem !important
+                padding: 0.2rem !important
+                margin-left: 0.2rem !important
+
+.add-session-container
+    position: relative
+    height: 1.8rem
+    width: clamp(10rem,100%,30rem)
+    background-color: $mainGreen
+    color: lighten($mainBlack,13% )
+    border-radius: 5px
+    box-shadow: 0 0 3px lighten($mainGreen,5% )
+    cursor: pointer
+    overflow-x: hidden
+   
+    p
+      position: absolute
+      white-space: nowrap
+
+      &.add-text-first
+          animation: moveLeftToRight 10s 0s linear infinite
+    
+      &.add-text-second
+          left: -198px
+          animation: moveLeftToRight 10s 5s linear infinite
+
+    &:hover
+        box-shadow: 0 0 10px lighten($mainGreen,5% )
+        transition: box-shadow 0.1s 0s linear
+
+    &:active
+        background-color: $mainBlack
+        color: $mainGreen
+
+confirm-modal
+    @include absoluteCoverArea
+    z-index: 10   
+
+loading-spinner
+    z-index: 20
+    
+@keyframes moveLeftToRight
+    0%
+        left: -12.42rem
+        
+    100%
+        left: calc(200% - 12.42rem)
+
+
+
+        

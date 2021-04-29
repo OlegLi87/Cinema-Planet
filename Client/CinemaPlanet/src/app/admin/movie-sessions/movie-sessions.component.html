@@ -1,22 +1,60 @@
-<table class="table table-striped table-dark mt-4">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Auditorium</th>
-      <th>Movie</th>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let movieSession of movieSessions">
-      <td>{{ movieSession.id }}</td>
-      <td>{{ movieSession.auditoriumName }}</td>
-      <td>{{ movieSession.movieName }}</td>
-      <td>{{ movieSession.sessionDate | date: "dd-MM-yy" }}</td>
-      <td><button class="btn btn-sm btn-warning">Edit</button></td>
-      <td><button class="btn btn-sm btn-danger">Delete</button></td>
-    </tr>
-  </tbody>
-</table>
+<loading-spinner *ngIf="isLoading"> </loading-spinner>
+
+<div class="content-container col-lg-10 mx-auto" *ngIf="!isLoading">
+  <div class="text-center w-100" *ngIf="!movieSessions.length">
+    <h3>No Entries Found</h3>
+  </div>
+
+  <table
+    class="table table-striped table-dark mt-4"
+    *ngIf="movieSessions.length"
+  >
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Auditorium</th>
+        <th>Movie</th>
+        <th>Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let movieSession of movieSessions">
+        <td>{{ movieSession.id }}</td>
+        <td>{{ movieSession.auditoriumName }}</td>
+        <td>{{ movieSession.movieName }}</td>
+        <td>{{ movieSession.sessionDate | date: "dd-MM-yy" }}</td>
+        <td>
+          <button
+            class="btn btn-sm btn-warning"
+            (click)="onEditBtnClicked(movieSession)"
+          >
+            Edit
+          </button>
+          <button
+            class="btn btn-sm btn-danger ml-3"
+            (click)="onDeleteBtnClicked(movieSession)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="add-session-container mx-auto py-1" (click)="onAddBtnClicked()">
+    <p class="add-text-first m-0 d-inline-block">+ Add Movie Session +</p>
+    <p class="add-text-second m-0 d-inline-block">+ Add Movie Session +</p>
+  </div>
+</div>
+
+<confirm-modal
+  *ngIf="showConfirmModal"
+  [message]="'Are you sure to delete?'"
+  (confirmModalClosed)="onConfirmModalClosed($event)"
+></confirm-modal>
+
+<form-container
+  *ngIf="showForm"
+  [formContext]="formContext"
+  (formClosed)="toggleShowForm()"
+></form-container>
