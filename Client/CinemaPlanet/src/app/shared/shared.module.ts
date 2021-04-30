@@ -1,4 +1,4 @@
-import { SharedRoutingModule } from './shared-routing.module';
+import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { EditButtonComponent } from './edit-button/edit-button.component';
 import { DeleteButtonComponent } from './delete-button/delete-button.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { CustomCurrencyPipe } from './pipes/customCurrency.pipe';
+import { StringTrimmerPipe } from './pipes/stringTrimmer.pipe';
+import { PropertyNameCorrectorPipe } from './pipes/propertyNameCorrector.pipe';
 
 @NgModule({
   declarations: [
@@ -21,14 +24,20 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
     EditButtonComponent,
     DeleteButtonComponent,
     ConfirmModalComponent,
+    PropertyNameCorrectorPipe,
+    CustomCurrencyPipe,
+    StringTrimmerPipe,
   ],
-  imports: [CommonModule, SharedRoutingModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   exports: [
     NavigationBarComponent,
     LoadingSpinnerComponent,
     EditButtonComponent,
     DeleteButtonComponent,
     ConfirmModalComponent,
+    PropertyNameCorrectorPipe,
+    CustomCurrencyPipe,
+    StringTrimmerPipe,
   ],
 })
 export class SharedModule {}

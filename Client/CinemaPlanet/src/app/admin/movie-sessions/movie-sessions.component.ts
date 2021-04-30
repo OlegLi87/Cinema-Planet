@@ -1,12 +1,14 @@
 import { distinctUntilChanged } from 'rxjs/operators';
 import { DataRepositoryService } from './../../services/dataRepository.service';
 import { MovieSession } from './../../models/domain_models/movieSession.model';
-import { IS_LOADING_STREAM } from 'src/app/infastructure/dependency_providers/isLoadingStream.provider';
 import { Subject, Subscription, BehaviorSubject } from 'rxjs';
-import { isLoadingStreamProvider } from './../../infastructure/dependency_providers/isLoadingStream.provider';
+import {
+  isLoadingStreamProvider,
+  IS_LOADING_STREAM,
+} from './../../infastructure/dependency_providers/isLoadingStream.provider';
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { MOVIE_SESSIONS_STREAM } from 'src/app/infastructure/dependency_providers/movieSessionsStream.povider';
 import { FormContext } from '../form-container/form-container.component';
+import { MOVIE_SESSIONS_STREAM } from '../../infastructure/dependency_providers/movieSessionsStream.povider';
 
 @Component({
   selector: 'movie-sessions',

@@ -1,6 +1,3 @@
-import { StringTrimmerPipe } from './pipes/stringTrimmer.pipe';
-import { CustomCurrencyPipe } from './pipes/customCurrency.pipe';
-import { PropertyNameCorrectorPipe } from './pipes/propertyNameCorrector.pipe';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from './../shared/shared.module';
 import { CommonModule } from '@angular/common';
@@ -23,12 +20,9 @@ import { MovieSessionFormComponent } from './movie-sessions/movie-session-form/m
     AuditoriumsComponent,
     MoviesComponent,
     MovieSessionsComponent,
-    PropertyNameCorrectorPipe,
     AuditoriumFormComponent,
     FormContainerComponent,
     DataContainerComponent,
-    CustomCurrencyPipe,
-    StringTrimmerPipe,
     AddDataContainerComponent,
     MovieFormComponent,
     MovieSessionFormComponent,

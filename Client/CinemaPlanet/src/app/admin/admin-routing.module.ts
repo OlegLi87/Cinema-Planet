@@ -8,9 +8,8 @@ import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
   {
-    path: 'admin',
+    path: '',
     component: AdminMainComponent,
-    canActivate: [MainGuardService],
     children: [
       {
         path: 'auditoriums',
