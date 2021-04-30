@@ -36,7 +36,6 @@ export class MovieSessionsComponent implements OnInit, OnDestroy {
       .subscribe((isLoading) => {
         this.isLoading = isLoading;
         if (!isLoading && this.selectedMoveSession) {
-          this.toggleShowConfirmModal();
           this.selectedMoveSession = null;
         }
       });
@@ -65,13 +64,13 @@ export class MovieSessionsComponent implements OnInit, OnDestroy {
   }
 
   onConfirmModalClosed(result: boolean) {
+    this.toggleShowConfirmModal();
     if (result)
       this.dataRepositoryService.deleteMovieSession(
         this.selectedMoveSession.id,
         this.$isLoadingStream
       );
     else {
-      this.toggleShowConfirmModal();
       this.selectedMoveSession = null;
     }
   }
@@ -82,6 +81,7 @@ export class MovieSessionsComponent implements OnInit, OnDestroy {
 
   toggleShowForm(): void {
     this.showForm = !this.showForm;
+    if (!this.showForm) this.selectedMoveSession = null;
   }
 
   get formContext(): FormContext {
@@ -89,6 +89,14 @@ export class MovieSessionsComponent implements OnInit, OnDestroy {
       contextObj: this.selectedMoveSession,
       contextName: 'movieSession',
     };
+  }
+
+  get maxStringLength(): number {
+    const windowWidth = window.innerWidth;
+    if (windowWidth < 340) return 3;
+    if (windowWidth < 576) return 8;
+    if (windowWidth < 1100) return 10;
+    else return 16;
   }
 
   movieSessionIdentity(index: number, movieSession: MovieSession): number {

@@ -67,7 +67,7 @@ export class DataRepositoryService {
       )
       .subscribe((data) => {
         this.$moviesStream.next(data);
-        $isLoadingStream.next(false);
+        $isLoadingStream?.next(false);
       });
 
     this.httpAdminService
@@ -91,7 +91,7 @@ export class DataRepositoryService {
       )
       .subscribe((data) => {
         this.$movieSessionsStream.next(data);
-        $isLoadingStream.next(false);
+        $isLoadingStream?.next(false);
       });
   }
 
@@ -102,8 +102,8 @@ export class DataRepositoryService {
     $isLoadingStream?.next(true);
 
     this.httpAdminService.saveAuditorium(auditorium).subscribe((data) => {
-      this.streamAuditoriums($isLoadingStream);
       if (!auditorium.id) this.streamOverallStat();
+      this.streamAuditoriums($isLoadingStream);
     });
   }
 
@@ -116,11 +116,28 @@ export class DataRepositoryService {
     });
   }
 
+  saveMovieSession(
+    movieSession: MovieSession,
+    $isLoadingStream?: Subject<boolean>
+  ): void {
+    $isLoadingStream?.next(true);
+
+    this.httpAdminService.saveMovieSession(movieSession).subscribe((data) => {
+      if (!movieSession.id) {
+        this.streamOverallStat();
+      }
+      this.streamAuditoriums();
+      this.streamMovies();
+      this.streamMovieSessions($isLoadingStream);
+    });
+  }
+
   deleteAuditoirum(id: number, $isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
     this.httpAdminService.deleteAuditorium(id).subscribe(() => {
-      this.streamAuditoriums($isLoadingStream);
       this.streamOverallStat();
+      this.streamMovieSessions();
+      this.streamAuditoriums($isLoadingStream);
     });
   }
 
@@ -128,8 +145,9 @@ export class DataRepositoryService {
     $isLoadingStream?.next(true);
 
     this.httpAdminService.deleteMovie(id).subscribe(() => {
-      this.streamMovies($isLoadingStream);
       this.streamOverallStat();
+      this.streamMovieSessions();
+      this.streamMovies($isLoadingStream);
     });
   }
 
@@ -137,8 +155,10 @@ export class DataRepositoryService {
     $isLoadingStream?.next(true);
 
     this.httpAdminService.deleteMovieSession(id).subscribe(() => {
-      this.streamMovieSessions($isLoadingStream);
       this.streamOverallStat();
+      this.streamAuditoriums();
+      this.streamMovies();
+      this.streamMovieSessions($isLoadingStream);
     });
   }
 

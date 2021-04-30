@@ -2,7 +2,7 @@
   <div
     class="name-container position-relative text-center border-bottom border-dark"
   >
-    {{ dataContext.name | stringTrimmer }}
+    {{ dataContext.name | stringTrimmer: 13 }}
     <small class="release-date" *ngIf="dataContext.releaseDate"
       >({{ dataContext.releaseDate | date: "shortDate" }})</small
     >

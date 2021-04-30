@@ -13,6 +13,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationBarComponent implements OnInit {
   navigationContext: NavigationContext;
+  showConfirmModal = false;
 
   constructor(
     private navigationContextProvider: NavigationContextProviderService,
@@ -23,8 +24,12 @@ export class NavigationBarComponent implements OnInit {
     this.navigationContext = this.navigationContextProvider.getNavigationContext();
   }
 
-  logout(event: Event): void {
-    event.preventDefault();
+  onConfirmModalClosed(result: boolean): void {
+    this.showConfirmModal = false;
+    if (result) this.logout();
+  }
+
+  logout(): void {
     this.authService.logout();
   }
 

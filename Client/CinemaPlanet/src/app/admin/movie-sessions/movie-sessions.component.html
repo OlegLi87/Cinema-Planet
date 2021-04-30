@@ -1,4 +1,4 @@
-<loading-spinner *ngIf="isLoading"> </loading-spinner>
+<loading-spinner *ngIf="isLoading"></loading-spinner>
 
 <div class="content-container col-lg-10 mx-auto" *ngIf="!isLoading">
   <div class="text-center w-100" *ngIf="!movieSessions.length">
@@ -21,18 +21,20 @@
     <tbody>
       <tr *ngFor="let movieSession of movieSessions">
         <td>{{ movieSession.id }}</td>
-        <td>{{ movieSession.auditoriumName }}</td>
-        <td>{{ movieSession.movieName }}</td>
+        <td>
+          {{ movieSession.auditoriumName | stringTrimmer: maxStringLength }}
+        </td>
+        <td>{{ movieSession.movieName | stringTrimmer: maxStringLength }}</td>
         <td>{{ movieSession.sessionDate | date: "dd-MM-yy" }}</td>
         <td>
           <button
-            class="btn btn-sm btn-warning"
+            class="edit-button btn btn-sm"
             (click)="onEditBtnClicked(movieSession)"
           >
             Edit
           </button>
           <button
-            class="btn btn-sm btn-danger ml-3"
+            class="btn btn-sm btn-outline-danger ml-3"
             (click)="onDeleteBtnClicked(movieSession)"
           >
             Delete

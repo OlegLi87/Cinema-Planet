@@ -1,3 +1,4 @@
+import { MovieSession } from './../../models/domain_models/movieSession.model';
 import { Auditorium } from './../../models/domain_models/auditorium.model';
 import { Observable } from 'rxjs';
 import { environment } from './../../../environments/environment';
@@ -39,6 +40,13 @@ export class HttpAdminService {
 
   saveMovie(movie: Movie): Observable<any> {
     return this.httpClient.post(this.URL + '/saveMovie', movie);
+  }
+
+  saveMovieSession(movieSession: MovieSession): Observable<any> {
+    return this.httpClient.post<any>(
+      this.URL + '/saveMovieSession',
+      movieSession
+    );
   }
 
   deleteAuditorium(id: number): Observable<void> {

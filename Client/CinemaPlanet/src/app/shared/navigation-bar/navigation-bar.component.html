@@ -25,7 +25,15 @@
         [routerLinkActive]="'active'"
         >{{ link.linkName }}</a
       >
-      <a class="nav-item nav-link" href="#" (click)="logout($event)">Log out</a>
+      <a class="nav-item nav-link" (click)="this.showConfirmModal = true"
+        >Log out</a
+      >
     </div>
   </div>
 </nav>
+
+<confirm-modal
+  *ngIf="showConfirmModal"
+  [message]="'Are you sure to log out?'"
+  (confirmModalClosed)="onConfirmModalClosed($event)"
+></confirm-modal>

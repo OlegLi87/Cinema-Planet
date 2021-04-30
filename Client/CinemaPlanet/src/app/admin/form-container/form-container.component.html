@@ -26,5 +26,6 @@
   <movie-session-form
     *ngIf="formContext.contextName === 'movieSession'"
     [movieSessionContext]="formContext.contextObj"
+    (formProcessingEnd)="onClose()"
   ></movie-session-form>
 </div>

@@ -4,13 +4,13 @@
     <select id="auditorium" formControlName="auditoriumId" class="form-control">
       <option
         [value]="audit.id"
-        *ngFor="let audit of selectOptionValues.auditoriums"
+        *ngFor="let audit of auditoriums"
         [selected]="movieSessionContext?.auditoriumId === audit.id"
       >
         {{ audit.name }}
       </option>
       <option
-        *ngIf="!movieSessionContext"
+        *ngIf="!movieSessionContext && auditoriums"
         [selected]="!movieSessionContext"
         selected
         disabled
@@ -21,6 +21,15 @@
         Choose Auditorium
       </option>
     </select>
+    <div
+      class="error-message-container"
+      *ngIf="
+        !form.controls.auditoriumId.valid &&
+        (form.controls.auditoriumId.touched || isFormSubmitted)
+      "
+    >
+      <small class="text-danger">Auditorium is required.</small>
+    </div>
   </div>
 
   <div class="form-group">
@@ -28,13 +37,13 @@
     <select id="auditorium" formControlName="movieId" class="form-control">
       <option
         [value]="movie.id"
-        *ngFor="let movie of selectOptionValues.movies"
+        *ngFor="let movie of movies"
         [selected]="movieSessionContext?.movieId === movie.id"
       >
         {{ movie.name }}
       </option>
       <option
-        *ngIf="!movieSessionContext"
+        *ngIf="!movieSessionContext && movies"
         [selected]="!movieSessionContext"
         selected
         disabled
@@ -45,6 +54,15 @@
         Choose Movie
       </option>
     </select>
+    <div
+      class="error-message-container"
+      *ngIf="
+        !form.controls.movieId.valid &&
+        (form.controls.movieId.touched || isFormSubmitted)
+      "
+    >
+      <small class="text-danger">Movie is required.</small>
+    </div>
   </div>
 
   <div class="form-group">
@@ -55,10 +73,33 @@
       class="form-control"
       formControlName="sessionDate"
     />
+    <div
+      class="error-message-container"
+      *ngIf="
+        !form.controls.sessionDate.valid &&
+        (form.controls.sessionDate.touched || isFormSubmitted)
+      "
+    >
+      <small
+        class="text-danger"
+        *ngIf="form.controls.sessionDate.errors.required"
+        >Date is required.</small
+      >
+      <small
+        class="text-danger"
+        *ngIf="form.controls.sessionDate.errors.futureDate"
+        >Date must be in future.</small
+      >
+    </div>
   </div>
 
   <div class="buttons-container">
-    <button type="submit" class="btn btn-success">Save</button>
-    <button type="reset" class="btn btn-danger">Reset</button>
+    <button type="submit" class="btn">Save</button>
+    <button type="reset" class="btn btn-outline-danger ml-3">Reset</button>
   </div>
 </form>
+
+<loading-spinner
+  *ngIf="isLoading"
+  [backgroundColor]="'rgba(0,0,0,0.85)'"
+></loading-spinner>

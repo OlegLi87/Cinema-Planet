@@ -93,7 +93,7 @@ namespace CinemaPlanet.WebApi.Infastructure
             movieSession.Id = movieSessionDto.Id;
             movieSession.AuditoriumId = movieSessionDto.AuditoriumId;
             movieSession.MovieId = movieSessionDto.MovieId;
-            movieSession.SessionDate = movieSession.SessionDate;
+            movieSession.SessionDate = movieSessionDto.SessionDate;
 
             return movieSession;
         }
