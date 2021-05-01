@@ -1,3 +1,4 @@
+import { HttpDataService } from './http_services/httpData.service';
 import { Movie } from './../models/domain_models/movie.model';
 import { Auditorium } from './../models/domain_models/auditorium.model';
 import { AUDITORIUMS_STREAM } from './../infastructure/dependency_providers/auditoriumsStream.provider';
@@ -5,7 +6,6 @@ import { OverallStat } from './../models/domain_models/overallStat.model';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { OVERALL_STAT_STREAM } from './../infastructure/dependency_providers/overallStatStream.provider';
 import { Inject, Injectable } from '@angular/core';
-import { HttpAdminService } from './http_services/httpAdmin.service';
 import { MOVIES_STREAM } from '../infastructure/dependency_providers/moviesStream.provider';
 import { map } from 'rxjs/operators';
 import { GENRES_STREAM } from '../infastructure/dependency_providers/genresStream.provider';
@@ -15,7 +15,7 @@ import { MovieSession } from '../models/domain_models/movieSession.model';
 @Injectable({ providedIn: 'root' })
 export class DataRepositoryService {
   constructor(
-    private httpAdminService: HttpAdminService,
+    private httpDataService: HttpDataService,
     @Inject(OVERALL_STAT_STREAM)
     private $overallStatStream: BehaviorSubject<OverallStat>,
     @Inject(AUDITORIUMS_STREAM)
@@ -30,7 +30,7 @@ export class DataRepositoryService {
   streamOverallStat($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService
+    this.httpDataService
       .getOverallStatistics()
       .pipe(map<any, OverallStat>(this.mapToLowerCase))
       .subscribe((data) => {
@@ -42,7 +42,7 @@ export class DataRepositoryService {
   streamAuditoriums($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService
+    this.httpDataService
       .getAuditoriums()
       .pipe(map((data) => data.map<Auditorium>(this.mapToLowerCase)))
       .subscribe((data) => {
@@ -54,7 +54,7 @@ export class DataRepositoryService {
   streamMovies($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService
+    this.httpDataService
       .getMovies()
       .pipe(
         map((data) => data.map<Movie>(this.mapToLowerCase)),
@@ -70,7 +70,7 @@ export class DataRepositoryService {
         $isLoadingStream?.next(false);
       });
 
-    this.httpAdminService
+    this.httpDataService
       .getGenres()
       .subscribe((data) => this.$genresStream.next(data));
   }
@@ -78,7 +78,7 @@ export class DataRepositoryService {
   streamMovieSessions($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService
+    this.httpDataService
       .getMovieSessions()
       .pipe(
         map((data) => data.map<MovieSession>(this.mapToLowerCase)),
@@ -101,7 +101,7 @@ export class DataRepositoryService {
   ): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService.saveAuditorium(auditorium).subscribe((data) => {
+    this.httpDataService.saveAuditorium(auditorium).subscribe((data) => {
       if (!auditorium.id) this.streamOverallStat();
       this.streamAuditoriums($isLoadingStream);
     });
@@ -110,7 +110,7 @@ export class DataRepositoryService {
   saveMovie(movie: Movie, $isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService.saveMovie(movie).subscribe((data) => {
+    this.httpDataService.saveMovie(movie).subscribe((data) => {
       if (!movie.id) this.streamOverallStat();
       this.streamMovies($isLoadingStream);
     });
@@ -122,7 +122,7 @@ export class DataRepositoryService {
   ): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService.saveMovieSession(movieSession).subscribe((data) => {
+    this.httpDataService.saveMovieSession(movieSession).subscribe((data) => {
       if (!movieSession.id) {
         this.streamOverallStat();
       }
@@ -134,7 +134,7 @@ export class DataRepositoryService {
 
   deleteAuditoirum(id: number, $isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
-    this.httpAdminService.deleteAuditorium(id).subscribe(() => {
+    this.httpDataService.deleteAuditorium(id).subscribe(() => {
       this.streamOverallStat();
       this.streamMovieSessions();
       this.streamAuditoriums($isLoadingStream);
@@ -144,7 +144,7 @@ export class DataRepositoryService {
   deleteMovie(id: number, $isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService.deleteMovie(id).subscribe(() => {
+    this.httpDataService.deleteMovie(id).subscribe(() => {
       this.streamOverallStat();
       this.streamMovieSessions();
       this.streamMovies($isLoadingStream);
@@ -154,7 +154,7 @@ export class DataRepositoryService {
   deleteMovieSession(id: number, $isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
-    this.httpAdminService.deleteMovieSession(id).subscribe(() => {
+    this.httpDataService.deleteMovieSession(id).subscribe(() => {
       this.streamOverallStat();
       this.streamAuditoriums();
       this.streamMovies();

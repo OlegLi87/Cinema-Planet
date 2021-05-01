@@ -2,6 +2,15 @@ $colors: ("mainGreen" : rgb(52, 235, 164),"mainYellow": rgb(237, 202, 28),"mainB
 
 $mainGreen: map-get($colors,"mainGreen")
 
+@mixin appBackground()
+   display: block
+   min-height: 100vh
+   background-image: url('../assets/images/app_background.jpg')
+   background-size: cover
+   padding-bottom: 2rem
+   @media ( max-width:  31.25rem)
+        background-position: -300px
+
 @mixin invalidInputField()
    border: 2px solid #ff4e11
 

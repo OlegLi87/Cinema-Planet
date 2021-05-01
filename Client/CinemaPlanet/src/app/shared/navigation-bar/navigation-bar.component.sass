@@ -1,7 +1,10 @@
 @import '../../_partial'
 
+$mainGreen: map-get($colors,"mainGreen")
+
 :host
     display: block
+    box-shadow: 0 0 10px $mainGreen
 
 .navbar-brand
     color: rgba(255,255,255,0.5) !important
@@ -10,9 +13,13 @@
     color: rgba(255,255,255,0.75) !important
        
 .active
-    color: map-get($colors,"mainGreen" ) !important
-    text-shadow: 0 0 2px map-get($colors,"mainGreen")
+    color: $mainGreen !important
+    text-shadow: 0 0 2px $mainGreen
 
+.user-name
+    color: lighten($mainGreen,20%)
+    @media(max-width: 48rem)
+        display: none
 a
     cursor: pointer
 

@@ -1,17 +1,8 @@
 @import '../../_partial'
 
 :host
-    display: block
-    min-height: 100vh
-    background-image: url('../../../assets/images/admin_background.jpg')
-    background-size: cover
-    padding-bottom: 2rem
-    @media ( max-width:  31.25rem)
-        background-position: -300px
+   @include appBackground()
         
-navigation-bar
-    box-shadow: 0 0 10px map-get($colors,"mainGreen")
-
 .container
     @include contentContainer()
    

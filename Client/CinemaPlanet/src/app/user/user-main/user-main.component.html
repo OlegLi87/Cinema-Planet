@@ -1,0 +1,85 @@
+<navigation-bar></navigation-bar>
+
+<div class="container mt-2 col-lg-8 col-11">
+  <div class="row">
+    <div id="moviesCorousel" class="carousel slide w-100" data-ride="carousel">
+      <!-- bottom buttons -->
+      <ol class="carousel-indicators">
+        <li
+          data-target="#moviesCorousel"
+          [attr.data-slide-to]="index"
+          [class.active]="first"
+          *ngFor="let movie of movies; let index = index; let first = first"
+        ></li>
+      </ol>
+
+      <!-- content -->
+      <div class="carousel-inner jumbotron mb-3 mt-3 pt-3 text-center">
+        <h2 class="mb-5 page-title p-3 rounded">Order your seat.</h2>
+
+        <div
+          class="carousel-item"
+          [class.active]="last"
+          *ngFor="let movie of movies; let last = last; trackBy: movieIdentity"
+        >
+          <div class="movie-container">
+            <h4 class="movie-title pb-3">
+              {{ movie.name }}
+              <small class="release-date"
+                >({{ movie.releaseDate | date: "dd/MM/yy" }})</small
+              >
+            </h4>
+            <div
+              class="image-container"
+              [ngStyle]="{ 'background-image': 'url(' + movie.imageUrl + ')' }"
+            ></div>
+            <div class="additional-info-container d-flex flex-column ml-2">
+              <div class="genre mb-2">{{ movie.genre }}</div>
+              <div class="description mb-3 p-2">
+                {{ movie.description }}
+              </div>
+              <div class="basic seat-price text-info">
+                Basic seat price:
+                {{ movie.basicSeatPrice | currency: "USD":"symbol" }}
+              </div>
+              <div class="silver seat-price text-muted">
+                Sliver seat price:
+                {{ movie.silverSeatPrice | currency: "USD":"symbol" }}
+              </div>
+              <div class="gold seat-price text-warning">
+                Gold seat price:
+                {{ movie.goldSeatPrice | currency: "USD":"symbol" }}
+              </div>
+              <button class="btn btn-info mt-2 mx-5">Place Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- arrows -->
+      <a
+        class="carousel-control-prev"
+        href="#moviesCorousel"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="prev-icon" aria-hidden="true"
+          ><i class="fas fa-angle-double-left fa-2x"></i
+        ></span>
+        <span class="sr-only">Previous</span>
+      </a>
+
+      <a
+        class="carousel-control-next"
+        href="#moviesCorousel"
+        role="button"
+        data-slide="next"
+      >
+        <span class="next-icon" aria-hidden="true"
+          ><i class="fas fa-angle-double-right fa-2x"></i
+        ></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+</div>

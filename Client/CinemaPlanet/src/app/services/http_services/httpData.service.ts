@@ -9,7 +9,7 @@ import { Movie } from '../../models/domain_models/movie.model';
 @Injectable({
   providedIn: 'root',
 })
-export class HttpAdminService {
+export class HttpDataService {
   private readonly URL = environment.API_URL + '/admin';
 
   constructor(private httpClient: HttpClient) {}

@@ -3,7 +3,10 @@ import {
   NavigationContext,
   NavigationContextProviderService,
 } from './../../services/navigationContextProvider.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { USER_STREAM } from 'src/app/infastructure/dependency_providers/userStream.provider';
+import { AuthRole, User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'navigation-bar',
@@ -16,6 +19,7 @@ export class NavigationBarComponent implements OnInit {
   showConfirmModal = false;
 
   constructor(
+    @Inject(USER_STREAM) private $userStream: BehaviorSubject<User>,
     private navigationContextProvider: NavigationContextProviderService,
     private authService: AuthService
   ) {}
@@ -41,5 +45,11 @@ export class NavigationBarComponent implements OnInit {
 
   onLogoHoverOff(event: Event): void {
     (event.target as HTMLAnchorElement).classList.remove('logo-hovered');
+  }
+
+  get userName(): string {
+    const user = this.$userStream.value;
+    if (user.role === AuthRole.Admin) return null;
+    return user.username;
   }
 }

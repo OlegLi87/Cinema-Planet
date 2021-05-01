@@ -33,6 +33,5 @@ import { MovieSessionFormComponent } from './movie-sessions/movie-session-form/m
     ReactiveFormsModule,
     AdminRoutingModule,
   ],
-  exports: [],
 })
 export class AdminModule {}

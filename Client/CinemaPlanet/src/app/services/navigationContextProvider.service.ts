@@ -17,7 +17,7 @@ export class NavigationContextProviderService {
   getNavigationContext(): NavigationContext {
     const user = this.$userStream.value;
     if (!user) return null;
-    else if (user.role === AuthRole.Admin)
+    if (user.role === AuthRole.Admin)
       return {
         homeUrl: '/admin',
         navLinks: [
@@ -26,6 +26,11 @@ export class NavigationContextProviderService {
           { linkName: 'Movie Sessions', url: 'movieSessions' },
         ],
       };
-    else return null;
+    if (user.role === AuthRole.User)
+      return {
+        homeUrl: '/app',
+        navLinks: [{ linkName: 'Orders', url: '/app/orders' }],
+      };
+    return null;
   }
 }
