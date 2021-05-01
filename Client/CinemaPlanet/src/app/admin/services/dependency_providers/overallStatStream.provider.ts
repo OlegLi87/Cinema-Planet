@@ -1,6 +1,7 @@
+import { OverallStat } from './../../../models/domain_models/overallStat.model';
 import { BehaviorSubject } from 'rxjs';
 import { InjectionToken } from '@angular/core';
-import { OverallStat } from '../../models/domain_models/overallStat.model';
+
 import { Provider } from '@angular/core';
 
 export const OVERALL_STAT_STREAM = new InjectionToken(

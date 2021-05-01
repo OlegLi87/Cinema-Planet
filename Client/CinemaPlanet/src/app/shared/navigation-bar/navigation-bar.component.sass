@@ -17,7 +17,9 @@ $mainGreen: map-get($colors,"mainGreen")
     text-shadow: 0 0 2px $mainGreen
 
 .user-name
-    color: lighten($mainGreen,20%)
+    color: $mainGreen
+    text-shadow: 0 0 10px #000
+    border-bottom: 2px solid $mainGreen
     @media(max-width: 48rem)
         display: none
 a

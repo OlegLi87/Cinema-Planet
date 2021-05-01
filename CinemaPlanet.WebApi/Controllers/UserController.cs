@@ -1,4 +1,7 @@
-﻿using CinemaPlanet.WebApi.Infastructure.Auth;
+﻿using CinemaPlanet.Domain.Core;
+using CinemaPlanet.WebApi.Infastructure;
+using CinemaPlanet.WebApi.Infastructure.Auth;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +15,28 @@ namespace CinemaPlanet.WebApi.Controllers
     [Authorize(Roles = "User")]
     public class UserController : ApiController
     {
-        public string Get()
+        IUnitOfWork unitOfWork;
+
+        public UserController()
         {
-            return "In user";
+            IKernel kernel = new StandardKernel(new NinjectBinding());
+            unitOfWork = kernel.Get<IUnitOfWork>();
+        }
+
+        [HttpGet]
+        [Route("api/user/getMovies")]
+        public HttpResponseMessage GetMovies()
+        {
+            var movies = unitOfWork.MovieSessions.Get()
+                .Where(ms => ms.IsSessionAvailbale())
+                .Select(ms => ms.Movie);
+
+            return Request.CreateResponse(HttpStatusCode.OK, movies);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
         }
     }
 }

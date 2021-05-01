@@ -1,7 +1,8 @@
+import { MOVIES_STREAM } from './../../services/dependency_providers/moviesStream.provider';
+import { AUDITORIUMS_STREAM } from './../../services/dependency_providers/auditoriumsStream.provider';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { DataRepositoryService } from './../../../services/dataRepository.service';
-import { MOVIES_STREAM } from './../../../infastructure/dependency_providers/moviesStream.provider';
-import { AUDITORIUMS_STREAM } from './../../../infastructure/dependency_providers/auditoriumsStream.provider';
+import { DataRepositoryService } from '../../services/dataRepository.service';
+
 import {
   isLoadingStreamProvider,
   IS_LOADING_STREAM,

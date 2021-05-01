@@ -1,5 +1,6 @@
+import { MovieSession } from './../../../models/domain_models/movieSession.model';
 import { BehaviorSubject } from 'rxjs';
-import { MovieSession } from './../../models/domain_models/movieSession.model';
+
 import { InjectionToken, Provider } from '@angular/core';
 
 export const MOVIE_SESSIONS_STREAM = new InjectionToken(

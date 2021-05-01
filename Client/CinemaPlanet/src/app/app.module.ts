@@ -1,8 +1,3 @@
-import { movieSessionsStreamProvider } from './infastructure/dependency_providers/movieSessionsStream.povider';
-import { genresStreamProvider } from './infastructure/dependency_providers/genresStream.provider';
-import { moviesStreamProvider } from './infastructure/dependency_providers/moviesStream.provider';
-import { auditoriumsStreamProvider } from './infastructure/dependency_providers/auditoriumsStream.provider';
-import { overallStatStreamProvider } from './infastructure/dependency_providers/overallStatStream.provider';
 import { httpInterceptorProvider } from './infastructure/dependency_providers/httpInterceptor.provider';
 import { AppRoutingModule } from './app-routing.module';
 import { initUserAtAppStartProvider } from './infastructure/dependency_providers/appInitializers.provider';
@@ -24,11 +19,6 @@ registerLocaleData(localeRu);
     initUserAtAppStartProvider,
     httpInterceptorProvider,
     userStreamProvider,
-    overallStatStreamProvider,
-    auditoriumsStreamProvider,
-    moviesStreamProvider,
-    genresStreamProvider,
-    movieSessionsStreamProvider,
   ],
 
   bootstrap: [AppComponent],

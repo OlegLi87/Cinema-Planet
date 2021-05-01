@@ -1,14 +1,12 @@
-import { MovieSession } from './../../models/domain_models/movieSession.model';
-import { Auditorium } from './../../models/domain_models/auditorium.model';
+import { MovieSession } from '../../../models/domain_models/movieSession.model';
+import { Auditorium } from '../../../models/domain_models/auditorium.model';
 import { Observable } from 'rxjs';
-import { environment } from './../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Movie } from '../../models/domain_models/movie.model';
+import { Movie } from '../../../models/domain_models/movie.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class HttpDataService {
   private readonly URL = environment.API_URL + '/admin';
 

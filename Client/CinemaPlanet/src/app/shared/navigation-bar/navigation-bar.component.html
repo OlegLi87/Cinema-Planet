@@ -18,8 +18,8 @@
   </button>
   <div class="collapse navbar-collapse justify-content-end" id="navContent">
     <div class="navbar-nav d-flex align-items-center">
-      <strong class="user-name mr-4" *ngIf="userName"
-        ><i class="fas fa-user"></i> Hi {{ userName }} !</strong
+      <span class="user-name mr-4" *ngIf="userName"
+        ><i class="fas fa-user"></i> Hi <strong>{{ userName }}</strong></span
       >
       <a
         *ngFor="let link of navigationContext.navLinks"

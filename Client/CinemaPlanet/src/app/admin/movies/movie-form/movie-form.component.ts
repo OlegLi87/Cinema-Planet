@@ -3,9 +3,9 @@ import {
   isLoadingStreamProvider,
   IS_LOADING_STREAM,
 } from './../../../infastructure/dependency_providers/isLoadingStream.provider';
-import { DataRepositoryService } from './../../../services/dataRepository.service';
+import { DataRepositoryService } from '../../services/dataRepository.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { GENRES_STREAM } from './../../../infastructure/dependency_providers/genresStream.provider';
+import { GENRES_STREAM } from '../../services/dependency_providers/genresStream.provider';
 import { Movie } from './../../../models/domain_models/movie.model';
 import {
   Component,

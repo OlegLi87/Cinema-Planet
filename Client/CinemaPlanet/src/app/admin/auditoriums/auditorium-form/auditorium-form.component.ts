@@ -4,7 +4,7 @@ import {
   IS_LOADING_STREAM,
 } from './../../../infastructure/dependency_providers/isLoadingStream.provider';
 import { Subject, Subscription } from 'rxjs';
-import { DataRepositoryService } from './../../../services/dataRepository.service';
+import { DataRepositoryService } from '../../services/dataRepository.service';
 import { Auditorium } from './../../../models/domain_models/auditorium.model';
 import {
   Component,

@@ -1,18 +1,18 @@
+import { MOVIE_SESSIONS_STREAM } from './dependency_providers/movieSessionsStream.povider';
+import { OVERALL_STAT_STREAM } from './dependency_providers/overallStatStream.provider';
+import { AUDITORIUMS_STREAM } from './dependency_providers/auditoriumsStream.provider';
+import { MOVIES_STREAM } from './dependency_providers/moviesStream.provider';
 import { HttpDataService } from './http_services/httpData.service';
-import { Movie } from './../models/domain_models/movie.model';
-import { Auditorium } from './../models/domain_models/auditorium.model';
-import { AUDITORIUMS_STREAM } from './../infastructure/dependency_providers/auditoriumsStream.provider';
-import { OverallStat } from './../models/domain_models/overallStat.model';
+import { Movie } from '../../models/domain_models/movie.model';
+import { Auditorium } from '../../models/domain_models/auditorium.model';
+import { OverallStat } from '../../models/domain_models/overallStat.model';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { OVERALL_STAT_STREAM } from './../infastructure/dependency_providers/overallStatStream.provider';
 import { Inject, Injectable } from '@angular/core';
-import { MOVIES_STREAM } from '../infastructure/dependency_providers/moviesStream.provider';
 import { map } from 'rxjs/operators';
-import { GENRES_STREAM } from '../infastructure/dependency_providers/genresStream.provider';
-import { MOVIE_SESSIONS_STREAM } from '../infastructure/dependency_providers/movieSessionsStream.povider';
-import { MovieSession } from '../models/domain_models/movieSession.model';
+import { GENRES_STREAM } from './dependency_providers/genresStream.provider';
+import { MovieSession } from '../../models/domain_models/movieSession.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class DataRepositoryService {
   constructor(
     private httpDataService: HttpDataService,

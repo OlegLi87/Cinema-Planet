@@ -15,8 +15,8 @@ using CinemaPlanet.WebApi.Dtos;
 namespace CinemaPlanet.WebApi.Controllers
 {
     [CustomAuthentication]
-    [Authorize(Roles = "Admin")]
     [EnableCors(headers: "*", origins: "*", methods: "*")]
+    [Authorize(Roles = "Admin")]
     public class MoviesController : ApiController
     {
         IUnitOfWork unitOfWork;

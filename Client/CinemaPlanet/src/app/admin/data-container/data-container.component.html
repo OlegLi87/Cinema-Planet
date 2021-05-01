@@ -41,7 +41,7 @@
         <span
           *ngIf="prop.toLocaleLowerCase().includes('price'); else noCurrency"
         >
-          {{ dataContext[prop] | customCurrency }}</span
+          {{ dataContext[prop] | currency: "USD":"symbol" }}</span
         >
         <ng-template #noCurrency>
           <span> {{ dataContext[prop] }}</span>

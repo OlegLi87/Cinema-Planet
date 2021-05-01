@@ -1,4 +1,4 @@
-import { Auditorium } from './../../models/domain_models/auditorium.model';
+import { Auditorium } from './../../../models/domain_models/auditorium.model';
 import { BehaviorSubject } from 'rxjs';
 import { InjectionToken, Provider } from '@angular/core';
 

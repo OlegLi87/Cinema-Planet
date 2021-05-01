@@ -1,4 +1,5 @@
-import { DataRepositoryService } from './../../services/dataRepository.service';
+import { OVERALL_STAT_STREAM } from './../services/dependency_providers/overallStatStream.provider';
+import { DataRepositoryService } from '../services/dataRepository.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {
   isLoadingStreamProvider,
@@ -8,7 +9,6 @@ import { OverallStat } from './../../models/domain_models/overallStat.model';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { OVERALL_STAT_STREAM } from 'src/app/infastructure/dependency_providers/overallStatStream.provider';
 
 declare const $: any;
 

@@ -1,12 +1,12 @@
+import { MOVIES_STREAM } from './../services/dependency_providers/moviesStream.provider';
 import { FormContext } from './../form-container/form-container.component';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { IS_LOADING_STREAM } from 'src/app/infastructure/dependency_providers/isLoadingStream.provider';
 import { Movie } from './../../models/domain_models/movie.model';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { DataRepositoryService } from './../../services/dataRepository.service';
+import { DataRepositoryService } from '../services/dataRepository.service';
 import { isLoadingStreamProvider } from './../../infastructure/dependency_providers/isLoadingStream.provider';
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { MOVIES_STREAM } from 'src/app/infastructure/dependency_providers/moviesStream.provider';
 
 @Component({
   selector: 'movies',

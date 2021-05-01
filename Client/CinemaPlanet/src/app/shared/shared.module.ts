@@ -10,7 +10,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { EditButtonComponent } from './edit-button/edit-button.component';
 import { DeleteButtonComponent } from './delete-button/delete-button.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
-import { CustomCurrencyPipe } from './pipes/customCurrency.pipe';
 import { StringTrimmerPipe } from './pipes/stringTrimmer.pipe';
 import { PropertyNameCorrectorPipe } from './pipes/propertyNameCorrector.pipe';
 
@@ -25,7 +24,6 @@ import { PropertyNameCorrectorPipe } from './pipes/propertyNameCorrector.pipe';
     DeleteButtonComponent,
     ConfirmModalComponent,
     PropertyNameCorrectorPipe,
-    CustomCurrencyPipe,
     StringTrimmerPipe,
   ],
   imports: [CommonModule, FormsModule, RouterModule],
@@ -36,7 +34,6 @@ import { PropertyNameCorrectorPipe } from './pipes/propertyNameCorrector.pipe';
     DeleteButtonComponent,
     ConfirmModalComponent,
     PropertyNameCorrectorPipe,
-    CustomCurrencyPipe,
     StringTrimmerPipe,
   ],
 })

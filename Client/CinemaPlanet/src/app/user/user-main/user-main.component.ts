@@ -1,6 +1,4 @@
 import { distinctUntilChanged } from 'rxjs/operators';
-import { DataRepositoryService } from './../../services/dataRepository.service';
-import { MOVIES_STREAM } from 'src/app/infastructure/dependency_providers/moviesStream.provider';
 import { IS_LOADING_STREAM } from 'src/app/infastructure/dependency_providers/isLoadingStream.provider';
 import { isLoadingStreamProvider } from './../../infastructure/dependency_providers/isLoadingStream.provider';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -20,9 +18,7 @@ export class UserMainComponent implements OnInit {
   isLoading = false;
 
   constructor(
-    @Inject(IS_LOADING_STREAM) private $isLoadingStream: Subject<boolean>,
-    @Inject(MOVIES_STREAM) private $moviesStream: BehaviorSubject<Movie[]>,
-    private dataRepositoryService: DataRepositoryService
+    @Inject(IS_LOADING_STREAM) private $isLoadingStream: Subject<boolean>
   ) {}
 
   ngOnInit(): void {
@@ -30,13 +26,13 @@ export class UserMainComponent implements OnInit {
       .pipe(distinctUntilChanged())
       .subscribe((isLoading) => (this.isLoading = isLoading));
 
-    this.subscriptions[1] = this.$moviesStream.subscribe((movies) => {
-      if (!movies)
-        return this.dataRepositoryService.streamMovies(this.$isLoadingStream);
+    // this.subscriptions[1] = this.$moviesStream.subscribe((movies) => {
+    //   if (!movies)
+    //     return this.dataRepositoryService.streamMovies(this.$isLoadingStream);
 
-      this.movies = [];
-      movies.forEach((m) => this.movies.push({ ...m }));
-    });
+    //   this.movies = [];
+    //   movies.forEach((m) => this.movies.push({ ...m }));
+    // });
   }
 
   movieIdentity(index: number, movie: Movie): number {

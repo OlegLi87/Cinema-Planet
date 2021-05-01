@@ -1,12 +1,12 @@
+import { AUDITORIUMS_STREAM } from './../services/dependency_providers/auditoriumsStream.provider';
 import { FormContext } from './../form-container/form-container.component';
-import { DataRepositoryService } from './../../services/dataRepository.service';
+import { DataRepositoryService } from '../services/dataRepository.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import {
   isLoadingStreamProvider,
   IS_LOADING_STREAM,
 } from './../../infastructure/dependency_providers/isLoadingStream.provider';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { AUDITORIUMS_STREAM } from './../../infastructure/dependency_providers/auditoriumsStream.provider';
 import { Auditorium } from './../../models/domain_models/auditorium.model';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 

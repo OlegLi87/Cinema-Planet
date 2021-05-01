@@ -1,6 +1,6 @@
 import { Movie } from './../../models/domain_models/movie.model';
 import { FormContext } from './../form-container/form-container.component';
-import { DataRepositoryService } from './../../services/dataRepository.service';
+import { DataRepositoryService } from '../services/dataRepository.service';
 import { Auditorium } from './../../models/domain_models/auditorium.model';
 import {
   isLoadingStreamProvider,

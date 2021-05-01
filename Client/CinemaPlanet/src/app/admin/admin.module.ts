@@ -1,3 +1,5 @@
+import { HttpDataService } from './services/http_services/httpData.service';
+import { DataRepositoryService } from './services/dataRepository.service';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from './../shared/shared.module';
 import { CommonModule } from '@angular/common';
@@ -13,6 +15,11 @@ import { DataContainerComponent } from './data-container/data-container.componen
 import { AddDataContainerComponent } from './add-data-container/add-data-container.component';
 import { MovieFormComponent } from './movies/movie-form/movie-form.component';
 import { MovieSessionFormComponent } from './movie-sessions/movie-session-form/movie-session-form.component';
+import { genresStreamProvider } from './services/dependency_providers/genresStream.provider';
+import { auditoriumsStreamProvider } from './services/dependency_providers/auditoriumsStream.provider';
+import { movieSessionsStreamProvider } from './services/dependency_providers/movieSessionsStream.povider';
+import { moviesStreamProvider } from './services/dependency_providers/moviesStream.provider';
+import { overallStatStreamProvider } from './services/dependency_providers/overallStatStream.provider';
 
 @NgModule({
   declarations: [
@@ -32,6 +39,15 @@ import { MovieSessionFormComponent } from './movie-sessions/movie-session-form/m
     CommonModule,
     ReactiveFormsModule,
     AdminRoutingModule,
+  ],
+  providers: [
+    DataRepositoryService,
+    HttpDataService,
+    overallStatStreamProvider,
+    auditoriumsStreamProvider,
+    moviesStreamProvider,
+    genresStreamProvider,
+    movieSessionsStreamProvider,
   ],
 })
 export class AdminModule {}
