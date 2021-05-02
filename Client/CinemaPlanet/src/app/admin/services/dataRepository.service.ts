@@ -1,3 +1,4 @@
+import { AppUtilsService } from './../../services/appUtils.service';
 import { MOVIE_SESSIONS_STREAM } from './dependency_providers/movieSessionsStream.povider';
 import { OVERALL_STAT_STREAM } from './dependency_providers/overallStatStream.provider';
 import { AUDITORIUMS_STREAM } from './dependency_providers/auditoriumsStream.provider';
@@ -24,7 +25,8 @@ export class DataRepositoryService {
     private $moviesStream: BehaviorSubject<Movie[]>,
     @Inject(GENRES_STREAM) private $genresStream: BehaviorSubject<string[]>,
     @Inject(MOVIE_SESSIONS_STREAM)
-    private $movieSessionsStream: BehaviorSubject<MovieSession[]>
+    private $movieSessionsStream: BehaviorSubject<MovieSession[]>,
+    private appUtilsService: AppUtilsService
   ) {}
 
   streamOverallStat($isLoadingStream?: Subject<boolean>): void {
@@ -32,7 +34,7 @@ export class DataRepositoryService {
 
     this.httpDataService
       .getOverallStatistics()
-      .pipe(map<any, OverallStat>(this.mapToLowerCase))
+      .pipe(map<any, OverallStat>(this.appUtilsService.mapToLowerCase))
       .subscribe((data) => {
         this.$overallStatStream.next(data);
         $isLoadingStream?.next(false);
@@ -44,7 +46,9 @@ export class DataRepositoryService {
 
     this.httpDataService
       .getAuditoriums()
-      .pipe(map((data) => data.map<Auditorium>(this.mapToLowerCase)))
+      .pipe(
+        map((data) => data.map<Auditorium>(this.appUtilsService.mapToLowerCase))
+      )
       .subscribe((data) => {
         this.$auditoriumsStream.next(data);
         $isLoadingStream?.next(false);
@@ -57,10 +61,12 @@ export class DataRepositoryService {
     this.httpDataService
       .getMovies()
       .pipe(
-        map((data) => data.map<Movie>(this.mapToLowerCase)),
+        map((data) => data.map<Movie>(this.appUtilsService.mapToLowerCase)),
         map((data) => {
           return data.map((movie) => {
-            movie.releaseDate = this.mapToDate(movie.releaseDate);
+            movie.releaseDate = this.appUtilsService.mapToDate(
+              movie.releaseDate
+            );
             return movie;
           });
         })
@@ -81,10 +87,12 @@ export class DataRepositoryService {
     this.httpDataService
       .getMovieSessions()
       .pipe(
-        map((data) => data.map<MovieSession>(this.mapToLowerCase)),
+        map((data) =>
+          data.map<MovieSession>(this.appUtilsService.mapToLowerCase)
+        ),
         map((data) =>
           data.map((ms) => {
-            ms.sessionDate = this.mapToDate(ms.sessionDate);
+            ms.sessionDate = this.appUtilsService.mapToDate(ms.sessionDate);
             return ms;
           })
         )
@@ -160,21 +168,5 @@ export class DataRepositoryService {
       this.streamMovies();
       this.streamMovieSessions($isLoadingStream);
     });
-  }
-
-  private mapToLowerCase<T>(dataObj: object): T {
-    if (!dataObj) return;
-    const keys = Object.keys(dataObj);
-    const result = {} as T;
-
-    keys.forEach((k) => {
-      const keyStartWithLower = k[0].toLowerCase() + k.substring(1);
-      result[keyStartWithLower] = dataObj[k];
-    });
-    return result;
-  }
-
-  private mapToDate(dateStr: any): Date {
-    return new Date(Date.parse(dateStr));
   }
 }

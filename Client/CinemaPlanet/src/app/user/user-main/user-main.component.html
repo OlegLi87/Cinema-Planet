@@ -1,8 +1,17 @@
 <navigation-bar></navigation-bar>
 
-<div class="container mt-2 col-lg-8 col-11">
-  <div class="row">
-    <div id="moviesCorousel" class="carousel slide w-100" data-ride="carousel">
+<div class="container mt-2 col-lg-8 col-11" *ngIf="!isLoading">
+  <div class="row" *ngIf="!movies.length">
+    <h3 class="page-title text-center">No Data Found</h3>
+  </div>
+
+  <div class="row" *ngIf="movies.length">
+    <div
+      id="moviesCorousel"
+      class="carousel slide w-100"
+      data-ride="carousel"
+      data-interval="2500"
+    >
       <!-- bottom buttons -->
       <ol class="carousel-indicators">
         <li
@@ -19,8 +28,12 @@
 
         <div
           class="carousel-item"
-          [class.active]="last"
-          *ngFor="let movie of movies; let last = last; trackBy: movieIdentity"
+          [class.active]="first"
+          *ngFor="
+            let movie of movies;
+            let first = first;
+            trackBy: movieIdentity
+          "
         >
           <div class="movie-container">
             <h4 class="movie-title pb-3">
@@ -50,7 +63,12 @@
                 Gold seat price:
                 {{ movie.goldSeatPrice | currency: "USD":"symbol" }}
               </div>
-              <button class="btn btn-info mt-2 mx-5">Place Order</button>
+              <button
+                class="btn btn-info mt-2 mx-5"
+                (click)="onOrderBtnClicked(movie)"
+              >
+                Order Now
+              </button>
             </div>
           </div>
         </div>
@@ -83,3 +101,7 @@
     </div>
   </div>
 </div>
+
+<loading-spinner *ngIf="isLoading"></loading-spinner>
+
+<order-form *ngIf="showForm" [movie]="selectedMovie"></order-form>

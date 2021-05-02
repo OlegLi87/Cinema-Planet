@@ -38,6 +38,7 @@ export class NavigationBarComponent implements OnInit {
   }
 
   onLogoHoverOn(event: Event): void {
+    if (!(event.target instanceof HTMLAnchorElement)) return;
     const logo = event.target as HTMLAnchorElement;
     if (logo.classList.contains('active')) return;
     logo.classList.add('logo-hovered');

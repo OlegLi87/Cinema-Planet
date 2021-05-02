@@ -93,9 +93,27 @@ namespace CinemaPlanet.WebApi.Infastructure
             movieSession.Id = movieSessionDto.Id;
             movieSession.AuditoriumId = movieSessionDto.AuditoriumId;
             movieSession.MovieId = movieSessionDto.MovieId;
-            movieSession.SessionDate = movieSessionDto .SessionDate;
+            movieSession.SessionDate = movieSessionDto.SessionDate;
 
             return movieSession;
         }
+
+        public static Order MapToOrder(Order order, OrderDto orderDto, MovieSession movieSession)
+        {
+            order.Id = orderDto.Id;
+            order.MovieSessionId = movieSession.Id;
+            order.UserId = orderDto.UserId;
+            order.SeatType = (SeatType)Enum.Parse(typeof(SeatType), orderDto.SeatType);
+            order.SeatNumber = movieSession.GetSeatNumber(order.SeatType);
+
+            return order;
+        }
+
+        //public static OrderDto MapToOrderDto(Order order)
+        //{
+        //    var orderDto = new OrderDto();
+
+
+        //}
     }
 }

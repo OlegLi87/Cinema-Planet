@@ -1,0 +1,18 @@
+@import '../../_partial'
+
+:host
+    @include absoluteCoverArea
+    background-color: map-get($colors,"mainBlack")
+    z-index: 1000
+
+button[type="submit"]
+    @include successBtn
+
+loading-spinner 
+    background-color: map-get($colors,"mainBlack")
+    position: absolute
+    top: 0
+    left: 0
+    
+     
+    

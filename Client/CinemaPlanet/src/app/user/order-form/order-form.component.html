@@ -1,0 +1,87 @@
+<div class="container col-11 col-sm-8 col-md-6">
+  <div class="row justify-content-center mt-5 p-relative">
+    <form class="w-100" (ngSubmit)="onSubmit()">
+      <div class="form-group mt-3">
+        <label for="date" class="form-label">Choose a date</label>
+        <select
+          id="date"
+          class="form-control"
+          (click)="onDateSelectionClicked()"
+          (input)="onDateSelectionChanged($event.target.value)"
+          name="sessionDate"
+        >
+          <option selected disabled *ngIf="!availableMovieSessions">
+            Choose a Date
+          </option>
+          <option [value]="ms.id" *ngFor="let ms of availableMovieSessions">
+            {{ ms.sessionDate | date: "dd/MM/yy" }}
+          </option>
+        </select>
+      </div>
+
+      <div class="seat-type-container" *ngIf="availableSeatTypes?.length">
+        <h5 class="text-center mb-3">Choose a seat type</h5>
+        <div
+          class="radio-buttons-container d-flex w-100 justify-content-center"
+        >
+          <div
+            class="form-check form-check-inline"
+            *ngIf="availableSeatTypes.includes('Basic')"
+          >
+            <input
+              class="form-check-input"
+              type="radio"
+              name="radioType"
+              id="basicSeat"
+              value="Basic"
+              [(ngModel)]="order.seatType"
+            />
+            <label class="form-check-label text-info" for="basicSeat"
+              >Basic Seat</label
+            >
+          </div>
+          <div
+            class="form-check form-check-inline"
+            *ngIf="availableSeatTypes.includes('Silver')"
+          >
+            <input
+              class="form-check-input"
+              type="radio"
+              name="radioType"
+              id="silverSeat"
+              value="Silver"
+              [(ngModel)]="order.seatType"
+            />
+            <label class="form-check-label" for="silverSeat text-muted"
+              >Silver seat</label
+            >
+          </div>
+          <div
+            class="form-check form-check-inline"
+            *ngIf="availableSeatTypes.includes('Gold')"
+          >
+            <input
+              class="form-check-input"
+              type="radio"
+              name="radioType"
+              id="goldSeat"
+              value="Gold"
+              [(ngModel)]="order.seatType"
+            />
+            <label class="form-check-label text-warning" for="goldSeat"
+              >Gold Seat</label
+            >
+          </div>
+        </div>
+      </div>
+      <div class="botton-container text-center" *ngIf="order.seatType">
+        <h5 class="mt-4 text-center">
+          Price: {{ price | currency: "USD":"symbol" }}
+        </h5>
+        <button type="submit" class="btn mt-3 w-50">Place Order</button>
+      </div>
+    </form>
+
+    <loading-spinner *ngIf="isLoading"></loading-spinner>
+  </div>
+</div>
