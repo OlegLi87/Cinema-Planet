@@ -109,11 +109,19 @@ namespace CinemaPlanet.WebApi.Infastructure
             return order;
         }
 
-        //public static OrderDto MapToOrderDto(Order order)
-        //{
-        //    var orderDto = new OrderDto();
+        public static OrderDto MapToOrderDto(Order order)
+        {
+            var orderDto = new OrderDto();
 
+            orderDto.Id = order.Id;
+            orderDto.AuditoriumName = order.MovieSession.Auditorium.Name;
+            orderDto.MovieName = order.MovieSession.Movie.Name;
+            orderDto.SeatNumber = order.SeatNumber;
+            orderDto.SeatType = order.SeatType.ToString();
+            orderDto.UserId = order.UserId;
+            orderDto.SessionDate = order.MovieSession.SessionDate;
 
-        //}
+            return orderDto;
+        }
     }
 }

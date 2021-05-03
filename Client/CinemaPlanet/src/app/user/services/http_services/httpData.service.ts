@@ -26,6 +26,10 @@ export class HttpDataService {
     );
   }
 
+  getOrders(): Observable<any[]> {
+    return this.httpClient.get<any[]>(this.URL + '/getOrders');
+  }
+
   saveOrder(order: Order): Observable<any> {
     return this.httpClient.post(this.URL + '/saveOrder', order);
   }

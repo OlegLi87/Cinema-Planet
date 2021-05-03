@@ -7,7 +7,7 @@ export const MOVIES_STREAM = new InjectionToken(
 );
 
 function getMovieStream(): BehaviorSubject<Movie[]> {
-  return new BehaviorSubject<Movie[]>(null);
+  return new BehaviorSubject(null);
 }
 
 export const moviesStreamProvider: Provider = {

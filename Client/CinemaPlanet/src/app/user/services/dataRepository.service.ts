@@ -4,16 +4,18 @@ import { Movie } from './../../models/domain_models/movie.model';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { MOVIES_STREAM } from './dependency_providers/moviesStream.provider';
 import { HttpDataService } from './http_services/httpData.service';
-import { Inject, Injectable } from '@angular/core';
+import { inject, Inject, Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { MovieSession } from 'src/app/models/domain_models/movieSession.model';
+import { ORDERS_STREAM } from './dependency_providers/ordersStream.provider';
 
 @Injectable()
 export class DataRepositoryService {
   constructor(
     private httpDataService: HttpDataService,
     private appUtilsService: AppUtilsService,
-    @Inject(MOVIES_STREAM) private $moviesStream: BehaviorSubject<Movie[]>
+    @Inject(MOVIES_STREAM) private $moviesStream: BehaviorSubject<Movie[]>,
+    @Inject(ORDERS_STREAM) private $ordersstream: BehaviorSubject<Order[]>
   ) {}
 
   streamMovies($isLoadingStream?: Subject<boolean>): void {
@@ -71,14 +73,37 @@ export class DataRepositoryService {
       .subscribe((seatTypes) => $availableSeatTypesStream.next(seatTypes));
   }
 
-  saveOrder(order: Order, $isLoadingStream?: Subject<boolean>) {
+  streamOrders($isLoadingStream?: Subject<boolean>): void {
     $isLoadingStream?.next(true);
 
     this.httpDataService
-      .saveOrder(order)
-      .pipe(map<any, Order>(this.appUtilsService.mapToLowerCase))
-      .subscribe((order) => {
-        console.log(order);
+      .getOrders()
+      .pipe(
+        map<any[], Order[]>((data) =>
+          data.map<Order>(this.appUtilsService.mapToLowerCase)
+        ),
+        map((orders) =>
+          orders.map((order) => {
+            order.sessionDate = this.appUtilsService.mapToDate(
+              order.sessionDate
+            );
+            return order;
+          })
+        )
+      )
+      .subscribe((orders) => {
+        console.log(orders);
+        this.$ordersstream.next(orders);
+        $isLoadingStream?.next(false);
       });
+  }
+
+  saveOrder(order: Order, $isLoadingStream?: Subject<boolean>) {
+    $isLoadingStream?.next(true);
+
+    this.httpDataService.saveOrder(order).subscribe((any) => {
+      $isLoadingStream.next(false);
+      this.streamOrders();
+    });
   }
 }

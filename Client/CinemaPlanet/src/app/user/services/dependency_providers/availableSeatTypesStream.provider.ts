@@ -6,7 +6,7 @@ export const AVAILABLE_SEAT_TYPES_STREAM = new InjectionToken(
 );
 
 function getAvailableSeatTypesStream(): Subject<string[]> {
-  return new Subject<string[]>();
+  return new Subject();
 }
 
 export const availableSeatTypesStreamProvider: Provider = {

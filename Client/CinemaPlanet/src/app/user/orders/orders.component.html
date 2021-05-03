@@ -1,1 +1,29 @@
 <navigation-bar></navigation-bar>
+
+<div class="container">
+  <div class="row mt-5 justify-content-center">
+    <loading-spinner *ngIf="isLoading"></loading-spinner>
+    <div class="orders-container" *ngIf="!isLoading">
+      <table class="table table-striped table-dark">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Auditorium</th>
+            <th>Movie</th>
+            <th>Date</th>
+            <th>Seat Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.auditoriumName }}</td>
+            <td>{{ order.movieName }}</td>
+            <td>{{ order.sessionDate | date: "dd/MM/yy" }}</td>
+            <td [seatColor]="order">{{ order.seatNumber }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

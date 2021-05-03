@@ -4,6 +4,6 @@ export interface Order {
   seatType: string;
   seatNumber?: number;
   movieName?: string;
-  auditoirumName?: string;
+  auditoriumName?: string;
   sessionDate?: Date;
 }

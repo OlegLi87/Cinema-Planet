@@ -6,7 +6,7 @@ import { InjectionToken, Provider } from '@angular/core';
 export const MOVIES_STREAM = new InjectionToken('Stream of movies');
 
 function getMoviesStream(): BehaviorSubject<Movie[]> {
-  return new BehaviorSubject<Movie[]>(null);
+  return new BehaviorSubject(null);
 }
 
 export const moviesStreamProvider: Provider = {

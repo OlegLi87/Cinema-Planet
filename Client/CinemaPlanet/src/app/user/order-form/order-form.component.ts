@@ -16,7 +16,17 @@ import {
   isLoadingStreamProvider,
   IS_LOADING_STREAM,
 } from './../../infastructure/dependency_providers/isLoadingStream.provider';
-import { Component, Inject, OnInit, OnDestroy, Input } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  OnChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'order-form',
@@ -28,11 +38,13 @@ import { Component, Inject, OnInit, OnDestroy, Input } from '@angular/core';
     availableSeatTypesStreamProvider,
   ],
 })
-export class OrderFormComponent implements OnInit, OnDestroy {
+export class OrderFormComponent implements OnChanges, OnInit, OnDestroy {
   @Input() movie: Movie;
+  @Output() formProcessingEnd = new EventEmitter<void>();
 
   private subscriptions = new Array<Subscription>();
   private selectedMovieSessionId: number;
+  private isFormSubmitted = false;
 
   order: Order = {} as Order;
   availableMovieSessions: MovieSession[];
@@ -48,10 +60,14 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     private $availableSeatTypesStream: Subject<string[]>
   ) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['movie']) this.clearFormState();
+  }
+
   ngOnInit(): void {
     this.subscriptions[0] = this.$isLoadingStream
       .pipe(distinctUntilChanged())
-      .subscribe((isLoading) => (this.isLoading = isLoading));
+      .subscribe(this.loadingStateChanged.bind(this));
 
     this.subscriptions[1] = this.$availableMovieSessionStream.subscribe(
       (movieSessions) => {
@@ -110,8 +126,23 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    this.isFormSubmitted = true;
     this.order.movieSessionId = this.selectedMovieSessionId;
     this.dataRepositoryService.saveOrder(this.order, this.$isLoadingStream);
+  }
+
+  private loadingStateChanged(isLoading): void {
+    this.isLoading = isLoading;
+    if (!isLoading && this.isFormSubmitted) {
+      this.clearFormState();
+      this.formProcessingEnd.emit();
+    }
+  }
+
+  private clearFormState(): void {
+    this.availableMovieSessions = null;
+    this.availableSeatTypes = null;
+    this.order = {} as Order;
   }
 
   ngOnDestroy(): void {

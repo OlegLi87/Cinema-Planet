@@ -6,7 +6,7 @@ export const AVAILABLE_MOVIE_SESSIONS_STREAM = new InjectionToken(
 );
 
 function getAvailableSessionDatesStream(): Subject<Date[]> {
-  return new Subject<Date[]>();
+  return new Subject();
 }
 
 export const availableSessionDatesStreamProvider: Provider = {

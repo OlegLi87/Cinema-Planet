@@ -46,6 +46,10 @@ export class UserMainComponent implements OnInit, OnDestroy {
     this.showForm = true;
   }
 
+  onFormClosed(): void {
+    this.showForm = false;
+  }
+
   movieIdentity(index: number, movie: Movie): number {
     return movie.id;
   }

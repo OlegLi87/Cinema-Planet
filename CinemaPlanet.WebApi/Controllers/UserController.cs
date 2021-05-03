@@ -72,6 +72,18 @@ namespace CinemaPlanet.WebApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, availableSeatTypes);
         }
 
+        [HttpGet]
+        [Route("api/user/getOrders")]
+        public HttpResponseMessage GetOrders()
+        {
+            var userName = RequestContext.Principal.Identity.Name;
+            var user = unitOfWork.Users.GetByCredentials(userName);
+
+            var ordersDto = user.Orders.Select(order => ApiUtils.MapToOrderDto(order));
+
+            return Request.CreateResponse(HttpStatusCode.OK, ordersDto);
+        }
+
         [HttpPost]
         [Route("api/user/saveOrder")]
         public HttpResponseMessage saveOrder(OrderDto orderDto)
@@ -88,11 +100,11 @@ namespace CinemaPlanet.WebApi.Controllers
 
             var order = ApiUtils.MapToOrder(new Order(), orderDto, movieSession);
             unitOfWork.Orders.Add(order);
+            unitOfWork.Save();
 
+            orderDto.Id = order.Id;
             orderDto.SeatNumber = order.SeatNumber;
             orderDto.SessionDate = movieSession.SessionDate;
-
-            unitOfWork.Save();
 
             return Request.CreateResponse(HttpStatusCode.OK, orderDto);
 

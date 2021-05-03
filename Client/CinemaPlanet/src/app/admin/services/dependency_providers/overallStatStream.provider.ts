@@ -9,7 +9,7 @@ export const OVERALL_STAT_STREAM = new InjectionToken(
 );
 
 function getOverallStatStream(): BehaviorSubject<OverallStat> {
-  return new BehaviorSubject<OverallStat>(null);
+  return new BehaviorSubject(null);
 }
 
 export const overallStatStreamProvider: Provider = {

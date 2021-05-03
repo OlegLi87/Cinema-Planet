@@ -7,7 +7,7 @@ export const AUDITORIUMS_STREAM = new InjectionToken(
 );
 
 function getAuditoriumsStream(): BehaviorSubject<Auditorium[]> {
-  return new BehaviorSubject<Auditorium[]>(null);
+  return new BehaviorSubject(null);
 }
 
 export const auditoriumsStreamProvider: Provider = {

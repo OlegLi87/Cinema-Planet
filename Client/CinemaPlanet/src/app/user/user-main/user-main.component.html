@@ -5,12 +5,13 @@
     <h3 class="page-title text-center">No Data Found</h3>
   </div>
 
-  <div class="row" *ngIf="movies.length">
+  <div class="row" *ngIf="movies.length" class="p-relative">
     <div
       id="moviesCorousel"
       class="carousel slide w-100"
       data-ride="carousel"
-      data-interval="2500"
+      [class.face-rotation]="showForm"
+      [class.back-rotation]="!showForm && selectedMovie"
     >
       <!-- bottom buttons -->
       <ol class="carousel-indicators">
@@ -23,7 +24,7 @@
       </ol>
 
       <!-- content -->
-      <div class="carousel-inner jumbotron mb-3 mt-3 pt-3 text-center">
+      <div class="carousel-inner jumbotron mt-3 pt-3 text-center">
         <h2 class="mb-5 page-title p-3 rounded">Order your seat.</h2>
 
         <div
@@ -99,9 +100,14 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
+
+    <order-form
+      [movie]="selectedMovie"
+      (formProcessingEnd)="showForm = false"
+      [class.back-rotation]="showForm"
+      [class.face-rotation]="!showForm && selectedMovie"
+    ></order-form>
   </div>
 </div>
 
 <loading-spinner *ngIf="isLoading"></loading-spinner>
-
-<order-form *ngIf="showForm" [movie]="selectedMovie"></order-form>

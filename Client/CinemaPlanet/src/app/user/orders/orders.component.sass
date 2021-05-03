@@ -1,4 +1,22 @@
 @import '../../_partial'
 
 :host
-   @include appBackground()    
+   @include appBackground()  
+
+table
+   th
+      color: map-get($colors,"mainGreen") 
+      text-align: center
+   
+   td
+      text-align: center
+   
+   & td,& th
+       @media(max-width: 36rem)
+          padding: 0.6rem 0.3rem !important
+
+   font-size: clamp(0.55rem,1.7vw,0.95rem)
+
+
+   
+  

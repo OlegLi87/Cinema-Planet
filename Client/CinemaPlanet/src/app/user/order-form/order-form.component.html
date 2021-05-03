@@ -1,5 +1,5 @@
 <div class="container col-11 col-sm-8 col-md-6">
-  <div class="row justify-content-center mt-5 p-relative">
+  <div class="row justify-content-center mt-5">
     <form class="w-100" (ngSubmit)="onSubmit()">
       <div class="form-group mt-3">
         <label for="date" class="form-label">Choose a date</label>
@@ -81,7 +81,10 @@
         <button type="submit" class="btn mt-3 w-50">Place Order</button>
       </div>
     </form>
-
     <loading-spinner *ngIf="isLoading"></loading-spinner>
   </div>
+</div>
+
+<div class="close-btn">
+  <i class="far fa-times-circle fa-2x" (click)="formProcessingEnd.emit()"></i>
 </div>
